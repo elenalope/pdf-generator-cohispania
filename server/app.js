@@ -3,7 +3,7 @@ import {PORT} from './config.js'
 import {connect} from './database/db.js'
 import express from 'express'
 import cors from 'cors'
-import {pdfRouter} from './routes/pdfRouter.js'
+import pdfRouter from './routes/pdfRouter.js'
 
 
 const app = express()
