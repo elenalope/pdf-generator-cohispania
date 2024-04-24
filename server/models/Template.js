@@ -6,75 +6,31 @@ const contentSchema = new mongoose.Schema({
         enum: ['chapter', 'section', 'subsection', 'paragraph', 'title', 'list', 'signature', 'image', 'link', 'break'],
         required: true
     },
-     title: {
-        type: String,
-        required: true
-     },
+     title: String,
      content: [String],
-     src: {
-        type: String,
-        required: false
-     },
-     level: {
-        type: String,
-        required: false
-     },
-    cover: {
-        type: Boolean,
-        default: false
-    },
-    ordered: {
-        type: Boolean,
-        default: false
-    },
-    fullName: {
-        type: String,
-        required: false
-    },
-    position: {
-        type: String,
-        required: false
-    },
-    party:{
-        type: String,
-        required: false
-    },
-    date: {
-        type: String,
-        required: false
-    }},{
+     src: String,
+     level: String,
+    cover: Boolean,
+    ordered: Boolean,
+    fullName: String,
+    position: String,
+    party:String,
+    date: String
+},{
         _id:false
     });
     
     const TemplateSchema = new Schema({
-        title: {
-            type: String,
-            required: true
-        },
-        subtitle: {
-            type: String,
-            required: false
-        },
+        title: String,
+        subtitle: String,
         docExplanation:[String],
-        highlightedValue: {
-            type: String,
-            required: false
-        },
-        padding: {
-            type: String,
-            required: false
-        },
-        toc:{
-            type: Boolean,
-            required: false
-        },
+        highlightedValue: String,
+        padding: String,
+        toc:Boolean,
         data: [contentSchema],
         
         })
     
-
-
-
 const Template = mongoose.model('Template', TemplateSchema);
 
 export default Template;
