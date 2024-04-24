@@ -1,13 +1,10 @@
 import mongoose from 'mongoose';
-import { MONGO_URI } from '../config';
+import { MONGO_URI } from '../config.js';
 
 
-const connect = async() =>{
+export const connect = async() =>{
    try {
-        await mongoose.connect(MONGO_URI,{
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect(MONGO_URI);
         console.log("Database connected");
     } catch (error) {
         console.error(error);
