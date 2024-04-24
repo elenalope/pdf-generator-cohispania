@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
-import { MONGO_URI } from '../config.js';
+import { MONGO_URI, MONGO_URI_TEST } from '../config.js';
 
 
-//const DB_NAME = NODE_ENV === 'test' ? DB_TEST_NAME : MONGO_URI;
+const MONGO_URL_CONNECTION = NODE_ENV === 'test' ? MONGO_URI_TEST : MONGO_URI;
+
 
 const connect = async() =>{
    try {
-        await mongoose.connect(MONGO_URI,{
+        await mongoose.connect(MONGO_URL_CONNECTION,{
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
