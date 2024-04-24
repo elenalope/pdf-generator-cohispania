@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
-import { MONGO_URI } from '../config';
+import { MONGO_URI } from '../config.js';
 
+
+//const DB_NAME = NODE_ENV === 'test' ? DB_TEST_NAME : MONGO_URI;
 
 const connect = async() =>{
    try {
