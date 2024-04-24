@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
+import './Navbar.css';
 
 const Nav = () => {
     return (
-          <h3 className="navbar">PDF GENERATOR</h3>
+          <h3 className="navbar">NAVBAR</h3>
     );
   }
   
