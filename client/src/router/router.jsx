@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import LayoutPublic from '../layout/LayoutPublic';
-import Home from '../pages/Home';
+import Home from '../pages/home/Home';
+import Template from '../pages/template/Template'
 
 const router = createBrowserRouter([
   {
@@ -12,8 +13,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/pdf",
+        path: "/",
         element: <Home />, // o el componente correspondiente para la generación de PDF
+      },
+      {
+        path: "/template",
+        element: <Template />,
       }
      // {
      //   path: "/interface",

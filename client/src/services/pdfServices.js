@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const URL = 'http://localhost:5173/api';
+export const URL = 'http://localhost:5000';
 
 
 //GET
@@ -9,7 +9,7 @@ export const getPDF = async () => {
     const response = await axios.get(URL);
     return response.data
   } catch (error) {
-    console.error('error get pdfs', error.message);
+    console.error('Error to get the documents', error.message);
     throw error;
   }
 };
@@ -18,7 +18,7 @@ export const getPDF = async () => {
 export const postPDF = async (data) => {
   try {
      const response = await axios.post(URL, data);
-     alert("Documento creado existosamente");
+     alert("Document create succesfully");
      return response;
   } catch (error) {
      console.error('Error creating document', error.message);
@@ -30,10 +30,10 @@ export const deletePDF = async (id) =>{
   try {
     let urlId = `${URL}/${id}`;
     const response = await axios.delete(urlId);
-    alert("Documento eliminado");
+    alert("Document deleted");
     return response;
   } catch (error) {
-    console.error('error delete document', error.message);
+    console.error('Error delete document', error.message);
     throw error;
   }
 
@@ -44,7 +44,7 @@ export const updateData = async (data, id) => {
   try {
     let urlId = `${URL}/${id}`;
     const response = await axios.put(urlId, data);
-    alert('Documento actualizado');
+    alert('Document updated succesfully');
     return response;
   } catch (error) {
     console.error('error update ', error.message);
