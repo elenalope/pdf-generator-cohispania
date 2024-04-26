@@ -1,5 +1,4 @@
 import mongoose, {Schema} from 'mongoose';
-
 const contentSchema = new mongoose.Schema({
     type: {
         type: String,
@@ -19,8 +18,7 @@ const contentSchema = new mongoose.Schema({
 },{
         _id:false
     });
-    
-    const TemplateSchema = new Schema({
+        const TemplateSchema = new Schema({
         title: String,
         subtitle: String,
         docExplanation:[String],
@@ -30,7 +28,5 @@ const contentSchema = new mongoose.Schema({
         data: [contentSchema],
         
         })
-    
 const Template = mongoose.model('Template', TemplateSchema);
-
 export default Template;
