@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', getAllDocuments);
 router.delete('/template/:_id', deleteDocument);
-router.post('/', createDocument);
+router.post('/template', createDocument);
 router.put('/template/:_id', updateDocument);
 router.get('/template/:_id', getDocById);
 
