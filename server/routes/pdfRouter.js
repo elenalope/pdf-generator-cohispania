@@ -4,10 +4,10 @@ import { getAllDocuments, getDocById, deleteDocument, createDocument, updateDocu
 
 const router = express.Router();
 
-router.get('/templates', getAllDocuments);
-router.delete('/templates/:_id', deleteDocument);
-router.post('/templates', createDocument);
-router.put('/templates/:_id', updateDocument);
-router.get('/templates/:_id', getDocById);
+router.get('/', getAllDocuments);
+router.delete('/template/:_id', deleteDocument);
+router.post('/', createDocument);
+router.put('/template/:_id', updateDocument);
+router.get('/template/:_id', getDocById);
 
 export default router;

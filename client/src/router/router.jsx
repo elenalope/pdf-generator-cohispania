@@ -14,16 +14,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/",
-        element: <Home />, // o el componente correspondiente para la generación de PDF
+        element: <Home />,
       },
       {
         path: "/template",
         element: <Template />,
       }
-     // {
-     //   path: "/interface",
-     //   element: <Interface />, // Asegúrate de importar Interface si lo necesitas
-     // }
     ]
   }
 ]);
