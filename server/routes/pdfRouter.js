@@ -1,13 +1,13 @@
 import express from 'express';
-import { getAllDocuments } from '../controllers/documents';
+import { getAllDocuments, getDocById, deleteDocument, createDocument, updateDocument } from '../controllers/documents.js';
 
 
 const router = express.Router();
 
-router.get('/documents', getAllDocuments);
-router.delete();
-router.post();
-router.put();
-router.get();
+router.get('/templates', getAllDocuments);
+router.delete('/templates/:_id', deleteDocument);
+router.post('/templates', createDocument);
+router.put('/templates/:_id', updateDocument);
+router.get('/templates/:_id', getDocById);
 
 export default router;

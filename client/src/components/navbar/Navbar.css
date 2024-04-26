@@ -1,0 +1,10 @@
+.navbar {
+    background-color: #F68D2E;
+    height: 10vh;
+    width: auto;
+    color: white;
+    font-family: 'Jost', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
