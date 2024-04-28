@@ -26,7 +26,7 @@ const SectionSchema = new mongoose.Schema({
     image: String,
     link: String,
     paragraph: String,
-    content: [{String}],
+    content: [String],
     templateFather : {type: Schema.Types.ObjectId, ref: 'Template'}
 })
 
@@ -45,4 +45,4 @@ const SubsectionSchema = new mongoose.Schema({
 const Subsection = Template.discriminator('Subsection', SubsectionSchema);
 
 
-module.exports = {Template, Chapter, Section, Subsection}
+export  {Template, Chapter, Section, Subsection}
