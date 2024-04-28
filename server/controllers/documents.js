@@ -1,4 +1,22 @@
 import {Template}from "../models/Template.js";
+import { Chapter } from "../models/Chapter.js";
+import { Section } from "../models/Section.js";
+import { Subsection } from "../models/Subsection.js";
+
+//
+
+export const createTemplate = async(request,response)=>{
+     
+    try {
+/*         const {title, content, chapter, section, subsection}
+ */        const document = await Template.create(request.body);
+        const {_id} = document;
+        response.status(201).json({document, _id}); 
+    } catch (error) {
+
+        response.status(500).json({message: error.message})
+    }
+}
 
 export const getAllDocuments = async (request, response) => {
    
@@ -43,18 +61,7 @@ export const deleteDocument = async (request, response) => {
     }
 }
 
-//
-
-export const createDocument = async(request,response)=>{
-     
-    try {
-        const document = await Template.create(request.body)
-        response.status(201).json(document); 
-    } catch (error) {
-
-        response.status(500).json({message: error.message})
-    }
-} 
+ 
 
 //UPDATE
 
