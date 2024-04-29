@@ -1,24 +1,11 @@
 import mongoose, { Schema } from 'mongoose';
 
-const TemplateSchema = new mongoose.Schema({
+const SubsectionSchema = new mongoose.Schema({
     title: String,
-    content: [String]
-});
-
-const Template = mongoose.model('Template', TemplateSchema);
-
-
-////
-
-const ChapterSchema = new mongoose.Schema({
-    title: String,
+    image: String,
+    paragraph: String,
     content: [String],
-    templateFather : {type: Schema.Types.ObjectId, ref: 'Template'}
-});
-
-const Chapter = Template.discriminator('Chapter', ChapterSchema);
-
-////
+},{_id : false})
 
 const SectionSchema = new mongoose.Schema({
     title: String,
@@ -27,22 +14,19 @@ const SectionSchema = new mongoose.Schema({
     link: String,
     paragraph: String,
     content: [String],
-    templateFather : {type: Schema.Types.ObjectId, ref: 'Template'}
-})
+    Subsection: [SubsectionSchema]
+},{_id : false})
 
-const Section = Template.discriminator('Section', SectionSchema);
-
-////
-
-const SubsectionSchema = new mongoose.Schema({
+const ChapterSchema = new mongoose.Schema({
     title: String,
-    image: String,
-    paragraph: String,
-    content: [String],
-    templateFather : {type: Schema.Types.ObjectId, ref: 'Template'}
-})
+    content: [SectionSchema]
+},{_id : false});
 
-const Subsection = Template.discriminator('Subsection', SubsectionSchema);
+const TemplateSchema = new mongoose.Schema({
+    title: String,
+    content: [ChapterSchema]
+});
 
+const Template = mongoose.model('Template', TemplateSchema);
 
-export  {Template, Chapter, Section, Subsection}
+export  {Template}
