@@ -1,7 +1,7 @@
 import request from "supertest";
-import { connect } from '../database/db.js';
-import  template  from "@babel/core";
-import { app } from '../app';
+// import { connect } from '../database/db.js';
+// import  template  from "@babel/core";
+import { app, server } from '../app.js';
 
 
 
@@ -14,9 +14,7 @@ describe('GET /api/documents', () => {
 });
 
 
-
 afterAll( async () => {
     server.close();
-  
  })
 
