@@ -1,17 +1,22 @@
-import { express } from "express";
-import supertest from "supertest";
-import { App } from "supertest/types";
-import connect from "../database/db";
-import Template from "../models/Template";
+import request from "supertest";
+import { connect } from '../database/db.js';
+import  template  from "@babel/core";
+import { app } from '../app';
 
-const api = request(App);
 
-describe('GET', () => {
-    test('GET ', async() => {
-        const response = await request(api).get('/api/documents')
-        expect(response.status).toBe(200)
-        expect(Array.isArray(response.body)).toBe(true)
-    })    
+
+describe('GET /api/documents', () => {
+  test('should return an array of documents and status 200', async () => {
+    const response = await request(app).get('/api/documents');
+    expect(response.status).toBe(200);
+    expect(Array.isArray(response.body)).toBe(true);
+  });
 });
 
+
+
+afterAll( async () => {
+    server.close();
+  
+ })
 

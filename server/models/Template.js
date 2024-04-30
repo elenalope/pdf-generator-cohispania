@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
 const contentSchema = new mongoose.Schema({
     type: {
@@ -68,7 +69,7 @@ const contentSchema = new mongoose.Schema({
             type: Boolean,
             required: false
         },
-        data: [contentSchema],
+        // data: [contentSchema],
         
         })
     

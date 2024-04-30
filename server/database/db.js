@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { MONGO_URI, MONGO_URI_TEST } from '../config.js';
+import { MONGO_URI, MONGO_URI_TEST,NODE_ENV } from '../config.js';
 
 
 const MONGO_URL_CONNECTION = NODE_ENV === 'test' ? MONGO_URI_TEST : MONGO_URI;
@@ -8,8 +8,8 @@ const MONGO_URL_CONNECTION = NODE_ENV === 'test' ? MONGO_URI_TEST : MONGO_URI;
 const connect = async() =>{
    try {
         await mongoose.connect(MONGO_URL_CONNECTION,{
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            // useNewUrlParser: true,
+            // useUnifiedTopology: true,
         });
         console.log("Database connected");
     } catch (error) {
