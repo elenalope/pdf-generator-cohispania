@@ -1,7 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import LayoutPublic from '../layout/LayoutPublic';
-import Home from '../pages/home/Home';
-import Template from '../pages/template/Template'
+import LayoutDocument from '../layout/LayoutDocument';
+import Home from '../pages/home/Home.jsx';
+import Config from '../pages/config/Config.jsx';
+import Chapter from '../views/Chapter.jsx';
+import Section from '../views/Section.jsx';
+import Subsection from  '../views/Subsection.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -14,16 +19,30 @@ const router = createBrowserRouter([
       },
       {
         path: "/",
-        element: <Home />, // o el componente correspondiente para la generación de PDF
+        element: <Home />, 
       },
       {
-        path: "/template",
-        element: <Template />,
+        path: "/config",
+        element: <Config />,
+      },
+      {
+        path: "/document",
+        element: <LayoutDocument />,
+        children: [
+          {
+            path: "chapter",
+            element: <Chapter />,
+          },
+          {
+            path: "section",
+            element: <Section />,
+          },
+          {
+            path: "subsection",
+            element: <Subsection />,
+          },
+        ]
       }
-     // {
-     //   path: "/interface",
-     //   element: <Interface />, // Asegúrate de importar Interface si lo necesitas
-     // }
     ]
   }
 ]);
