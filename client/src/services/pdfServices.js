@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const URL = 'http://localhost:5000';
+export const URL = 'http://localhost:5000/api';
 
 
 //GET
@@ -17,7 +17,7 @@ export const getPDF = async () => {
 //POST
 export const postPDF = async (data) => {
   try {
-     const response = await axios.post(URL, data);
+     const response = await axios.post(`${URL}`, data);
      alert("Document create succesfully");
      return response;
   } catch (error) {
