@@ -1,6 +1,6 @@
 import mongoose, {Schema} from 'mongoose';
 
-// Title
+/* // Title
 const TitleSchema = new mongoose.Schema({
     content: {type: String, required:true},
     level: { type: String, enum: ['h1', 'h2', 'h3', 'h4', 'h5'] },
@@ -10,9 +10,9 @@ const TitleSchema = new mongoose.Schema({
         bottom: Number,
         right: Number
     }
-}, { _id: false });
+}, { _id: false }); */
 
-const SubtitleSchema = new mongoose.Schema({
+/* const SubtitleSchema = new mongoose.Schema({
     content: String,
     level: { type: String, enum: ['h2', 'h3', 'h4', 'h5'] },
     margin: {
@@ -21,9 +21,9 @@ const SubtitleSchema = new mongoose.Schema({
         bottom: Number,
         right: Number
     }
-}, { _id: false });
+}, { _id: false }); */
 // Paragraph
-const ParagraphSchema = new mongoose.Schema({
+/* const ParagraphSchema = new mongoose.Schema({
     content: String,
     highlight: Boolean,
     color: String,
@@ -39,14 +39,14 @@ const ParagraphSchema = new mongoose.Schema({
         left: Number,
         bottom: Number,
         right: Number
-    },
-    bold: Boolean,
+    }, */
+   /*  bold: Boolean,
     fontStyle: { type: String, enum: ['normal', 'italic', 'initial', 'inherit'] },
     textAlign: { type: String, enum: ['left', 'center', 'right', 'justify', 'initial', 'inherit'] }
-}, { _id: false });
+}, { _id: false }); */
 
 // List
-const ListSchema = new mongoose.Schema({
+/* const ListSchema = new mongoose.Schema({
     content: [String],
     ordered: Boolean,
     margin: {
@@ -59,10 +59,10 @@ const ListSchema = new mongoose.Schema({
     fontSize: Number,
     bold: Boolean,
     fontStyle: { type: String, enum: ['normal', 'italic', 'initial', 'inherit'] }
-}, { _id: false });
+}, { _id: false }); */
 
 // Signature
-const SignatureSchema = new mongoose.Schema({
+/* const SignatureSchema = new mongoose.Schema({
     fullName: String,
     position: String,
     party: String,
@@ -77,9 +77,9 @@ const SignatureSchema = new mongoose.Schema({
     size: { height: Number },
     signedBy: Boolean
 }, { _id: false });
-
+ */
 // Image
-const ImageSchema = new mongoose.Schema({
+/* const ImageSchema = new mongoose.Schema({
     src: String,
     width: String,
     height: String,
@@ -90,10 +90,10 @@ const ImageSchema = new mongoose.Schema({
         right: Number
     },
     align: { type: String, enum: ['left', 'center', 'right', 'auto'] }
-}, { _id: false });
+}, { _id: false }); */
 
 // Link
-const LinkSchema = new mongoose.Schema({
+/* const LinkSchema = new mongoose.Schema({
     src: String,
     content: String,
     color: String,
@@ -113,43 +113,37 @@ const LinkSchema = new mongoose.Schema({
     bold: Boolean,
     fontStyle: { type: String, enum: ['normal', 'italic', 'initial', 'inherit'] },
     textAlign: { type: String, enum: ['left', 'center', 'right', 'justify', 'initial', 'inherit'] }
-}, { _id: false });
+}, { _id: false }); */
 
 ////
 const SubsectionSchema = new mongoose.Schema({
-    title: TitleSchema,
-    image: ImageSchema,
-    paragraph: ParagraphSchema,
+    title: String,
+    image: String,
+    paragraph: String,
     content: [String],
 },{_id : false})
 
 const SectionSchema = new mongoose.Schema({
-    title: TitleSchema,
-    paragraph: ParagraphSchema,
-    signature: SignatureSchema,
+    title: String,
+    paragraph: String,
+    signature: String,
     cover: Boolean,
-    image: ImageSchema,
-    link: LinkSchema,
+    image: String,
+    link: String,
     break: Boolean,
-    list: LinkSchema,
-    content: [
-        {
-            type: Schema.Types.Mixed,
-            content:[TitleSchema, ParagraphSchema, ListSchema, SignatureSchema, ImageSchema, LinkSchema]
-        }    
-    ],
+    list: [String],
     Subsection: [SubsectionSchema]
 },{_id : false})
 
 const ChapterSchema = new mongoose.Schema({
-    title: TitleSchema,
-    subtitle: SubtitleSchema,
-    image: ImageSchema,
+    title: String,
+    subtitle: String,
+    image: String,
     content: [SectionSchema]
 },{_id : false});
 
 const TemplateSchema = new mongoose.Schema({
-    title: TitleSchema,
+    title: String,
     content: [ChapterSchema, SectionSchema]
 });
 
