@@ -1,9 +1,14 @@
-import React from 'react'
+import './Document.css'
 
 function Document() {
   return (
-    <div>Document</div>
+    <>
+    <div className='template-name'>Nombre de la plantilla</div>
+    <div className='option-list'></div>
+    <div className='pdf-background'></div>
+    <button className='exit-button'>SALIR SIN GUARDAR</button>
+    </>
   )
 }
 
-export default Document
+export default Document;
