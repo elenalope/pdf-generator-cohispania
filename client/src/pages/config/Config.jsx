@@ -1,17 +1,19 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
+import PreviewPdf from '../../components/PreviewPdf/PreviewPdf';
 
 const Config = () => {
 
     const[size, setSize] = useState('A4');
     const[title, setTitle] = useState('');
     const[subtitle, setSubtitle] = useState('');
+    const[toc, setToc] = useState(false);
     const[logo, setLogo] = useState(null);
     const navigate = useNavigate();
 
     const handleConfig = () => {
 
-        navigate('/document', {state: {config: {size, title, subtitle,logo }}});
+        navigate('/document', {state: {config: {size, title, subtitle,logo, toc }}});
     }
 
   return (
@@ -34,10 +36,15 @@ const Config = () => {
             <input type="text" value={subtitle} onChange={(e) => setSubtitle(e.target.value)}/>
         </label>
         <label htmlFor="">
+                Incluir Índice:
+                <input type="checkbox" checked={toc} onChange={(e) => setToc(e.target.checked)} />
+            </label>
+        <label htmlFor="">
             Logo:
             <input type="text" onChange={(e) => setLogo(e.target.files[0])} />
         </label>
         <button onClick={handleConfig}>Crear plantilla</button>
+        <PreviewPdf handleConfig={handleConfig} />
     </div>
   )
 }
