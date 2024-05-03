@@ -1,0 +1,12 @@
+.template-name {
+    background-color: #E9EAEC;
+    height: 2vh;
+    margin: 2%;
+    padding: 20px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.exit-button {
+    background-color: #2196F3;
+    color: white;
+}
