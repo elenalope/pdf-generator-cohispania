@@ -1,8 +1,11 @@
 import './Navbar.css';
+import logo from '../../assets/logo-nav-cohispania.png'
 
 const Nav = () => {
     return (
-          <h3 className="navbar">NAVBAR</h3>
+      <div className='navbar'>
+          <img src={logo} alt="logo" className='logo'/>
+      </div>
     );
   }
   

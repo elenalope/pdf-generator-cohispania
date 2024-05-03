@@ -1,10 +1,16 @@
+body {
+    margin: 0;
+}
 .navbar {
-    background-color: #F68D2E;
+    background-color: #2196F3;
     height: 10vh;
-    width: auto;
-    color: white;
-    font-family: 'Jost', sans-serif;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+} 
+.logo {
+    width: 20vh;
+    margin-left: 2%;
 }
