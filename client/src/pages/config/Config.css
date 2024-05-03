@@ -1,0 +1,48 @@
+.configTitle{
+    background-color:  #C9C9CE;
+    padding: 2%;
+}
+
+.containerConfig{
+    background-color: #C9C9CE;
+    display: flex;
+    flex-direction: column;
+}
+.configLabel{
+    background-color: #E9EAEC;
+    margin: 10px 10px 10px 10px;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.configButton{
+    background-color: #2196F3;
+    padding: 10px;
+    width: 8rem;
+    border: none;
+    border-radius: 4px;
+    color:white;
+    box-shadow: 2px 2px 5px black;
+}
+.containerButtonsConfig{
+    display: flex;
+    gap: 2%;
+    justify-content: end;
+    margin-right: 5%;
+}
+.configInput{
+    border:none;
+    background-color: #C9C9CE;
+    background: transparent;
+  position: relative;
+}
+.configInput::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px; /* Ajusta la altura del borde inferior */
+    background-color: black;
+}

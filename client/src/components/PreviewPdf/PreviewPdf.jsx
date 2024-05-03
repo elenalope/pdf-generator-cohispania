@@ -1,5 +1,5 @@
 import React from 'react'
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
+import {Document,Page, Text, View, StyleSheet } from '@react-pdf/renderer'
 
 
 const styles = StyleSheet.create({
@@ -20,18 +20,22 @@ const styles = StyleSheet.create({
 })
 
 const PreviewPdf = ({handleConfig}) => {
+    const {size, title, subtitle, logo, toc} = handleConfig;
   return (
+    
     <Document>
-        <Page size={handleConfig.size} style={styles.page}>
+        <Page size={size} style={styles.page}>
             <View style={styles.section}>
-                {handleConfig.toc && <Text>Índice:</Text>}
-                <Text>Título: {handleConfig.title}</Text>
-                <Text>Subtítulo: {handleConfig.subtitle}</Text>
-                <Text>{handleConfig.logo}</Text>
+                {toc && <Text>Índice:</Text>}
+                <Text>Título: {title}</Text>
+                <Text>Subtítulo: {subtitle}</Text>
+                <Text>{logo}</Text>
             </View>
         </Page>
     </Document>
+
+   
   )
 }
 
-export default PreviewPdf
+export default PreviewPdf;
