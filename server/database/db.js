@@ -5,7 +5,7 @@ import { MONGO_URI, MONGO_URI_TEST,NODE_ENV } from '../config.js';
 const MONGO_URL_CONNECTION = NODE_ENV === 'test' ? MONGO_URI_TEST : MONGO_URI;
 
 
-const connect = async() =>{
+export const connect = async() =>{
    try {
         await mongoose.connect(MONGO_URL_CONNECTION,{
            

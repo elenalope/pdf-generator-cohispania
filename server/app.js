@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import ('dotenv/config');
 import {PORT} from './config.js'
 import express from 'express'
 import cors from 'cors'
@@ -11,11 +11,21 @@ export const app = express()
 
 app.use(cors());
 app.use(express.json());
-app.use('/api', pdfRouter);
+app.use('/api', pdfRouter)
 
 
- export const server = app.listen(PORT,async () => {
-    console.log(`Server running on port ${PORT}`)
-    await connect()
-})
+//  export const server = app.listen(PORT,async () => {
+//     console.log(`Server running on port ${PORT}`)
+//     await connect()
+// })
+
+// connect();
+
+// app.listen(PORT, () => {
+//     console.log(`Server running on port http://localhost:${PORT}`)
+//  export const server = app.listen(PORT,async () => {
+//     console.log(`Server running on port ${PORT}`)
+//     await connect()
+// })
+
 

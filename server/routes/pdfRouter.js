@@ -1,13 +1,14 @@
 import express from 'express';
-import { getAllDocuments } from '../controllers/documents.js';
+import { getAllDocuments, getDocById, deleteDocument, createDocument, updateDocument } from '../controllers/documentController.js';
 
 
 const router = express.Router();
 
-router.get('/documents', getAllDocuments);
-// router.delete();
-// router.post();
-// router.put();
-// router.get();
+router.get('/', getAllDocuments);
+router.get('/document/:id', getDocById);
+router.delete('/document/:id', deleteDocument);
+router.post('/document', createDocument);
+router.put('/document/:id', updateDocument);
+
 
 export default router;
