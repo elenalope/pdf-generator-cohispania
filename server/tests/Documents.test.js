@@ -1,6 +1,4 @@
 import request from "supertest";
-// import { connect } from '../database/db.js';
-// import  template  from "@babel/core";
 import { app, server } from '../app.js';
 
 
@@ -12,6 +10,17 @@ describe('GET /api/documents', () => {
     expect(Array.isArray(response.body)).toBe(true);
   });
 });
+
+  test('Post response should be an object and then return status 201', async() => {
+      const response = await api.post('/api/documets').send({
+         
+      });
+
+      expect(typeof response.body).toBe('object');
+      expect(response.status).toBe(201);
+  
+  });
+
 
 
 afterAll( async () => {
