@@ -1,12 +1,39 @@
 .template-name {
     background-color: #E9EAEC;
     height: 2vh;
-    margin: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
     padding: 20px;
     font-family: 'Open Sans', sans-serif;
+}
+
+.document-body {
+    display: flex;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 0.5%;
+}
+
+.option-list {
+    background-color: #E9EAEC;
+    height: 65vh;
+    width: 50vh;
+}
+
+.pdf-background {
+    height: 65vh;
+    width: 153vh;
+    background-color: #C9C9CE;
+    margin-left: 1%;
 }
 
 .exit-button {
     background-color: #2196F3;
     color: white;
+    margin: 2%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
