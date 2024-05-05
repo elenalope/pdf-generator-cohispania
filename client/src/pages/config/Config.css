@@ -1,6 +1,6 @@
 .configTitle{
-    background-color:  #C9C9CE;
-    padding: 2%;
+    font-size: 1.4em;
+    align-items: center;
 }
 
 .containerConfig{
@@ -9,13 +9,22 @@
     flex-direction: column;
 }
 .configLabel{
-    background-color: #E9EAEC;
+    background-color: #C9C9CE;
     margin: 10px 10px 10px 10px;
     width: 40%;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
+.configLabelSize{
+    background-color: #C9C9CE;
+    margin: 10px 10px 10px 10px;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .configButton{
     background-color: #2196F3;
     padding: 10px;
@@ -31,18 +40,19 @@
     justify-content: end;
     margin-right: 5%;
 }
-.configInput{
-    border:none;
-    background-color: #C9C9CE;
-    background: transparent;
-  position: relative;
+.lineConfig{
+    color: black;
 }
-.configInput::after{
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px; /* Ajusta la altura del borde inferior */
-    background-color: black;
+.listButtonsConfig{
+    list-style: none;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    gap: 10px; 
+}
+.configBar{
+    display: flex;
+    background-color:  #E9EAEC;
+    align-items: center;
+    justify-content: space-between;
 }

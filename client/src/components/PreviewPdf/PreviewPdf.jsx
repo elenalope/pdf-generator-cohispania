@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
     }
 })
 
-const PreviewPdf = ({handleConfig}) => {
-    const {size, title, subtitle, logo, toc} = handleConfig;
+const PreviewPdf = ({config}) => {
+    const {size, title, subtitle, coverLogo, toc} = config;
   return (
     
     <Document>
@@ -29,7 +29,7 @@ const PreviewPdf = ({handleConfig}) => {
                 {toc && <Text>Índice:</Text>}
                 <Text>Título: {title}</Text>
                 <Text>Subtítulo: {subtitle}</Text>
-                <Text>{logo}</Text>
+                <Text>{coverLogo}</Text>
             </View>
         </Page>
     </Document>
