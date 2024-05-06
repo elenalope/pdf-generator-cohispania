@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 })
 
 const PreviewPdf = ({config}) => {
-    const {size, title, subtitle, coverLogo, toc} = config;
+    const {size, title, subtitle,coverLogo, toc, theme, padding, highlightedValue, docExplanation, coverImg, headerLogo, watermark, includeCover,includeBackCover } = config;
   return (
     
     <Document>
@@ -30,6 +30,7 @@ const PreviewPdf = ({config}) => {
                 <Text>Título: {title}</Text>
                 <Text>Subtítulo: {subtitle}</Text>
                 <Text>{coverLogo}</Text>
+                <Text>{theme}</Text>
             </View>
         </Page>
     </Document>
