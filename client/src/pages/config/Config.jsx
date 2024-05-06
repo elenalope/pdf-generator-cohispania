@@ -15,6 +15,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 const Config = () => {
 
+    const [pdfBlob, setPdfBlob] = useState(null);
     const[size, setSize] = useState('A4');
     const[title, setTitle] = useState('');
     const[subtitle, setSubtitle] = useState('');
@@ -43,6 +44,7 @@ const Config = () => {
 
   return (
     <>
+    <form >
     <div className='configBar'>
         <h2 className='configTitle'>Configura tu plantilla</h2>
         <ul className='listButtonsConfig'>
@@ -123,7 +125,7 @@ const Config = () => {
         {showPreview && <PreviewPdf config={{ size, title, subtitle, coverLogo, toc } }/>}
 
     </div>
-    
+    </form>
     </>
     
   )
