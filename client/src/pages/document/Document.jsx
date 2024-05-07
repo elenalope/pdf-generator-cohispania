@@ -1,6 +1,6 @@
-import './Document.css'
+import './Document.css';
 
-function Document() {
+function MyDocument() {
   return (
     <>
     <div className='template-name'>Nombre de la plantilla</div>
@@ -13,4 +13,4 @@ function Document() {
   )
 }
 
-export default Document;
+export default MyDocument;
