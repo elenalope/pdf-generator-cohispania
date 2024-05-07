@@ -6,6 +6,7 @@ import { PDFViewer } from '@react-pdf/renderer';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import Index from '../../components/Index';
 
 const PdfDoc = ({ config }) => (
   <Document>
@@ -38,7 +39,7 @@ const handleDownloadPdf = async () => {
   link.click();
   document.body.removeChild(link);
 };
- const { title, /* subtitle,coverLogo, toc, theme, padding, highlightedValue, docExplanation, coverImg, headerLogo, watermark, includeCover,includeBackCover */} = config;
+ const { title, subtitle,coverLogo, toc,tocLevels, theme, padding, highlightedValue, docExplanation, coverImg, headerLogo, watermark, includeCover,includeBackCover, indexItems} = config;
   return (
     <>
     <div /* className='template-name' */><p>Nombre de la plantilla:{title}</p>
@@ -48,8 +49,10 @@ const handleDownloadPdf = async () => {
             <li onClick={handlePreview} ><VisibilityIcon/></li>
         </ul></div>
     <div className='document-body'>
+    {config.toc && <Index indexItems={config.indexItems} />}
       <div className='option-list'></div>
       <div className='pdf-background'></div>
+
     </div>
     <button className='exit-button' onClick={()=>navigate('/')}>SALIR SIN GUARDAR</button>
     </>

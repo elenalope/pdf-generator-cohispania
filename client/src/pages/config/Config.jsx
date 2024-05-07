@@ -22,7 +22,6 @@ const Config = () => {
     const[toc, setToc] = useState(false);
     const[tocLevels, setTocLevels] = useState(1, 2, 3);
     const[padding, setPadding] = useState('')
-    const[sectionBreak, setSectionBreak] = useState(false);
     const[coverLogo, setCoverLogo] = useState(null);
     const[showPreview, setShowPreview] = useState(false);
     const[includeBackCover, setIncludeBackCover] = useState(false)
@@ -35,15 +34,23 @@ const Config = () => {
     const[orientation, setOrientation] = useState('portrait')
     const[watermark, setWatermark] = useState('')
     const navigate = useNavigate();
+    const [indexItems, setIndexItems] = useState([]);
     
 
     const handleConfig = () => {
 
-        navigate('/document', {state: {config: {size, title, subtitle,coverLogo, toc, theme, padding, highlightedValue, docExplanation, coverImg, headerLogo, watermark, includeCover,includeBackCover }}});
+        navigate('/document', {state: {config: {size, title, subtitle,coverLogo, toc, tocLevels, theme, padding, highlightedValue, docExplanation, coverImg, headerLogo, watermark, includeCover,includeBackCover, indexItems }}});
     }
     const handlePreview = () =>{
         setShowPreview(!showPreview);
     }
+    const addIndexItem = () => {
+        const newItem = {
+           level: tocLevels, // Asume que tocLevels es el nivel del nuevo elemento
+           title: 'Nuevo título', // Aquí deberías obtener el título del nuevo elemento, por ejemplo, a través de un campo de entrada
+        };
+        setIndexItems([...indexItems, newItem]);
+       };
 
   return (
     <>
@@ -84,6 +91,19 @@ const Config = () => {
             inputProps={{ 'aria-label': 'controlled' }}
         />
             } label="Índice"/>
+        </label>
+        <label className='configLabel'>
+            <Select
+                labelId="toc-levels-select-label"
+                id="toc-levels-select"
+                value={tocLevels}
+                onChange={(e) => setTocLevels(e.target.value)}
+                label="Nivel del Índice"
+            >
+                <MenuItem value={1}>Chapters</MenuItem>
+                <MenuItem value={2}>Sections</MenuItem>
+                <MenuItem value={3}>Subsections</MenuItem>
+            </Select>
         </label>
         <label htmlFor="" className='configLabel'>
             <TextField id='coverLogo' label="cover Logo" variant='standard' value={coverLogo} onChange={(e)=> setCoverLogo(e.target.value)}/>
