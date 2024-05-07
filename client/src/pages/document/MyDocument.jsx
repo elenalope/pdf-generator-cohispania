@@ -7,6 +7,17 @@ import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
+const MyDocument = () => {
+  const[showPreview, setShowPreview] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const config = location.state?.config;
+  const { title = '', subtitle = '', coverLogo = '', toc = '', theme = '', padding = '', highlightedValue = '', docExplanation = '', coverImg = '', headerLogo = '', watermark = '', includeCover = '', includeBackCover = '' } = config || {};
+
+  const handlePreview = () =>{
+    setShowPreview(!showPreview);
+}
+
 const PdfDoc = ({ config }) => (
   <Document>
      <Page size={config.size}>
@@ -17,15 +28,6 @@ const PdfDoc = ({ config }) => (
      </Page>
   </Document>
  );
-const MyDocument = () => {
-  const[showPreview, setShowPreview] = useState(false);
-  const location = useLocation();
-  const config = location.state?.config;
-  const navigate = useNavigate();
-
-  const handlePreview = () =>{
-    setShowPreview(!showPreview);
-}
 
 const handleDownloadPdf = async () => {
   
@@ -38,7 +40,7 @@ const handleDownloadPdf = async () => {
   link.click();
   document.body.removeChild(link);
 };
- const { title, /* subtitle,coverLogo, toc, theme, padding, highlightedValue, docExplanation, coverImg, headerLogo, watermark, includeCover,includeBackCover */} = config;
+
   return (
     <>
     <div /* className='template-name' */><p>Nombre de la plantilla:{title}</p>
@@ -56,7 +58,7 @@ const handleDownloadPdf = async () => {
   )
 }
 
-export default MyDocument
+export default MyDocument;
 
 
 
