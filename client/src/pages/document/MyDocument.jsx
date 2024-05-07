@@ -19,13 +19,11 @@ const MyDocument = () => {
   const location = useLocation();
   const config = location.state?.config;
   const navigate = useNavigate();
-  useEffect(() => {
-      navigate('/document');
- }, [config, navigate]);
- const { title} = config;
+
+ const { title, /* subtitle,coverLogo, toc, theme, padding, highlightedValue, docExplanation, coverImg, headerLogo, watermark, includeCover,includeBackCover */} = config;
   return (
     <>
-    <div className='template-name'>dd{title}</div>
+    <div className='template-name'>Nombre de la plantilla:{title}</div>
     <div className='document-body'>
       <div className='option-list'></div>
       <div className='pdf-background'></div>
