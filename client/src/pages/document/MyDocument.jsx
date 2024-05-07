@@ -49,11 +49,18 @@ const handleDownloadPdf = async () => {
   return (
     <>
       <div className='template-name'>{config ? config.title : ''}</div>
-      <ul >
-            <li><SaveIcon/></li>
-            <li><GetAppIcon onClick={handleDownloadPdf}/></li>
-            <li onClick={handlePreview} ><VisibilityIcon/></li>
-        </ul>
+            <Stack direction="row" spacing={2} sx={{ marginLeft: '2%', marginRight: '2%', marginTop: '20px' }}>
+                <Button variant="contained">
+                    <SaveIcon />
+                </Button>
+                <Button variant="contained" onClick={handleDownloadPdf}>
+                    <GetAppIcon />
+                </Button>
+                <Button variant="contained" onClick={handlePreview}>
+                    <VisibilityIcon />
+                </Button>
+            </Stack>
+            <CssBaseline />
             <div className='document-body'>
                 <div className='option-list'>
                     <p>Tamaño: {config ? config.size : ''}</p>
