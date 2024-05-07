@@ -13,8 +13,9 @@ const SectionSchema = new mongoose.Schema({
     signature: String,
     cover: Boolean,
     image: String,
+    orientation: String,
+    size: String,
     link: String,
-    break: Boolean,
     list: [String],
     Subsection: [SubsectionSchema]
 },{_id : false})
@@ -28,6 +29,15 @@ const ChapterSchema = new mongoose.Schema({
 
 const TemplateSchema = new mongoose.Schema({
     title: String,
+    subtitle: String,
+    size: String,
+    toc: Boolean,
+    tocLevels: Number,
+    padding: String,
+    orientation: String,
+    image: String,
+    includeCover: Boolean,
+    includeBackCover: Boolean,
     content: [ChapterSchema, SectionSchema]
 });
 
