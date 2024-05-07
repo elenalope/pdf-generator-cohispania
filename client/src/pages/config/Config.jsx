@@ -20,7 +20,9 @@ const Config = () => {
     const[title, setTitle] = useState('');
     const[subtitle, setSubtitle] = useState('');
     const[toc, setToc] = useState(false);
+    const[tocLevels, setTocLevels] = useState(1, 2, 3);
     const[padding, setPadding] = useState('')
+    const[sectionBreak, setSectionBreak] = useState(false);
     const[coverLogo, setCoverLogo] = useState(null);
     const[showPreview, setShowPreview] = useState(false);
     const[includeBackCover, setIncludeBackCover] = useState(false)
@@ -30,6 +32,7 @@ const Config = () => {
     const[docExplanation, setDocExplanation] = useState('')
     const[coverImg, setCoverImg] = useState('')
     const[headerLogo, setHeaderLogo] = useState('')
+    const[orientation, setOrientation] = useState('portrait')
     const[watermark, setWatermark] = useState('')
     const navigate = useNavigate();
     
