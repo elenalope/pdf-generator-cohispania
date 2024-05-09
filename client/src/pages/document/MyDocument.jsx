@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
+import PreviewPdf from '../../components/PreviewPdf/PreviewPdf';
 import './MyDocument.css';
 import { pdf, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
-import { PDFViewer } from '@react-pdf/renderer';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -18,7 +18,7 @@ const MyDocument = () => {
   const navigate = useNavigate();
   const config = location.state?.config;
   const { title = '', subtitle = '', coverLogo = '', toc = '', theme = '', padding = '', highlightedValue = '', docExplanation = '', coverImg = '', headerLogo = '', watermark = '', includeCover = '', includeBackCover = '' } = config || {};
-
+  
   const handlePreview = () =>{
     setShowPreview(!showPreview);
 }
@@ -53,7 +53,7 @@ const handleDownloadPdf = async () => {
                 <Button variant="contained">
                     <SaveIcon />
                 </Button>
-                <Button variant="contained" onClick={handleDownloadPdf}>
+                <Button type='file' variant="contained" onClick={handleDownloadPdf}>
                     <GetAppIcon />
                 </Button>
                 <Button variant="contained" onClick={handlePreview}>
@@ -78,6 +78,8 @@ const handleDownloadPdf = async () => {
     <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
       <Button variant="contained" onClick={()=>navigate('/')}>SALIR SIN GUARDAR</Button>
     </Stack>
+    {showPreview && <PreviewPdf config={{title} }/>}
+
      </>
   )
 }

@@ -70,13 +70,13 @@ const Config = () => {
             <MenuItem value={'A3'}>A3</MenuItem>
             </Select>
         </label>
-        <label className='configLabel'>
+        <label className='configLabel' htmlFor='title'>
             <TextField id='title' label="Título" variant='standard' value={title} onChange={(e)=> setTitle(e.target.value)}/>
         </label>
-        <label className='configLabel'>
+        <label className='configLabel' htmlFor='subtitle'>
             <TextField id='subtitle' label="Subtítulo" variant='standard' value={subtitle} onChange={(e)=> setSubtitle(e.target.value)}/>
         </label>
-        <label className='configLabel'>
+        <label className='configLabel' htmlFor='toc-switch'>
         <FormControlLabel
             control={
         <Switch id="toc-switch" checked={toc}
@@ -85,10 +85,10 @@ const Config = () => {
         />
             } label="Índice"/>
         </label>
-        <label htmlFor="" className='configLabel'>
+        <label htmlFor="coverLogo" className='configLabel'>
             <TextField id='coverLogo' label="cover Logo" variant='standard' value={coverLogo} onChange={(e)=> setCoverLogo(e.target.value)}/>
         </label>
-        <label id="demo-simple-select-filled-label" className='configLabel'>
+        <label htmlFor="demo-simple-select-filled-label" className='configLabel'>
             Padding:
         <Select
           labelId="demo-simple-select-filled-label"
@@ -102,7 +102,7 @@ const Config = () => {
           <MenuItem value={30}>Thirty</MenuItem>
         </Select>
         </label>
-        <label className='configLabel'>
+        <label className='configLabel' htmlFor="includeCover-switch" >
         <FormControlLabel
             control={
         <Switch id="includeCover-switch" checked={includeCover}
@@ -111,7 +111,7 @@ const Config = () => {
         />
             } label="Portada"/>
         </label>
-        <label className='configLabel'>
+        <label className='configLabel' htmlFor="includeBackCover-switch">
         <FormControlLabel
             control={
         <Switch id="includeBackCover-switch" checked={includeBackCover}
