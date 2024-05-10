@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+import { useForm } from "react-hook-form";
 import {useLocation, useNavigate} from 'react-router-dom';
-import PreviewPdf from '../../components/PreviewPdf/PreviewPdf';
+import { postPDF } from '../../services/pdfServices';
 import './MyDocument.css';
 import { pdf, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import PreviewPdf from '../../components/PreviewPdf/PreviewPdf';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -12,13 +15,30 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
-const MyDocument = () => {
-  const[showPreview, setShowPreview] = useState(false);
+const MyDocument = () => {  
   const location = useLocation();
   const navigate = useNavigate();
   const config = location.state?.config;
-  const { title = '', subtitle = '', coverLogo = '', toc = '', theme = '', padding = '', highlightedValue = '', docExplanation = '', coverImg = '', headerLogo = '', watermark = '', includeCover = '', includeBackCover = '' } = config || {};
-  
+  const methods = useForm({
+
+    defaultValues: config,
+  })
+
+  const { register, handleSubmit, reset, formState: { errors } } = methods;
+  const[showPreview, setShowPreview] = useState(false);
+/*   const { title = '', subtitle = '', coverLogo = '', toc = '', theme = '', padding = '', highlightedValue = '', docExplanation = '', coverImg = '', headerLogo = '', watermark = '', includeCover = '', includeBackCover = '' } = config || {};
+ */
+const onSubmit = async (data) =>{
+  console.log(data)
+  try {
+/*     const newData = Object.assign({}, data, config);
+ */  
+    const response = await postPDF(data);
+   /*  console.log("Respuesta ", response); */
+  } catch (error) {
+    console.error('Error creating document', error.message)
+  }
+}
   const handlePreview = () =>{
     setShowPreview(!showPreview);
 }
@@ -27,7 +47,7 @@ const PdfDoc = ({ config }) => (
   <Document>
      <Page size={config.size}>
        <View >
-         <Text>{config.title}</Text>
+         <Text>{config.title.text}</Text>
          <Text>{config.subtitle}</Text>
        </View>
      </Page>
@@ -45,12 +65,16 @@ const handleDownloadPdf = async () => {
   link.click();
   document.body.removeChild(link);
 };
+console.log(config)
 
+// //  const { title, subtitle,coverLogo, toc,tocLevels, theme, padding, highlightedValue, docExplanation, coverImg, headerLogo, watermark, includeCover,includeBackCover, indexItems} = config;
   return (
     <>
-      <div className='template-name'>{config ? config.title : ''}</div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      
+      <div className='template-name'>{config ? config.title.text : ''}</div>
             <Stack direction="row" spacing={2} sx={{ marginLeft: '2%', marginRight: '2%', marginTop: '20px' }}>
-                <Button variant="contained">
+                <Button variant="contained" type="submit">
                     <SaveIcon />
                 </Button>
                 <Button type='file' variant="contained" onClick={handleDownloadPdf}>
@@ -62,15 +86,13 @@ const handleDownloadPdf = async () => {
             </Stack>
             <CssBaseline />
             <div className='document-body'>
-                <div className='option-list'>
-                    <p>Tamaño: {config ? config.size : ''}</p>
-                    <p>Título: {config ? config.title : ''}</p>
-                    <p>Subtítulo: {config ? config.subtitle : ''}</p>
-                    <p>Logo: {config ? config.logo : ''}</p>
-                </div>
+                
                 <React.Fragment>
                   <CssBaseline />
                   <Container fixed>
+                    
+                  {showPreview && <PreviewPdf config={{  title, subtitle } }/>}
+
                     <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }} />
                   </Container>
                 </React.Fragment>
@@ -78,8 +100,7 @@ const handleDownloadPdf = async () => {
     <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
       <Button variant="contained" onClick={()=>navigate('/')}>SALIR SIN GUARDAR</Button>
     </Stack>
-    {showPreview && <PreviewPdf config={{title} }/>}
-
+    </form>
      </>
   )
 }

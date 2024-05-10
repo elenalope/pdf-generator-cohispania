@@ -23,7 +23,7 @@ const ListPdf = () => {
       <h3>Lista de plantillas</h3>
       <ul>
         {documents.map((document) => (
-          <li key={document._id}>{document.title}</li>
+          <li key={document._id}>{document.title && document.title.text}</li>
         ))}
       </ul>
      

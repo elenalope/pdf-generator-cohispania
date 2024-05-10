@@ -1,5 +1,19 @@
 import mongoose, {Schema} from 'mongoose';
 
+const TitleSchema = new mongoose.Schema({
+    text: String,
+    bold: Boolean,
+    font: String,
+    underline: Boolean,
+    color: String,
+    size: String,
+    margin: {
+        top: Number,
+        bottom: Number,
+        left: Number,
+        right: Number
+    }
+})
 const SubsectionSchema = new mongoose.Schema({
     title: String,
     image: String,
@@ -7,14 +21,16 @@ const SubsectionSchema = new mongoose.Schema({
     content: [String],
 },{_id : false})
 
+
 const SectionSchema = new mongoose.Schema({
     title: String,
     paragraph: String,
     signature: String,
     cover: Boolean,
     image: String,
+    orientation: String,
+    size: String,
     link: String,
-    break: Boolean,
     list: [String],
     Subsection: [SubsectionSchema]
 },{_id : false})
@@ -27,9 +43,22 @@ const ChapterSchema = new mongoose.Schema({
 },{_id : false});
 
 const TemplateSchema = new mongoose.Schema({
-    title: String,
+    title: TitleSchema,
+    subtitle: String,
+    size: String,
+    toc: Boolean,
+    tocLevels: Number,
+    padding: String,
+    orientation: String,
+    image: String,
+    padding: String,
+    includeCover: Boolean,
+    includeBackCover: Boolean,
+    coverLogo:String,
+    size: String,
     content: [ChapterSchema, SectionSchema]
 });
+
 
 const Template = mongoose.model('Template', TemplateSchema);
 
