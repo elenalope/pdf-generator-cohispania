@@ -15,9 +15,10 @@ export const getPDF = async () => {
 };
 
 //POST
-export const postPDF = async (data) => {
+export const postPDF = async (newData) => {
   try {
-     const response = await axios.post(`${URL}`, data);
+    console.log("Datos enviados:", newData);
+     const response = await axios.post(`${URL}/document`, newData);
      alert("Document create succesfully");
      return response;
   } catch (error) {

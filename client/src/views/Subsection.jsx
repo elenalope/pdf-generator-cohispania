@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Subsection() {
+const Subsection = () => {
   return (
     <div>Subsection</div>
   )
