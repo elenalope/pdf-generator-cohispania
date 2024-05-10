@@ -26,8 +26,7 @@ const MyDocument = () => {
 
   const { register, handleSubmit, reset, formState: { errors } } = methods;
   const[showPreview, setShowPreview] = useState(false);
-/*   const { title = '', subtitle = '', coverLogo = '', toc = '', theme = '', padding = '', highlightedValue = '', docExplanation = '', coverImg = '', headerLogo = '', watermark = '', includeCover = '', includeBackCover = '' } = config || {};
- */
+
 const onSubmit = async (data) =>{
   console.log(data)
   try {
@@ -67,7 +66,6 @@ const handleDownloadPdf = async () => {
 };
 console.log(config)
 
-// //  const { title, subtitle,coverLogo, toc,tocLevels, theme, padding, highlightedValue, docExplanation, coverImg, headerLogo, watermark, includeCover,includeBackCover, indexItems} = config;
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)}>
