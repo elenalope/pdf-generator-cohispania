@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Chapter() {
+const Chapter = () => {
   return (
     <div>Chapter</div>
   )
