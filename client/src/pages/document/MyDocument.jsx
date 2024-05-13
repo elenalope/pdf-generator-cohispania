@@ -52,7 +52,7 @@ const PdfDoc = ({ config }) => (
   </Document>
  );
 
-const handleDownloadPdf = async () => {
+ const handleDownloadPdf = async () => {
   
   const blob = await pdf(<PdfDoc config={config} />).toBlob();
   const url = URL.createObjectURL(blob);
