@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const URL = 'http://localhost:3000/api';
+export const URL = 'http://localhost:5000/api';
 
 
 //GET

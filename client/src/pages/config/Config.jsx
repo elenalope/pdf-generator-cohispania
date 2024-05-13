@@ -19,7 +19,7 @@ const Config = () => {
     const [config, setConfig] = useState({
         size: 'A4',
         title: {
-            text: 'titulo', 
+            content: 'titulo', 
             bold: false,
             font: 'sans',
             underline: false,
@@ -64,7 +64,7 @@ const handleConfig = () => {
       state: { config: {
         size: config.size,
         title: {
-          text: config.title.text,
+          content: config.title.content,
           color: config.title.color,
           bold: config.title.bold,
           font: config.title.font,
@@ -75,6 +75,7 @@ const handleConfig = () => {
         subtitle: config.subtitle,
         coverLogo: config.coverLogo,
         toc: config.toc,
+        tocLevels: config.tocLevels,
         padding: config.padding
       }
         
@@ -122,19 +123,17 @@ const handleConfig = () => {
             <MenuItem value={'A3'}>A3</MenuItem>
             </Select>
         </label> 
-        <label className='configLabel'>
-{/*             <TextField {...register('title')} id='title' label="Título" variant='standard' value={config.title} onChange={(e)=> setConfig({...config, title:e.target.value })}/>
- */}        
+        <label className='configLabel'>     
         <TextField
-                {...register('title.text')}
+                {...register('title.content')}
                 id='title'
                 label='Título'
                 variant='standard'
-                value={config.title.text}
+                value={config.title.content}
                 onChange={(e) =>
                   setConfig({
                     ...config,
-                    title: { ...config.title, text: e.target.value },
+                    title: { ...config.title, content: e.target.value },
                   })
                 }
               />

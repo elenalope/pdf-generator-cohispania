@@ -33,7 +33,6 @@ const onSubmit = async (data) =>{
 /*     const newData = Object.assign({}, data, config);
  */  
     const response = await postPDF(data);
-   /*  console.log("Respuesta ", response); */
   } catch (error) {
     console.error('Error creating document', error.message)
   }
@@ -46,7 +45,7 @@ const PdfDoc = ({ config }) => (
   <Document>
      <Page size={config.size}>
        <View >
-         <Text>{config.title.text}</Text>
+         <Text>{config.title.content}</Text>
          <Text>{config.subtitle}</Text>
        </View>
      </Page>
@@ -70,7 +69,7 @@ console.log(config)
     <>
     <form onSubmit={handleSubmit(onSubmit)}>
       
-      <div className='template-name'>{config ? config.title.text : ''}</div>
+      <div className='template-name'>{config ? config.title.content : ''}</div>
             <Stack direction="row" spacing={2} sx={{ marginLeft: '2%', marginRight: '2%', marginTop: '20px' }}>
                 <Button variant="contained" type="submit">
                     <SaveIcon />
