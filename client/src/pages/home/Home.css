@@ -1,0 +1,14 @@
+.boxHome {
+    background-color: #E9EAEC;
+    color: #757575;
+    color: 757575;
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 1%;
+    margin-top: 0;
+    font-family: sans-serif;
+    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.2);
+}

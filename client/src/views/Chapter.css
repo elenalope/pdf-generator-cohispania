@@ -1,0 +1,22 @@
+.Chapter{
+    position: absolute;
+    top: 19%; /* ajusta la posición vertical según sea necesario */
+    left: 13.6%;
+    width: 23.5%;
+    height: 4%;
+    transform: translateX(-50%); 
+    font-size: 110%;
+    background-color: rgb(240, 231, 220);
+}
+
+.Add{
+    position: absolute;
+    top:19.3%;
+    left:23.5%
+}
+
+
+.button-Add {
+  position: absolute;
+  
+  }
