@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import AlertaDescargaExitosa from '../../components/alerts/SaveSuccessAlert';
-import ListPdf from '../../components/listPdf/ListPdf';
 import './Home.css';
+import ListPdf from '../../components/listPdf/ListPdf';
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom'; 
 
 const Home = () => {
-    const [mostrarAlerta, setMostrarAlerta] = useState(false);
+    const navigate = useNavigate();
 
-    const handleMostrarAlerta = () => {
-        setMostrarAlerta(true);
+    const handleButtonClick = () => {
+        navigate('/config'); 
     };
 
     return (
-        <>
+        <div className="homeContainer">
             <h3 className="boxHome">Mis plantillas</h3>
-            <ListPdf />
-            <Button variant="contained" onClick={handleMostrarAlerta}>
-                Mostrar Alerta
-            </Button>
-            {mostrarAlerta && <AlertaDescargaExitosa onClose={() => setMostrarAlerta(false)} />}
-        </>
+            <div className="buttonHome">
+                <Button variant="contained" className='addTemplate' onClick={handleButtonClick}>Crear Plantilla</Button>
+            </div>
+            <ListPdf/>
+        </div>
     );
 };
 
