@@ -17,18 +17,29 @@ import ImageIcon from '@mui/icons-material/Image';
 import LinkIcon from '@mui/icons-material/Link';
 import DrawIcon from '@mui/icons-material/Draw';
 import AddIcon from '@mui/icons-material/Add';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
+import SendIcon from '@mui/icons-material/Send';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { styled } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 
-const Section = () => {
-  const [section, setSection] = useState([]);
-  const [breaks, setBreaks] = useState([]);
-
-  const addSection = () => {
-    setSection([...section, 'Section']);
-  };
-
-  const addBreak = () => {
-    setBreaks([...breaks, 'Break']);
-  };
+const Section = (data) => {
+  
+  const label = { inputProps: { 'aria-label': 'Switch demo' } };
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
+  
 
   return (
     <>
@@ -38,7 +49,7 @@ const Section = () => {
       <nav aria-label="main mailbox folders">
         <List>
         <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton disabled>
               <ListItemIcon>
                 <ImportContactsIcon />
               </ListItemIcon>
@@ -58,7 +69,7 @@ const Section = () => {
           </ListItem>
           <Divider />
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton disabled>
               <ListItemIcon>
                 <TitleIcon />
               </ListItemIcon>
@@ -68,7 +79,7 @@ const Section = () => {
           </ListItem>
           <Divider />
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton disabled>
               <ListItemIcon>
                 <FormatAlignJustifyIcon />
               </ListItemIcon>
@@ -78,7 +89,7 @@ const Section = () => {
           </ListItem>
           <Divider />
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton disabled>
               <ListItemIcon>
                 <FormatListBulletedIcon />
               </ListItemIcon>
@@ -88,7 +99,7 @@ const Section = () => {
           </ListItem>
           <Divider />
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton disabled>
               <ListItemIcon>
                 <DrawIcon />
               </ListItemIcon>
@@ -98,7 +109,7 @@ const Section = () => {
           </ListItem>
           <Divider />
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton disabled>
               <ListItemIcon>
                 <ImageIcon />
               </ListItemIcon>
@@ -108,7 +119,7 @@ const Section = () => {
           </ListItem>
           <Divider />
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton disabled>
               <ListItemIcon>
                 <LinkIcon />
               </ListItemIcon>
@@ -133,10 +144,39 @@ const Section = () => {
       </div>
 
       <div className='pdf-background'>
-        
+      <Box sx={{ mt: 2 , ml:10 , mr: 10 ,p:2 }}>
+      <FormGroup>
+          <TextField sx={{ mb:2}}
+            id="standard-password-input"
+            label="Título"
+            type="text"
+            autoComplete="current-password"
+            variant="standard"
+          />
+          <Button sx={{ mb:2}}
+            component="label"
+            role={undefined}
+            variant="contained"
+            tabIndex={-1}
+            startIcon={<CloudUploadIcon />}
+          >
+          Seleccionar Imagen
+          <VisuallyHiddenInput type="file" />
+          </Button>
+          <FormControlLabel control={<Switch />} label="Portada" />
+
+
+          <Button variant="contained" endIcon={<SendIcon />} size="small"
+          sx={{ width: 100 , ml: 'auto'}}>
+          Crear
+          </Button>
+        </FormGroup>
+        </Box>
       </div>
     </div>
-    <Button variant="contained" sx={{ m:3 }}>SALIR SIN GUARDAR</Button>
+    <Button variant="contained" sx={{ m:3 }}>
+      SALIR SIN GUARDAR
+    </Button>
     </>
   )
 }
