@@ -147,6 +147,7 @@ const ChapterSchema = new mongoose.Schema({
 },{_id : false});
 
 const TemplateSchema = new mongoose.Schema({
+    name: String,
     title: TitleSchema,
     subtitle: String,
     highlightedValue:String,

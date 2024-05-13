@@ -39,7 +39,6 @@ const MyDocument = () => {
 
     defaultValues: config,
   })
-
   const { register, handleSubmit, reset, formState: { errors } } = methods;
   const[showPreview, setShowPreview] = useState(false);
 
@@ -57,18 +56,7 @@ const onSubmit = async (data) =>{
     setShowPreview(!showPreview);
 }
 
-const PdfDoc = ({ config }) => (
-  <Document>
-     <Page size={config.size}>
-       <View >
-         <Text>{config.title.content}</Text>
-         <Text>{config.subtitle}</Text>
-       </View>
-     </Page>
-  </Document>
- );
-
- const handleDownloadPdf = async () => {
+const handleDownloadPdf = async () => {
   
   const blob = await pdf(<PdfDoc config={config} />).toBlob();
   const url = URL.createObjectURL(blob);
@@ -79,6 +67,25 @@ const PdfDoc = ({ config }) => (
   link.click();
   document.body.removeChild(link);
 };
+console.log('pdf document',config)
+const PdfDoc = ({ config }) => (
+  <Document>
+     <Page size={config.size}>
+       <View>
+         <Text>{config.title.content}</Text>
+         <Text>{config.subtitle}</Text>
+         <View>
+                {config.toc && <Text>Índice:</Text>}
+                {tocLevels >= 1 && <Text>Chapters:</Text>}
+                {tocLevels >= 2 && <Text>Sections:</Text>}
+                {tocLevels >= 3 && <Text>Subsections:</Text>}
+            </View>
+       </View>
+     </Page>
+  </Document>
+);
+
+ 
 console.log(config)
 
   return (
@@ -86,7 +93,7 @@ console.log(config)
 
     <form onSubmit={handleSubmit(onSubmit)}>
       
-      <div className='template-name'>{config ? config.title.content : ''}</div>
+      <div className='template-name'>{config ? config.name : ''}</div>
             <Stack direction="row" spacing={2} sx={{ marginLeft: '2%', marginRight: '2%', marginTop: '20px' }}>
                 <Button variant="contained" type="submit">
                     <SaveIcon />
@@ -203,7 +210,7 @@ console.log(config)
                   <CssBaseline />
                   <Container fixed>
                     
-                  {showPreview && <PreviewPdf config={{  title, subtitle } }/>}
+                  {showPreview && <PreviewPdf config={{config}}/>}
 
                     <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }} />
                   </Container>
