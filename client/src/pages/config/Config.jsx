@@ -12,14 +12,16 @@ import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Box from '@mui/material/Box';
 
 
 const Config = () => {
     const navigate = useNavigate();
     const [config, setConfig] = useState({
+        name: '',
         size: 'A4',
         title: {
-            content: 'titulo', 
+            content: '', 
             bold: false,
             font: 'sans',
             underline: false,
@@ -31,14 +33,13 @@ const Config = () => {
                 left: 0,
                 right: 0
             } },
-        subtitle: 'subtitulo',
-        coverLogo: 'www.google.es',
+        subtitle: '',
+        coverLogo: '',
         toc: false,
         tocLevels: 1,
         padding: '20px',
         includeCover: false,
         includeBackCover: false,
-        /* indexItems: [], */
       });
 
       const methods = useForm({
@@ -62,6 +63,7 @@ const[showPreview, setShowPreview] = useState(false);
 const handleConfig = () => {
     navigate('/document', {
       state: { config: {
+        name: config.name,
         size: config.size,
         title: {
           content: config.title.content,
@@ -99,122 +101,180 @@ const handleConfig = () => {
        
   return (
     <>
-    <FormProvider {...methods}>
-    <form onSubmit={handleSubmit(onSubmit)}>
-    <div className='configBar'>
-        <h2 className='configTitle'>Configura tu plantilla</h2>
-        <ul className='listButtonsConfig'>
-            <li><SaveIcon/></li>
-            <li><GetAppIcon/></li>
-            <li onClick={handlePreview}><VisibilityIcon/></li>
-        </ul>
-    </div>
-    <div className='containerConfig'>
-        <label id="demo-simple-select-standard-label" className='configLabelSize'>
-            <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            value={config.size}
-            onChange={(e)=> setConfig({...config, size: e.target.value })}
-            label="Tamaño"
-            >
-            <MenuItem value={'A4'}>A4</MenuItem>
-            <MenuItem value={'A5'}>A5</MenuItem>
-            <MenuItem value={'A3'}>A3</MenuItem>
-            </Select>
-        </label> 
-        <label className='configLabel'>     
-        <TextField
-                {...register('title.content')}
-                id='title'
-                label='Título'
-                variant='standard'
-                value={config.title.content}
-                onChange={(e) =>
-                  setConfig({
-                    ...config,
-                    title: { ...config.title, content: e.target.value },
-                  })
-                }
-              />
- </label>
-        <label className='configLabel'>
-            <TextField {...register('subtitle')} id='subtitle' label="Subtítulo" variant='standard' value={config.subtitle} onChange={(e)=> setConfig({...config, subtitle: e.target.value })}/>
-        </label>
-        <label className='configLabel' htmlFor='toc-switch'>
-        <FormControlLabel
-            control={
-        <Switch {...register('toc')} id="toc-switch" checked={config.toc}
-            onChange={(e) => setConfig({...config, toc: e.target.value })}
-            inputProps={{ 'aria-label': 'controlled' }}
-        />
-            } label="Índice"/>
-        </label>
-        <label className='configLabel'>
-            <Select
-            {...register('tocLevels')}
-                labelId="toc-levels-select-label"
-                id="toc-levels-select"
-                value={config.tocLevels}
-                onChange={(e) => setConfig({...config, tocLevels: e.target.value })}
-                label="Nivel del Índice"
-            >
-                <MenuItem value={1}>Chapters</MenuItem>
-                <MenuItem value={2}>Sections</MenuItem>
-                <MenuItem value={3}>Subsections</MenuItem>
-            </Select>
-        </label>
-        <label htmlFor="" className='configLabel'>
-            <TextField {...register('coverLogo')} id='coverLogo' label="cover Logo" variant='standard' value={config.coverLogo} onChange={(e)=> setConfig({...config, coverLogo: e.target.value })}/>
-        </label>
-        <label htmlFor="demo-simple-select-filled-label" className='configLabel'>
-            Padding:
-        <Select
-        {...register('padding')}
-          labelId="demo-simple-select-filled-label"
-          id="demo-simple-select-filled"
-          value={config.padding}
-          onChange={(e)=> setConfig({...config, padding: e.target.value })}
-          label="Padding"
-        >
-          <MenuItem value={'5px'}>5px</MenuItem>
-          <MenuItem value={'10px'}>10px</MenuItem>
-          <MenuItem value={'20px'}>20px</MenuItem>
-        </Select>
-        </label>
-        <label className='configLabel' htmlFor="includeCover-switch" >
-        <FormControlLabel
-            control={
-        <Switch {...register('includeCover')} id="includeCover-switch" checked={config.includeCover}
-            onChange={(e) => setConfig({...config, includeCover: e.target.value })}
-            inputProps={{ 'aria-label': 'controlled' }}
-        />
-            } label="Portada"/>
-        </label>
-        <label className='configLabel' htmlFor="includeBackCover-switch">
-        <FormControlLabel
-            control={
-        <Switch {...register('includeBackCover')} id="includeBackCover-switch" checked={config.includeBackCover}
-            onChange={(e) => setConfig({...config, includeBackCover: e.target.value })}
-            inputProps={{ 'aria-label': 'controlled' }}
-        />
-            } label="Contraportada"/>
-        </label>
-        
-        <div className='containerButtonsConfig'>
-            <Button variant="contained" onClick={handleConfig}>Crear </Button>
-            <Button variant="outlined" onClick={()=>navigate('/')}>Cancelar</Button>
-        </div>    
-        {showPreview && <PreviewPdf
-    size={config.size}
-    title={config.title.text}
-    subtitle={config.subtitle}
-    coverLogo={config.coverLogo}
-    toc={config.toc}
-  />}
+    <FormProvider {...methods} >
+      <form onSubmit={handleSubmit(onSubmit)} className='formConfig'>
+      <div className='configBar'>
+          
+          <label className='configLabelName'>
+              <TextField {...register('name')} id='name' label="Nombre de la plantilla" variant='standard' value={config.name} onChange={(e)=> setConfig({...config, name: e.target.value })}/>
+          </label>
+          
+          <ul className='listButtonsConfig'>
+              <li><SaveIcon/></li>
+              <li><GetAppIcon/></li>
+              <li onClick={handlePreview}><VisibilityIcon/></li>
+          </ul>
+      </div>
+      <div className='containerConfig'>
+          
+          <label className='configLabel'>     
+          <TextField
+                  {...register('title.content')}
+                  id='title'
+                  label='Título'
+                  variant='standard'
+                  value={config.title.content}
+                  onChange={(e) =>
+                    setConfig({
+                      ...config,
+                      title: { ...config.title, content: e.target.value },
+                    })
+                  }
+                />
+  </label>
+          <label className='configLabel'>
+              <TextField {...register('subtitle')} id='subtitle' label="Subtítulo" variant='standard' value={config.subtitle} onChange={(e)=> setConfig({...config, subtitle: e.target.value })}/>
+          </label>
+          <label htmlFor="standard-multiline-static" >
+              <Box component="form" autoComplete="off"
+                >
+            <div className='configLabel'>
+              <TextField id="standard-multiline-static" label="Descripción documento"
+                        multiline rows={3}  variant="standard"
+                      /></div>
+                  </Box>
+          </label>
 
-    </div>
-    </form>
+          
+          <label className='configLabel' htmlFor="includeCover-switch">
+            <FormControlLabel
+                control={
+                    <Switch {...register('includeCover')} id="includeCover-switch" checked={config.includeCover}
+                        onChange={(e) => setConfig({...config, includeCover: e.target.checked })}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                    />
+                } label="Portada"/>
+          </label>
+            {config.includeCover && (
+                <>
+                    <label className='configLabel' htmlFor="coverImg">
+                        <TextField {...register('coverImg')} id='coverImg' label="Imagen Portada" variant='standard' value={config.coverImg} onChange={(e)=> setConfig({...config, coverImg: e.target.value })}/>
+                    </label>
+                    <label className='configLabel' htmlFor="coverLogo">
+                        <TextField {...register('coverLogo')} id='coverLogo' label="Imagen Logo" variant='standard' value={config.coverLogo} onChange={(e)=> setConfig({...config, coverLogo: e.target.value })}/>
+                    </label>
+                </>)}
+                <label className='configLabel' htmlFor="headerLogo">
+              <TextField {...register('headerLogo')} id='headerLogo' label="Logo Cabecera" variant='standard' value={config.headerLogo} onChange={(e)=> setConfig({...config, headerLogo: e.target.value })}/>
+                </label>
+                <label className='configLabel' htmlFor="includeBackCover-switch">
+                  <FormControlLabel
+                      control={
+                          <Switch {...register('includeBackCover')} id="includeBackCover-switch" checked={config.includeBackCover}
+                              onChange={(e) => setConfig({...config, includeBackCover: e.target.checked })}
+                              inputProps={{ 'aria-label': 'controlled' }}
+                          />
+                      } label="Contraportada"/>
+                </label>
+      <label className='configLabel' htmlFor="toc-switch">
+            <FormControlLabel
+                control={
+                    <Switch {...register('toc')} id="toc-switch" checked={config.toc}
+                        onChange={(e) => setConfig({...config, toc: e.target.checked })}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                    />
+                } label="Indice"/>
+          </label>
+      {config.toc && (
+                <>
+      <label className='configLabel' htmlFor='toc-levels-select'>
+              <Select
+              {...register('tocLevels')}
+                  labelId="toc-levels-select-label"
+                  id="toc-levels-select"
+                  value={config.tocLevels}
+                  onChange={(e) => setConfig({...config, tocLevels: e.target.value })}
+                  label="Nivel del Índice"
+              >
+                  <MenuItem value={1}>Chapters</MenuItem>
+                  <MenuItem value={2}>Sections</MenuItem>
+                  <MenuItem value={3}>Subsections</MenuItem>
+              </Select>
+      </label></>)}
+          <label htmlFor="demo-simple-select-filled-label" className='configLabel'>
+              Padding:
+              <Select
+              {...register('padding')}
+                labelId="demo-simple-select-filled-label"
+                id="demo-simple-select-filled"
+                value={config.padding}
+                onChange={(e)=> setConfig({...config, padding: e.target.value })}
+                label="Padding"
+              >
+                <MenuItem value={'5px'}>5px</MenuItem>
+                <MenuItem value={'10px'}>10px</MenuItem>
+                <MenuItem value={'20px'}>20px</MenuItem>
+              </Select>
+          </label>
+          <label className='configLabel' htmlFor="sectionBreak-switch">
+                  <FormControlLabel
+                      control={
+                          <Switch {...register('sectionBreak')} id="sectionBreak-switch" checked={config.sectionBreak}
+                              onChange={(e) => setConfig({...config, sectionBreak: e.target.checked })}
+                              inputProps={{ 'aria-label': 'controlled' }}
+                          />
+                      } label="Salto de Sección"/>
+          </label>
+          <label className='configLabel' htmlFor="watermark">
+              <TextField {...register('watermark')} id='watermark' label="Marca de agua" variant='standard' value={config.watermark} onChange={(e)=> setConfig({...config, watermark: e.target.value })}/>
+          </label>  
+          <label className='configLabel' htmlFor="theme">
+              <TextField {...register('theme')} id='theme' label="Tema" variant='standard' value={config.theme} onChange={(e)=> setConfig({...config, theme: e.target.value })}/>
+          </label>
+          <label htmlFor="demo-simple-select-filled-label" className='configLabel'>
+              Orientación:
+              <Select
+              {...register('orientation')}
+                labelId="demo-simple-select-filled-label"
+                id="demo-simple-select-filled"
+                value={config.orientation}
+                onChange={(e)=> setConfig({...config, orientation: e.target.value })}
+                label="Orientación"
+              >
+                <MenuItem value={'Horizontal'}>Horizontal</MenuItem>
+                <MenuItem value={'Vertical'}>Vertical</MenuItem>
+              </Select>
+          </label>
+          <label id="demo-simple-select-standard-label" className='configLabelSize'>
+              <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={config.size}
+              onChange={(e)=> setConfig({...config, size: e.target.value })}
+              label="Tamaño"
+              >
+              <MenuItem value={'A4'}>A4</MenuItem>
+              <MenuItem value={'A5'}>A5</MenuItem>
+              <MenuItem value={'A3'}>A3</MenuItem>
+              </Select>
+          </label> 
+          
+
+      </div>
+      <div className='containerButtonsConfig'>
+              <Button variant="contained" onClick={handleConfig}>Crear </Button>
+              <Button variant="outlined" onClick={()=>navigate('/')}>Cancelar</Button>
+          </div>    
+
+
+                  {showPreview && <PreviewPdf
+              size={config.size}
+              title={config.title.text}
+              subtitle={config.subtitle}
+              coverLogo={config.coverLogo}
+              toc={config.toc}
+            />}
+      </form>
     </FormProvider>
     </>
     
