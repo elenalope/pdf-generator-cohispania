@@ -26,7 +26,6 @@ import SendIcon from '@mui/icons-material/Send';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
-import { css } from '@emotion/react';
 
 const Section = (data) => {
   const location = useLocation();
@@ -91,8 +90,8 @@ const Section = (data) => {
     <div className='document-body'>
       <div className='option-list'>
       <Box>
-      <nav aria-label="main mailbox folders">
-        <List>
+      <nav>
+        <List sx={{  backgroundColor: '#E9EAEC'}}>
         <ListItem disablePadding>
             <ListItemButton disabled>
               <ListItemIcon>
@@ -182,7 +181,6 @@ const Section = (data) => {
               <AddIcon onClick={handleBreakClick} />
             </ListItemButton>
           </ListItem>
-          <Divider />
         </List>
       </nav>
     </Box>
