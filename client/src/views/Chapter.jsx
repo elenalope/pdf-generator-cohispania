@@ -5,6 +5,8 @@ import Button from '@mui/material/Button'; // Importa Button correctamente
 import  MyDocument  from "../pages/document/MyDocument.jsx";
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
+
 
 
 
@@ -67,6 +69,7 @@ const Chapter = (data) => {
         <Button onClick={handleClick}>
           <AddIcon/>
         </Button>
+        <ImportContactsIcon className='book'/>
         </div>
       </div>
        {/* Renderizar el formulario si showForm es true */}
