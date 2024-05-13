@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
@@ -26,26 +26,40 @@ import SendIcon from '@mui/icons-material/Send';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
+import { css } from '@emotion/react';
 
 const Section = (data) => {
-  const [formDataArray, setFormDataArray] = useState([]);
   const location = useLocation();
-  const navigate = useNavigate();
   const config = location.state?.config;
-  const { title = '', coverImg = '',  includeCover= '' } = config || {};
-  const [formBreakArray, setFormBreakArray] = useState([]);
-  
+  const { title = '', cover = '',  ImgCover = '' } = config || {};
+  const [elements, setElements] = useState([]);
 
   const handleDownloadPdf = async () => {
   
   }
 
   const handleSectionClick = () => {
-    setFormDataArray([...formDataArray, { title: '', image: null , includeCover: '' }]); 
+    setElements([...elements, { type: 'section', data: { title: '', image: null, cover: '' } }]);
   }
 
   const handleBreakClick = () => {
-    setFormBreakArray([...formBreakArray, { break: '' }]); 
+    if (elements.length > 0 && elements[elements.length - 1].type === 'section') {
+      setElements([...elements, { type: 'break' }]);
+    } else {
+      alert('No puedes agregar un salto de página sin una sección previa o después de otro salto');
+    }
+  }
+
+  const handleInputChange = (e, index) => {
+    const { name, value } = e.target;
+    const updatedElements = [...elements];
+    if(updatedElements[index].type === 'section') {
+      updatedElements[index] = {
+        ...updatedElements[index],
+        data: {...updatedElements[index].data, [name]: value}
+      };
+    }
+    setElements(updatedElements);
   }
 
   const handleSubmit = async (e, index) => {
@@ -56,16 +70,6 @@ const Section = (data) => {
     } catch (error) {
       console.error('Error al enviar los datos:', error);
     }
-  }
-  
-  const handleInputChange = (e, index) => {
-    const { name, value } = e.target;
-    const updatedFormDataArray = [...formDataArray];
-    updatedFormDataArray[index] = {
-      ...updatedFormDataArray[index],
-      [name]: value
-    };
-    setFormDataArray(updatedFormDataArray);
   }
 
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
@@ -104,8 +108,8 @@ const Section = (data) => {
               <ListItemIcon>
                 <BookIcon />
               </ListItemIcon>
-              <ListItemText primary="Sección" onClick={handleSectionClick} />
-              <AddIcon />
+              <ListItemText primary="Sección"/>
+              <AddIcon onClick={handleSectionClick} />
             </ListItemButton>
           </ListItem>
           <Divider />
@@ -174,8 +178,8 @@ const Section = (data) => {
               <ListItemIcon>
                 <MoveDownIcon />
               </ListItemIcon>
-              <ListItemText primary="Salto" onClick={handleBreakClick}/>
-              <AddIcon />
+              <ListItemText primary="Salto"/>
+              <AddIcon onClick={handleBreakClick} />
             </ListItemButton>
           </ListItem>
           <Divider />
@@ -185,49 +189,53 @@ const Section = (data) => {
       </div>
 
       <div className='pdf-background'>
-      <Box sx={{ mt: 2 , ml:10 , mr: 10 , mb: 2 , p:2 }}>
-      {formDataArray.map((formData, index) => (
-      <FormGroup>
-          <TextField sx={{ mb:2}}
-            label="Título"
-            type="text"
-            // variant="standard"
-            value={formData.title}
-            onChange={(e) => handleInputChange(e, index)}
-          />
-          <Button sx={{ mb:2}}
-            component="label"
-            role={undefined}
-            variant="contained"
-            tabIndex={-1}
-            startIcon={<CloudUploadIcon />}
-            onChange={(e) => handleInputChange(e, index)}
-          >
-          Seleccionar Imagen
-          <VisuallyHiddenInput type="file" />
-          </Button>
-          <FormControlLabel control={<Switch />} label="Portada" 
-          value={formData.cover}
-          onChange={(e) => handleInputChange(e, index)}/>
+      <Box sx={{ mt: 2, ml: 10, mr: 10, mb: 2, p: 2  }} >
+            {elements.map((element, index) => {
+              return element.type === 'section' ? (
+                <FormGroup sx={{ p:3 , mb: 3,  backgroundColor: '#E9EAEC'}} key={index}>
+                  <TextField
+                    sx={{ mb: 2}}
+                    label="Título"
+                    type="text"
+                    variant="standard"
+                    value={element.data.title}
+                    onChange={(e) => handleInputChange(e, index)}
+                  />
+                  <Button
+                    sx={{ mb: 2 }}
+                    component="label"
+                    role={undefined}
+                    variant="contained"
+                    tabIndex={-1}
+                    startIcon={<CloudUploadIcon />}
+                   >
+                    Seleccionar Imagen
+                    <VisuallyHiddenInput type="file" onChange={(e) => handleInputChange(e, index)} />
+                  </Button>
 
+                  <FormControlLabel control={<Switch />} label="Portada" 
+                  value={element.data.cover}
+                  onChange={(e) => handleInputChange(e, index)}/>
 
-          <Button variant="contained" endIcon={<SendIcon />} size="small"
-          sx={{ width: 100 , ml: 'auto'}} type="submit">
-          Crear
-          </Button>
-        </FormGroup>
-        ))}
-        </Box>
-        {formBreakArray.map((formBreak, index) => (
-        <Box sx={{ mt: 2 , ml:10 , mr: 10 ,p:2 }}>
-          <h1 className='break-title'>Salto de página</h1>
-        </Box>
-         ))}
+                  <Button variant="contained" endIcon={<SendIcon />} size="small"
+                  sx={{ width: 100 , ml: 'auto'}} type="submit" onSubmit={handleSubmit()}>
+                  Crear
+                  </Button>
+                </FormGroup>
+              ) : (
+                <Box sx={{ p:3 , mb: 3,  backgroundColor: '#E9EAEC' }} key={index}>
+                  <h1 className='break-title'>Salto de página</h1>
+                </Box>
+              );
+            })}
+          </Box>
       </div>
     </div>
+    <Link to='/'>
     <Button variant="contained" sx={{ m:3 }}>
-      SALIR SIN GUARDAR
+      Salir Sin Guardar
     </Button>
+    </Link>
     </>
   )
 }
