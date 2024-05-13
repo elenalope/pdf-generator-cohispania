@@ -63,10 +63,10 @@ const handleDownloadPdf = async () => {
             <CssBaseline />
             <div className='document-body'>
                 <div className='option-list'>
-                    <p>Tamaño: {config ? config.size : ''}</p>
-                    <p>Título: {config ? config.title : ''}</p>
-                    <p>Subtítulo: {config ? config.subtitle : ''}</p>
-                    <p>Logo: {config ? config.logo : ''}</p>
+                    {/* // <p>Tamaño: {config ? config.size : ''}</p>
+                    // <p>Título: {config ? config.title : ''}</p>
+                    // <p>Subtítulo: {config ? config.subtitle : ''}</p>
+                    // <p>Logo: {config ? config.logo : ''}</p> */}
                 </div>
                 <React.Fragment>
                   <CssBaseline />
