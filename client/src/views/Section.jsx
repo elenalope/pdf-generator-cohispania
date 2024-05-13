@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -26,7 +28,46 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
 const Section = (data) => {
+  const [formDataArray, setFormDataArray] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const config = location.state?.config;
+  const { title = '', coverImg = '',  includeCover= '' } = config || {};
+  const [formBreakArray, setFormBreakArray] = useState([]);
   
+
+  const handleDownloadPdf = async () => {
+  
+  }
+
+  const handleSectionClick = () => {
+    setFormDataArray([...formDataArray, { title: '', image: null , includeCover: '' }]); 
+  }
+
+  const handleBreakClick = () => {
+    setFormBreakArray([...formBreakArray, { break: '' }]); 
+  }
+
+  const handleSubmit = async (e, index) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/api/form', formDataArray[index]);
+      console.log('Respuesta del servidor:', response.data);
+    } catch (error) {
+      console.error('Error al enviar los datos:', error);
+    }
+  }
+  
+  const handleInputChange = (e, index) => {
+    const { name, value } = e.target;
+    const updatedFormDataArray = [...formDataArray];
+    updatedFormDataArray[index] = {
+      ...updatedFormDataArray[index],
+      [name]: value
+    };
+    setFormDataArray(updatedFormDataArray);
+  }
+
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -63,7 +104,7 @@ const Section = (data) => {
               <ListItemIcon>
                 <BookIcon />
               </ListItemIcon>
-              <ListItemText primary="Sección"/>
+              <ListItemText primary="Sección" onClick={handleSectionClick} />
               <AddIcon />
             </ListItemButton>
           </ListItem>
@@ -133,7 +174,7 @@ const Section = (data) => {
               <ListItemIcon>
                 <MoveDownIcon />
               </ListItemIcon>
-              <ListItemText primary="Salto"/>
+              <ListItemText primary="Salto" onClick={handleBreakClick}/>
               <AddIcon />
             </ListItemButton>
           </ListItem>
@@ -144,14 +185,15 @@ const Section = (data) => {
       </div>
 
       <div className='pdf-background'>
-      <Box sx={{ mt: 2 , ml:10 , mr: 10 ,p:2 }}>
+      <Box sx={{ mt: 2 , ml:10 , mr: 10 , mb: 2 , p:2 }}>
+      {formDataArray.map((formData, index) => (
       <FormGroup>
           <TextField sx={{ mb:2}}
-            id="standard-password-input"
             label="Título"
             type="text"
-            autoComplete="current-password"
-            variant="standard"
+            // variant="standard"
+            value={formData.title}
+            onChange={(e) => handleInputChange(e, index)}
           />
           <Button sx={{ mb:2}}
             component="label"
@@ -159,19 +201,28 @@ const Section = (data) => {
             variant="contained"
             tabIndex={-1}
             startIcon={<CloudUploadIcon />}
+            onChange={(e) => handleInputChange(e, index)}
           >
           Seleccionar Imagen
           <VisuallyHiddenInput type="file" />
           </Button>
-          <FormControlLabel control={<Switch />} label="Portada" />
+          <FormControlLabel control={<Switch />} label="Portada" 
+          value={formData.cover}
+          onChange={(e) => handleInputChange(e, index)}/>
 
 
           <Button variant="contained" endIcon={<SendIcon />} size="small"
-          sx={{ width: 100 , ml: 'auto'}}>
+          sx={{ width: 100 , ml: 'auto'}} type="submit">
           Crear
           </Button>
         </FormGroup>
+        ))}
         </Box>
+        {formBreakArray.map((formBreak, index) => (
+        <Box sx={{ mt: 2 , ml:10 , mr: 10 ,p:2 }}>
+          <h1 className='break-title'>Salto de página</h1>
+        </Box>
+         ))}
       </div>
     </div>
     <Button variant="contained" sx={{ m:3 }}>
