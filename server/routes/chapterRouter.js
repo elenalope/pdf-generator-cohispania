@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 router.post('/document/:id/chapter', addChapter);
-router.delete('/document/:id/chapter/:id', deleteChapter);
+router.delete('/document/:id/chapter/:chapterId', deleteChapter);
 
 
 

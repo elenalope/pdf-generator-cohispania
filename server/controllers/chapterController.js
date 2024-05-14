@@ -21,8 +21,7 @@ export const addChapter = async (request, response) => {
 
 export const deleteChapter = async (request, response) => {
     try {
-        const { id: templateId } = request.params;
-        const { chapterId } = request.params; 
+        const { id: templateId , chapterId } = request.params;
         const document = await Template.findById(templateId);
 
         if (!document) {
