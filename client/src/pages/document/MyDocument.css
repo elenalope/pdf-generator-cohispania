@@ -5,6 +5,8 @@
     margin-right: 2%;
     padding: 20px;
     font-family: 'Open Sans', sans-serif;
+    display: flex;
+    flex-direction: row;
 }
 
 .document-body {
@@ -15,7 +17,8 @@
 }
 
 .option-list {
-    background-color: #E9EAEC;
+    display: flex;
+    flex-direction: column;
     height: 65vh;
     width: 50vh;
 }
@@ -25,6 +28,9 @@
     width: 153vh;
     background-color: #C9C9CE;
     margin-left: 1%;
+    flex-grow: 1; 
+    overflow-y: auto; 
+    padding: 20px;
 }
 
 .exit-button {
