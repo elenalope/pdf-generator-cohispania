@@ -10,24 +10,7 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
-import axios from 'axios';
-//import React, { useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
 
-const Section = (data) => {
-    const location = useLocation();
-    const config = location.state?.config;
-    const { title = '', cover = '',  ImgCover = '' } = config || {};
-    const [elements, setElements] = useState([]);
-  
-    const handleDownloadPdf = async () => {
-    
-    }
-  
-    const handleSectionClick = () => {
-      setElements([...elements, { type: 'section', data: { title: '', image: null, cover: '' } }]);
-    }
-}
 const Home = () => {
     const navigate = useNavigate();
   
