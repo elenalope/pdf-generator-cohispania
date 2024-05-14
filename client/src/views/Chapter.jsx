@@ -101,7 +101,7 @@ const Chapter = (data) => {
           </ListItem>
           <Divider />
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton disabled>
               <ListItemIcon>
                 <BookIcon />
               </ListItemIcon>
@@ -171,10 +171,10 @@ const Chapter = (data) => {
           </ListItem>
           <Divider />
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton disabled>
               <ListItemIcon>
                 <MoveDownIcon />
-              </ListItemIcon>
+              </ListItemIcon >
               <ListItemText primary="Salto"/>
               <AddIcon />
             </ListItemButton>
@@ -185,9 +185,9 @@ const Chapter = (data) => {
       </div>
         
       <div className='pdf-background'>
-      <Box sx={{ backgroundColor: '#E9EAEC', mt: 2, ml: 10, mr: 10, mb: 2, p: 2  }} >
+      <Box sx={{  mt: 2, ml: 10, mr: 10, mb: 2, p: 2  }} >
       {formDataArray.map((formData, index) => (
-        <FormGroup key={index} className="form" onSubmit={(e) => handleSubmit(e, index)}>
+        <FormGroup sx={{ pl: 8 , pr: 8 , mb: 3, pt:2 , pb: 2 , backgroundColor: '#E9EAEC'}} key={index} className="form" onSubmit={(e) => handleSubmit(e, index)}>
           <TextField
               sx={{ mb: 2}}
               label="Título"
@@ -196,6 +196,14 @@ const Chapter = (data) => {
               value={formData.title}
               onChange={(e) => handleInputChange(e, index)}
                   />
+           <TextField
+              sx={{ mb: 2}}
+              label="Subtitulo"
+              type="text"
+              variant="standard"
+              value={formData.title}
+              onChange={(e) => handleInputChange(e, index)}
+              />
                <Button
                 sx={{ mb: 2 }}
                 component="label"
