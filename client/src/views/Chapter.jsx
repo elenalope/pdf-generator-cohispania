@@ -10,7 +10,7 @@ const Chapter = () => {
   return (
     <>
     <ChapterDialog />
-    {/* <ChapterCard /> */}
+    {/* <ChapterCard /> }
     </>
   )
 }
