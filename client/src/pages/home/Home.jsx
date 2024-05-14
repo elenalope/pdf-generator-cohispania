@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
+import DocumentProvider from '../../context/DocumentContext';
 
 const Home = () => {
     const navigate = useNavigate();
