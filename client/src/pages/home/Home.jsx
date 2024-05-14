@@ -3,6 +3,7 @@ import ListPdf from '../../components/listPdf/ListPdf';
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom'; 
+import DocumentProvider from '../../context/DocumentContext.jsx';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Home = () => {
     };
 
     return (
+        <DocumentProvider> 
         <div className="homeContainer">
             <h3 className="boxHome">Mis plantillas</h3>
             <div className="buttonHome">
@@ -19,6 +21,7 @@ const Home = () => {
             </div>
             <ListPdf/>
         </div>
+        </DocumentProvider>
     );
 };
 
