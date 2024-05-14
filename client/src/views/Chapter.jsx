@@ -31,6 +31,10 @@ import TextField from '@mui/material/TextField';
 
 
 
+
+
+
+
 const Chapter = (data) => {
   const [formDataArray, setFormDataArray] = useState([]);
   const location = useLocation();
@@ -65,118 +69,125 @@ const Chapter = (data) => {
     };
     setFormDataArray(updatedFormDataArray);
   }
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
 
   return (
-      <div>
-        <div className='add'>
-          <Button >
-            <AddIcon/>
-          </Button>
-          <ImportContactsIcon className='book'/>
+      
+
+          
           <div className='document-body'>
       <div className='option-list'>
       <Box>
       <nav>
-        <List sx={{ marginTop: '190%',right:'65%', width:'75%' ,backgroundColor: '#E9EAEC'}}>
-  <ListItem disablePadding>
-    <ListItemButton>
-      <ListItemIcon>
-        <ImportContactsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Capítulo" />
-      <AddIcon onClick={handleClick}/>
-    </ListItemButton>
-  </ListItem>
-  <Divider />
-  <ListItem disablePadding>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <BookIcon />
-      </ListItemIcon>
-      <ListItemText primary="Sección" />
-      <AddIcon />
-    </ListItemButton>
-  </ListItem>
-  <Divider />
-  <ListItem disablePadding>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <TitleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Título" />
-      <AddIcon />
-    </ListItemButton>
-  </ListItem>
-  <Divider />
-  <ListItem disablePadding>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <FormatAlignJustifyIcon />
-      </ListItemIcon>
-      <ListItemText primary="Párrafo" />
-      <AddIcon />
-    </ListItemButton>
-  </ListItem>
-  <Divider />
-  <ListItem disablePadding>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <FormatListBulletedIcon />
-      </ListItemIcon>
-      <ListItemText primary="Lista" />
-      <AddIcon />
-    </ListItemButton>
-  </ListItem>
-  <Divider />
-  <ListItem disablePadding>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <DrawIcon />
-      </ListItemIcon>
-      <ListItemText primary="Firma" />
-      <AddIcon />
-    </ListItemButton>
-  </ListItem>
-  <Divider />
-  <ListItem disablePadding>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <ImageIcon />
-      </ListItemIcon>
-      <ListItemText primary="Imagen" />
-      <AddIcon />
-    </ListItemButton>
-  </ListItem>
-  <Divider />
-  <ListItem disablePadding>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <LinkIcon />
-      </ListItemIcon>
-      <ListItemText primary="Link" />
-      <AddIcon />
-    </ListItemButton>
-  </ListItem>
-  <Divider />
-  <ListItem disablePadding>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <MoveDownIcon />
-      </ListItemIcon>
-      <ListItemText primary="Salto" />
-      <AddIcon />
-    </ListItemButton>
-     </ListItem>
-     </List>
-
+        <List sx={{  backgroundColor: '#E9EAEC'}}>
+        <ListItem disablePadding>
+            <ListItemButton >
+              <ListItemIcon>
+                <ImportContactsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Capítulo"/> 
+              <AddIcon onClick={handleClick}/>
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <BookIcon />
+              </ListItemIcon>
+              <ListItemText primary="Sección"/>
+              <AddIcon  />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem disablePadding>
+            <ListItemButton disabled>
+              <ListItemIcon>
+                <TitleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Título"/>
+              <AddIcon />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem disablePadding>
+            <ListItemButton disabled>
+              <ListItemIcon>
+                <FormatAlignJustifyIcon />
+              </ListItemIcon>
+              <ListItemText primary="Párrafo"/>
+              <AddIcon />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem disablePadding>
+            <ListItemButton disabled>
+              <ListItemIcon>
+                <FormatListBulletedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Lista"/>
+              <AddIcon />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem disablePadding>
+            <ListItemButton disabled>
+              <ListItemIcon>
+                <DrawIcon />
+              </ListItemIcon>
+              <ListItemText primary="Firma"/>
+              <AddIcon />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem disablePadding>
+            <ListItemButton disabled>
+              <ListItemIcon>
+                <ImageIcon />
+              </ListItemIcon>
+              <ListItemText primary="Imagen"/>
+              <AddIcon />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem disablePadding>
+            <ListItemButton disabled>
+              <ListItemIcon>
+                <LinkIcon />
+              </ListItemIcon>
+              <ListItemText primary="Link"/>
+              <AddIcon />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <MoveDownIcon />
+              </ListItemIcon>
+              <ListItemText primary="Salto"/>
+              <AddIcon />
+            </ListItemButton>
+          </ListItem>
+        </List>
       </nav>
     </Box>
       </div>
-        </div>
-      </div>
+        
+      <div className='pdf-background'>
+      <Box sx={{ backgroundColor: '#E9EAEC', mt: 2, ml: 10, mr: 10, mb: 2, p: 2  }} >
       {formDataArray.map((formData, index) => (
-        <form key={index} className="form" onSubmit={(e) => handleSubmit(e, index)}>
-          <div className='container-target'style={{ marginTop: 'px' }}>
+        <FormGroup key={index} className="form" onSubmit={(e) => handleSubmit(e, index)}>
           <TextField
               sx={{ mb: 2}}
               label="Título"
@@ -196,25 +207,19 @@ const Chapter = (data) => {
                  Seleccionar Imagen
                  <VisuallyHiddenInput type="file" onChange={(e) => handleInputChange(e, index)} />
                  </Button>
-
-                <FormControlLabel control={<Switch />} label="Portada" 
-                value={formData.cover}
-                onChange={(e) => handleInputChange(e, index)}/>
-
                 <Button variant="contained" endIcon={<SendIcon />} size="small"
                 sx={{ width: 100 , ml: 'auto'}} type="submit" onSubmit={handleSubmit()}>
                 Crear
                 </Button>
-              <Box/>
-              </div>
-        </form>
-      ))}
+                </FormGroup>
+                ))
+                }
+              </Box>
+        </div>
+      
     </div>
   );
 }
-
-
-
 
 
 
