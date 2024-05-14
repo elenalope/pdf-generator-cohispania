@@ -26,6 +26,7 @@ import SendIcon from '@mui/icons-material/Send';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
+import LongMenu from '../components/cards/DropDownMenu'
 
 const Section = (data) => {
   const location = useLocation();
@@ -83,7 +84,7 @@ const Section = (data) => {
     whiteSpace: 'nowrap',
     width: 1,
   });
-  
+
 
   return (
     <>
@@ -190,7 +191,10 @@ const Section = (data) => {
       <Box sx={{ mt: 2, ml: 10, mr: 10, mb: 2, p: 2  }} >
             {elements.map((element, index) => {
               return element.type === 'section' ? (
-                <FormGroup sx={{ p:3 , mb: 3,  backgroundColor: '#E9EAEC'}} key={index}>
+                <FormGroup sx={{ pl: 8 , pr: 8 , mb: 3, pt:2 , pb: 2 , backgroundColor: '#E9EAEC'}} key={index}>
+                  <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
+                    <LongMenu />
+                  </Box>
                   <TextField
                     sx={{ mb: 2}}
                     label="Título"
@@ -214,15 +218,15 @@ const Section = (data) => {
                   <FormControlLabel control={<Switch />} label="Portada" 
                   value={element.data.cover}
                   onChange={(e) => handleInputChange(e, index)}/>
-
+{/* 
                   <Button variant="contained" endIcon={<SendIcon />} size="small"
                   sx={{ width: 100 , ml: 'auto'}} type="submit" onSubmit={handleSubmit()}>
                   Crear
-                  </Button>
+                  </Button> */}
                 </FormGroup>
               ) : (
-                <Box sx={{ p:3 , mb: 3,  backgroundColor: '#E9EAEC' }} key={index}>
-                  <h1 className='break-title'>Salto de página</h1>
+                <Box sx={{ pl:3 , pt:2 , pb:2 , mb: 3,  backgroundColor: '#E9EAEC', fontFamily: 'Open Sans'}} key={index}>
+                  <h3 className='break-title'>Salto de página</h3>
                 </Box>
               );
             })}
