@@ -1,13 +1,4 @@
-    .Chapter{
-    position: absolute;
-    top: 26.7%; /* ajusta la posición vertical según sea necesario */
-     left: 11.5%;
-    width: 19%;
-    height: 4%;
-    transform: translateX(-50%); 
-    font-size: 110%;
-    background-color: rgb(240, 231, 220);
-}
+
 
 .add{
     position: absolute;
