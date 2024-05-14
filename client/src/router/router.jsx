@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import LayoutPublic from '../layout/LayoutPublic';
-import LayoutDocument from '../layout/LayoutDocument';
 import Home from '../pages/home/Home.jsx';
 import Config from '../pages/config/Config.jsx';
 import Chapter from '../views/Chapter.jsx';
 import Section from '../views/Section.jsx';
 import Subsection from  '../views/Subsection.jsx';
+import MyDocument from "../pages/document/MyDocument.jsx";
 
 
 const router = createBrowserRouter([
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/document",
-        element: <LayoutDocument />,
+        element: <MyDocument />,
         children: [
           {
             path: "chapter",

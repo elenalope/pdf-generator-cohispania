@@ -40,6 +40,13 @@ const Config = () => {
         padding: '20px',
         includeCover: false,
         includeBackCover: false,
+        theme:'',
+        coverImg: '',
+        coverLogo: '',
+        sectionBreak: false,
+        headerLogo: '',
+        watermark: '',
+        orientation: '',
       });
 
       const methods = useForm({
@@ -78,7 +85,14 @@ const handleConfig = () => {
         coverLogo: config.coverLogo,
         toc: config.toc,
         tocLevels: config.tocLevels,
-        padding: config.padding
+        padding: config.padding,
+        theme: config.theme,
+        coverImg: config.coverImg,
+        coverLogo: config.coverLogo,
+        sectionBreak: config.sectionBreak,
+        headerLogo: config.headerLogo,
+        watermark: config.watermark,
+        orientation: config.orientation,
       }
         
       }
@@ -105,7 +119,7 @@ const handleConfig = () => {
       <form onSubmit={handleSubmit(onSubmit)} className='formConfig'>
       <div className='configBar'>
           
-          <label className='configLabelName'>
+          <label className='configLabelName' htmlFor='name'>
               <TextField {...register('name')} id='name' label="Nombre de la plantilla" variant='standard' value={config.name} onChange={(e)=> setConfig({...config, name: e.target.value })}/>
           </label>
           
@@ -117,7 +131,7 @@ const handleConfig = () => {
       </div>
       <div className='containerConfig'>
           
-          <label className='configLabel'>     
+          <label className='configLabel' htmlFor='title'>     
           <TextField
                   {...register('title.content')}
                   id='title'
@@ -132,12 +146,11 @@ const handleConfig = () => {
                   }
                 />
   </label>
-          <label className='configLabel'>
+          <label className='configLabel' htmlFor='subtitle'>
               <TextField {...register('subtitle')} id='subtitle' label="Subtítulo" variant='standard' value={config.subtitle} onChange={(e)=> setConfig({...config, subtitle: e.target.value })}/>
           </label>
           <label htmlFor="standard-multiline-static" >
-              <Box component="form" autoComplete="off"
-                >
+              <Box component="form">
             <div className='configLabel'>
               <TextField id="standard-multiline-static" label="Descripción documento"
                         multiline rows={3}  variant="standard"
@@ -245,9 +258,8 @@ const handleConfig = () => {
                 <MenuItem value={'Vertical'}>Vertical</MenuItem>
               </Select>
           </label>
-          <label id="demo-simple-select-standard-label" className='configLabelSize'>
+          <label className='configLabelSize' htmlFor='demo-simple-select-standard'>
               <Select
-              labelId="demo-simple-select-standard-label"
               id="demo-simple-select-standard"
               value={config.size}
               onChange={(e)=> setConfig({...config, size: e.target.value })}
@@ -268,11 +280,7 @@ const handleConfig = () => {
 
 
                   {showPreview && <PreviewPdf
-              size={config.size}
-              title={config.title.text}
-              subtitle={config.subtitle}
-              coverLogo={config.coverLogo}
-              toc={config.toc}
+              config={config}
             />}
       </form>
     </FormProvider>
