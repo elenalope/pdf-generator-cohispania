@@ -125,7 +125,7 @@ const SubsectionSchema = new mongoose.Schema({
     title: TitleSchema,
     paragraph: ParagraphSchema,
     content: [String],
-},{_id : false})
+})
 
 
 const SectionSchema = new mongoose.Schema({
@@ -137,14 +137,14 @@ const SectionSchema = new mongoose.Schema({
     size: String,
     link: LinkSchema,
     Subsection: [SubsectionSchema]
-},{_id : false})
+})
 
 const ChapterSchema = new mongoose.Schema({
-    title: TitleSchema,
+    title: String,
     subtitle: String,
-    img: ImageSchema,
+    img: String,
     content: [SectionSchema]
-},{_id : false});
+});
 
 const TemplateSchema = new mongoose.Schema({
     name: String,
@@ -172,5 +172,5 @@ const TemplateSchema = new mongoose.Schema({
 
 
 const Template = mongoose.model('Template', TemplateSchema);
-
-export  {Template}
+const Chapter = mongoose.model('Chapter', ChapterSchema);
+export  {Template, Chapter}

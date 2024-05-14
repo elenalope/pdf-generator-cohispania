@@ -43,11 +43,12 @@ const MyDocument = () => {
   const[showPreview, setShowPreview] = useState(false);
   /* const[data, setData]= useState({}); */
   
-const onSubmit = async (data) =>{
-  console.log(data)
+const onSubmit = async (formData) =>{
+  /* console.log(data) */
   try {
-    const newData = {...config, ...data};
+    const newData = {...config, formData};
     setData(newData);
+    console.log('',data)
     const response = await postPDF(newData);
     console.log('newData',newData)
 /*     navigate('/document/chapter',{state: {data: newData}});
@@ -110,13 +111,13 @@ const generatePdf = async () => {
       <Box>
       <nav aria-label="main mailbox folders">
         <List>
-        <ListItem disablePadding>
+        <ListItem disablePadding onClick={()=> navigate('/document/chapter')}>
             <ListItemButton>
               <ListItemIcon>
                 <ImportContactsIcon />
               </ListItemIcon>
-              <ListItemText primary="Capítulo"/> 
-              <AddIcon />
+              <ListItemText primary="Capítulo" /> 
+              {/* <AddIcon /> */}
             </ListItemButton>
           </ListItem>
           <Divider />
@@ -126,7 +127,7 @@ const generatePdf = async () => {
                 <BookIcon />
               </ListItemIcon>
               <ListItemText primary="Sección"/>
-              <AddIcon />
+              {/* <AddIcon /> */}
             </ListItemButton>
           </ListItem>
           <Divider />
