@@ -50,8 +50,8 @@ const onSubmit = async (data) =>{
     setData(newData);
     const response = await postPDF(newData);
     console.log('newData',newData)
-    navigate('/document/chapter',{state: {data: newData}});
-  } catch (error) {
+/*     navigate('/document/chapter',{state: {data: newData}});
+ */  } catch (error) {
     console.error('Error creating document', error.message)
   }
 }
