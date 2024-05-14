@@ -1,5 +1,6 @@
 /* import React from 'react'
 import { useDocument } from '../context/DocumentContext';
+import ChapterDialog from '../components/chapter/ChapterDialog.jsx';
 
 
 const Chapter = () => {
@@ -7,7 +8,10 @@ const Chapter = () => {
   console.log('hola', data);
   console.log('Config:', config);
   return (
-    <div>Chapter</div>
+    <>
+    <ChapterDialog />
+    {/* <ChapterCard /> */}
+    </>
   )
 }
 
