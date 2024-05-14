@@ -209,7 +209,7 @@ const generatePdf = async () => {
                   <CssBaseline />
                   <Container fixed>
                     
-                  {showPreview && <PreviewPdf config={config} data={data} />}
+                  
 
                     <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }} />
                   </Container>
@@ -218,7 +218,7 @@ const generatePdf = async () => {
     <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
       <Button variant="contained" onClick={()=>navigate('/')}>SALIR SIN GUARDAR</Button>
     </Stack>
-    </form>
+    </form>{showPreview && <PreviewPdf config={config} data={data} />}
      </>
   )
 }
