@@ -129,10 +129,10 @@ const SubsectionSchema = new mongoose.Schema({
 
 
 const SectionSchema = new mongoose.Schema({
-    title: TitleSchema,
-    paragraph: ParagraphSchema,
+    title: String,
+    paragraph: String,
     cover: Boolean,
-    img: ImageSchema,
+    img: String,
     orientation: String,
     size: String,
     link: LinkSchema,

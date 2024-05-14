@@ -5,6 +5,7 @@ import express from 'express'
 import cors from 'cors'
 import pdfRouter from './routes/pdfRouter.js'
 import chapterRouter from './routes/chapterRouter.js'
+import sectionRouter from './routes/sectionRouter.js'
 
 
 const app = express()
@@ -12,8 +13,8 @@ const app = express()
 app.use(cors());
 app.use(express.json());
 app.use('/api', pdfRouter);
-app.use('/api', chapterRouter)
-
+app.use('/api', chapterRouter);
+app.use('/api', sectionRouter);
 connect();
 
 app.listen(PORT, () => {
