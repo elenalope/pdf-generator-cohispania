@@ -1,21 +1,27 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect,useContext} from 'react';
 import { getPDF } from '../../services/pdfServices';
+import { DocumentContext } from '../../context/DocumentContext';
+import { useNavigate } from 'react-router-dom'; 
 
 
 const ListPdf = () => {
 
-  const [documents, setDocuments] = useState([]);
+  const navigate = useNavigate();
+  const { documents, setDocuments } = useContext(DocumentContext);
+
 
   useEffect(()=>{
-
-    const getDocuments = async () => {
-      const response = await getPDF();
-      console.log(response)
-       setDocuments(response)
+    const fetchDocuments = async () => {
+      try {
+        const data = await getPDF();
+        setDocuments(data);
+      } catch (error) {
+        console.error('Error fetching documents', error.message);
       }
+    };
 
-    getDocuments();
-  }, [])
+    fetchDocuments();
+  }, [setDocuments]);
 
 
   return (
