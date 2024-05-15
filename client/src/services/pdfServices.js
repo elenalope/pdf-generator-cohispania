@@ -29,7 +29,7 @@ export const postPDF = async (newData) => {
 //DELETE
 export const deletePDF = async (id) =>{
   try {
-    let urlId = `${URL}/${id}`;
+    let urlId = `${URL}/document/${id}`;
     const response = await axios.delete(urlId);
     alert("Document deleted");
     return response;
@@ -43,7 +43,7 @@ export const deletePDF = async (id) =>{
 //UPDATE
 export const updateData = async (data, id) => {
   try {
-    let urlId = `${URL}/${id}`;
+    let urlId = `${URL}/document/${id}`;
     const response = await axios.put(urlId, data);
     alert('Document updated succesfully');
     return response;
@@ -56,7 +56,7 @@ export const updateData = async (data, id) => {
 //GET BY ID
 export const getById = async (id) => {
   try {
-    const response = await axios.get(`${URL}/${id}`);
+    const response = await axios.get(`${URL}/document/${id}`);
     return response;
   } catch (error) {
     console.error('Error get document', error.message);
