@@ -10,48 +10,62 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
-import DocumentProvider from '../../context/DocumentContext';
+import { useContext, useEffect } from 'react';
+import { DocumentContext } from '../../context/DocumentContext';
+import { getPDF } from '../../services/pdfServices';
 
 const Home = () => {
     const navigate = useNavigate();
+    const { documents, setDocuments } = useContext(DocumentContext);
+
+    useEffect(() => {
+      const fetchDocuments = async () => {
+        try {
+          const data = await getPDF();
+          setDocuments(data);
+        } catch (error) {
+          console.error('Error fetching documents', error.message);
+        }
+      };
   
+      fetchDocuments();
+    }, [setDocuments]);
     const handleButtonClick = () => {
       navigate('/config'); 
     };
   
     return (
-        <DocumentProvider> 
       <div className="homeContainer">
         <h3 className="boxHome">Mis plantillas</h3>
         <div className="buttonHome">
           <Button variant="contained" className='addTemplate' onClick={handleButtonClick}>Crear Plantilla</Button>
         </div>
-        <Card sx={{ maxWidth: 345 }}>
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              height="140"
-              width="280"
-              image=""
-              alt="document"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Documento 1
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                subtítulo documento 1
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <DeleteIcon />
-          <DownloadIcon />
-        </Card>
-        <ListPdf/>
+        {documents.map((doc) => (
+          <Card key={doc._id} sx={{ maxWidth: 345 }}>
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                height="140"
+                width="280"
+                image={doc.imageUrl || ""}
+                alt="document"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {doc.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {doc.subtitle}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <DeleteIcon />
+            <DownloadIcon />
+          </Card>
+        ))}
+        <ListPdf />
       </div>
-        </DocumentProvider>
     );
   };
   
   export default Home;
-

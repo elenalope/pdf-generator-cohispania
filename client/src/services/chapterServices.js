@@ -7,7 +7,7 @@ export const addChapter = async (templateId, newChapter) => {
     try {
       console.log("Datos del Chapter enviados:", chapterData);
       const response = await axios.post(`${URL}/${templateId}/chapter`, newChapter);
-      alert("Chapter añadido exitosamente");
+      alert("Capítulo añadido exitosamente");
       return response;
     } catch (error) {
        console.error('Error creating chapter', error.message);
