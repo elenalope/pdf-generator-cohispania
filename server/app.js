@@ -21,6 +21,9 @@ app.use('/api', moduleRouter);
 
 connect();
 
-app.listen(PORT, () => {
+
+export const server = app.listen(PORT, () => {
     console.log(`Server running on port http://localhost:${PORT}`)
-})
+});
+
+export default app;
