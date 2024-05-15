@@ -53,12 +53,13 @@ const Config = () => {
         defaultValues: config,
       })
 
-      const {register, handleSubmit, reset} = methods;
+      const {register, handleSubmit} = methods;
       const onSubmit = async (data) => {
         console.log('data de config.jsx',data);
         try {
             const response = await postPDF(data);
-            navigate('/document', {
+            const documentId = response.data._id;
+            navigate(`/document/${documentId}`, {
               state: { config: response.data } 
             });
          

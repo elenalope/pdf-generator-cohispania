@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import { useForm } from "react-hook-form";
 import { useDocument } from '../../context/DocumentContext';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import { postPDF } from '../../services/pdfServices';
 import './MyDocument.css';
-import { pdf, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { pdf, Document, Page, Text, View} from '@react-pdf/renderer';
 import PreviewPdf from '../../components/PreviewPdf/PreviewPdf.jsx';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
@@ -34,6 +34,7 @@ import AddIcon from '@mui/icons-material/Add';
 const MyDocument = () => {  
   const location = useLocation();
   const navigate = useNavigate();
+  const { id } = useParams();
   const config = location.state?.config;
   const {data, setData, setConfig} = useDocument();
   const methods = useForm({
