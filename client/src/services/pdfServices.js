@@ -29,15 +29,13 @@ export const postPDF = async (newData) => {
 //DELETE
 export const deletePDF = async (id) =>{
   try {
-    let urlId = `${URL}/${id}`;
-    const response = await axios.delete(urlId);
+    const response = await axios.delete(`${URL}/document/${id}`);
     alert("Document deleted");
     return response;
   } catch (error) {
     console.error('Error delete document', error.message);
     throw error;
   }
-
 };
 
 //UPDATE
