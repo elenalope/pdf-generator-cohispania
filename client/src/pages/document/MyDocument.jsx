@@ -31,6 +31,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import DrawIcon from '@mui/icons-material/Draw';
 import AddIcon from '@mui/icons-material/Add';
 
+
 const MyDocument = () => {  
   const location = useLocation();
   const navigate = useNavigate();
@@ -42,18 +43,15 @@ const MyDocument = () => {
   })
   const { register, handleSubmit, reset, formState: { errors } } = methods;
   const[showPreview, setShowPreview] = useState(false);
-  /* const[data, setData]= useState({}); */
-  
+ 
 const onSubmit = async (formData) =>{
-  /* console.log(data) */
   try {
     const newData = {...config, formData};
     setData(newData);
     console.log('',data)
     const response = await postPDF(newData);
     console.log('newData',newData)
-/*     navigate('/document/chapter',{state: {data: newData}});
- */  } catch (error) {
+ } catch (error) {
     console.error('Error creating document', error.message)
   }
 }
@@ -87,10 +85,9 @@ const generatePdf = async () => {
   } catch (error) {
     console.error('Error al generar el PDF:', error);
   }
-  
+ 
 };
-/* console.log('pdf document',config)
- */
+
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)} className='formMyDocument'>
@@ -112,12 +109,12 @@ const generatePdf = async () => {
       <Box>
       <nav aria-label="main mailbox folders">
         <List>
-        <ListItem disablePadding onClick={()=> navigate('/document/chapter')}>
+        <ListItem disablePadding onClick={()=> navigate(`/document/${id}/chapter`)}>
             <ListItemButton>
               <ListItemIcon>
                 <ImportContactsIcon />
               </ListItemIcon>
-              <ListItemText primary="Capítulo" /> 
+              <ListItemText primary="Capítulo" />
               {/* <AddIcon /> */}
             </ListItemButton>
           </ListItem>
@@ -206,12 +203,13 @@ const generatePdf = async () => {
       </nav>
     </Box>
       </div>
-                
+               
                 <React.Fragment>
                   <CssBaseline />
                   <Container fixed>
-                    
-                  
+                   
+                 
+
 
                     <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }} />
                   </Container>
@@ -225,7 +223,5 @@ const generatePdf = async () => {
   )
 }
 
+
 export default MyDocument;
-
-
-
