@@ -27,7 +27,7 @@ export const deleteChapter = async (request, response) => {
         if (!document) {
             return response.status(404).json({ message: "Template not found" });
         }
-        const chapterIndex = document.content.findIndex(chapter => chapter._id === chapterId);
+        const chapterIndex = document.content.findIndex(chapter => chapter._id.equals(chapterId));
 
         if (chapterIndex === -1) {
             return response.status(404).json({ message: "Chapter not found in this template" });
@@ -40,3 +40,26 @@ export const deleteChapter = async (request, response) => {
         response.status(500).json({ message: error.message });
     }
 }
+
+
+export const updateChapter = async (request, response) => {
+    try {
+        const { id: templateId, chapterId } = request.params;
+        const { chapter: updatedChapter } = request.body;
+        const document = await Template.findById(templateId);// me busca el doc por el id
+        if (!document) {
+            return response.status(404).json({ message: "Template not found" });
+        }
+        const chapterIndex = document.content.findIndex(chapter => chapter._id.equals(chapterId));  // me busca el chapter por id
+
+        if (chapterIndex === -1) {
+            return response.status(404).json({ message: "Chapter not found in this template" });
+        }
+        document.content[chapterIndex] = { ...document.content[chapterIndex]._doc, ...updatedChapter };//estoy actualizando los datos de chapter
+        await document.save();
+
+        response.status(200).json(document);
+    } catch (error) {
+        response.status(500).json({ message: error.message });
+    }
+};

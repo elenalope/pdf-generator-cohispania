@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import {Schema} from 'mongoose'
 
 const TitleSchema = new mongoose.Schema({
-    content: String,
+    content: { type: String, required: true },
     level: {
         type: String,
         enum: ['h1', 'h2', 'h3', 'h4', 'h5'], 
@@ -20,8 +20,8 @@ const TitleSchema = new mongoose.Schema({
 })
 
 const ParagraphSchema = new mongoose.Schema({
-    content: String,
-    Highlight: Boolean,
+    content: { type: String, required: true },
+    highlight: Boolean,
     color:String,
     fontSize: Number,
     margin: {
@@ -74,14 +74,12 @@ const SignatureSchema = new mongoose.Schema({
         left: Number,
         right: Number
     },
-    size: { 
-        type: Number
-     },
-     signedBy:Boolean
+    size: Number,
+    signedBy:Boolean
 })    
 
 const ImageSchema = new mongoose.Schema({
-    src: String,
+    src: { type: String, required: true },
     width: String,
     height: String,
     margin: {
@@ -98,7 +96,7 @@ const ImageSchema = new mongoose.Schema({
 })
 
 const LinkSchema = new mongoose.Schema({
-    src: String,
+    src: { type: String, required: true },
     content: String,
     color: String,
     fontSize: Number,
@@ -125,26 +123,49 @@ const LinkSchema = new mongoose.Schema({
 const SubsectionSchema = new mongoose.Schema({
     title: TitleSchema,
     paragraph: ParagraphSchema,
-    content: [String],
+    content: [
+        { type: TitleSchema },
+        { type: ParagraphSchema },
+        { type: ListSchema },
+        { type: SignatureSchema },
+        { type: ImageSchema },
+        { type: LinkSchema }],
 })
 
 
 const SectionSchema = new mongoose.Schema({
-    title: String,
+    title:{ type: String, required: true },
     paragraph: String,
     cover: Boolean,
     img: String,
     orientation: String,
     size: String,
     link: LinkSchema,
-    Subsection: [SubsectionSchema]
+    Subsections: [SubsectionSchema],
+    content: [
+        { type: TitleSchema },
+        { type: ParagraphSchema },
+        { type: ListSchema },
+        { type: SignatureSchema },
+        { type: ImageSchema },
+        { type: LinkSchema },
+        { type: SubsectionSchema }
+    ]
 })
 
 const ChapterSchema = new mongoose.Schema({
     title: String,
     subtitle: String,
     img: String,
-    content: [SectionSchema]
+    content: [
+        { type: SectionSchema },
+        { type: TitleSchema },
+        { type: ParagraphSchema },
+        { type: ListSchema },
+        { type: SignatureSchema },
+        { type: ImageSchema },
+        { type: LinkSchema }
+    ]
 });
 
 const TemplateSchema = new mongoose.Schema({
@@ -168,7 +189,16 @@ const TemplateSchema = new mongoose.Schema({
     orientation: String,
     size: String,
     signature:SignatureSchema,
-    content: [ChapterSchema, SectionSchema]
+    content: [
+        { type: ChapterSchema },
+        { type: SectionSchema },
+        { type: TitleSchema },
+        { type: ParagraphSchema },
+        { type: ListSchema },
+        { type: SignatureSchema },
+        { type: ImageSchema },
+        { type: LinkSchema }
+    ]
 });
 
 
