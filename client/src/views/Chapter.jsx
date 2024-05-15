@@ -1,25 +1,9 @@
-/* import React from 'react'
-import { useDocument } from '../context/DocumentContext';
-import ChapterDialog from '../components/chapter/ChapterDialog.jsx';
-
-
-const Chapter = () => {
-  const {data, setData,config, setConfig} = useDocument();
-  console.log('hola', data);
-  console.log('Config:', config);
-  return (
-    <>
-    <ChapterDialog />
-    {/* <ChapterCard /> }
-    </>
-  )
-}
-
-export default Chapter */
 import React, { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useParams} from 'react-router-dom';
+import { useDocument } from '../context/DocumentContext';
+import { addChapter } from '../services/chapterServices';
 import axios from 'axios';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import './Chapter.css';
@@ -38,8 +22,6 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import ImageIcon from '@mui/icons-material/Image';
 import LinkIcon from '@mui/icons-material/Link';
 import DrawIcon from '@mui/icons-material/Draw';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import SendIcon from '@mui/icons-material/Send';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -47,48 +29,47 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
 
-
-
-
-
-
-
 const Chapter = () => {
   
+  const { currentDocument, setCurrentDocument } = useDocument();
   const [formDataArray, setFormDataArray] = useState([]);
-  const location = useLocation();
   const navigate = useNavigate();
-  const config = location.state?.config;
-  const { title = '', subtitle = '', coverImg = '' } = config || {};
+  const { id: templateId } = useParams();
 
-  const handleDownloadPdf = async () => {
-  
-  }
-
-  const handleClick = () => {
-    setFormDataArray([...formDataArray, { title: '', subtitle: '', image: null }]); 
-  }
+  const handleClick = async () => {
+    const newChapter = { title: 'titulo', subtitle: 'subtitulo', content: [{}] }; 
+    try {
+      const response = await addChapter(templateId, newChapter);
+      /* setCurrentDocument((prev) => ({
+        ...prev,
+        content: [...prev.content, response.data],
+      })); */
+      setFormDataArray([...formDataArray, response.data]);
+    } catch (error) {
+      console.error('Error creating chapter:', error);
+    }
+  };
 
   const handleSubmit = async (e, index) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api', formDataArray[index]);
-      navigate('/document')
-      console.log('Respuesta del servidor:', response.data);
+      const updatedChapter = formDataArray[index];
+      console.log('Chapter updated:', updatedChapter);
+      navigate(`/document/${templateId}`);
     } catch (error) {
-      console.error('Error al enviar los datos:', error);
+      console.error('Error updating chapter:', error);
     }
-  }
+  };
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const updatedFormDataArray = [...formDataArray];
     updatedFormDataArray[index] = {
       ...updatedFormDataArray[index],
-      [name]: value
+      [name]: value,
     };
     setFormDataArray(updatedFormDataArray);
-  }
+  };
   const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
@@ -102,10 +83,7 @@ const Chapter = () => {
   });
 
   return (
-      
-
-          
-          <div className='document-body'>
+    <div className='document-body'>
       <div className='option-list'>
       <Box>
       <nav>
