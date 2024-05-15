@@ -42,7 +42,7 @@ const ListPdf = () => {
                 {document.name}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {document.subtitulo}
+                {document.title.content}
               </Typography>
             </CardContent>
           </CardActionArea>
