@@ -43,3 +43,25 @@ export const deleteSection = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+export const updateSection = async (request, response) => {
+    try {
+        const { id: templateId, sectionId } = request.params;
+        const { section: updatedSection } = request.body;
+        const document = await Template.findById(templateId);// me busca el doc por el id
+        if (!document) {
+            return response.status(404).json({ message: "Template not found" });
+        }
+        const sectionIndex = document.content.findIndex(section => section._id.equals(sectionId));  // me busca el section por id
+
+        if (sectionIndex === -1) {
+            return response.status(404).json({ message: "Section not found in this template" });
+        }
+        document.content[sectionIndex] = { ...document.content[sectionIndex]._doc, ...updatedSection };//estoy actualizando los datos de section
+        await document.save();
+
+        response.status(200).json(document);
+    } catch (error) {
+        response.status(500).json({ message: error.message });
+    }
+};

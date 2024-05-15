@@ -1,9 +1,10 @@
 import express from 'express';
-import { addSection, deleteSection } from '../controllers/sectionController.js';
+import { addSection, deleteSection, updateSection } from '../controllers/sectionController.js';
 
 const router = express.Router();
 
 router.post('/document/:id/section', addSection);
 router.delete('/document/:id/section/:sectionId', deleteSection);
+router.put('/document/:id/section/:sectionId', updateSection);
 
 export default router;

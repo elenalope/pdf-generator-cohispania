@@ -124,12 +124,12 @@ const SubsectionSchema = new mongoose.Schema({
     title: TitleSchema,
     paragraph: ParagraphSchema,
     content: [
-        { type: TitleSchema },
-        { type: ParagraphSchema },
-        { type: ListSchema },
-        { type: SignatureSchema },
-        { type: ImageSchema },
-        { type: LinkSchema }],
+        TitleSchema,
+        ParagraphSchema,
+        ListSchema,
+        SignatureSchema,
+        ImageSchema,
+        LinkSchema],
 })
 
 
@@ -143,13 +143,13 @@ const SectionSchema = new mongoose.Schema({
     link: LinkSchema,
     Subsections: [SubsectionSchema],
     content: [
-        { type: TitleSchema },
-        { type: ParagraphSchema },
-        { type: ListSchema },
-        { type: SignatureSchema },
-        { type: ImageSchema },
-        { type: LinkSchema },
-        { type: SubsectionSchema }
+        TitleSchema,
+        ParagraphSchema,
+        ListSchema,
+        SignatureSchema,
+        ImageSchema,
+        LinkSchema,
+        SubsectionSchema
     ]
 })
 
@@ -158,13 +158,13 @@ const ChapterSchema = new mongoose.Schema({
     subtitle: String,
     img: String,
     content: [
-        { type: SectionSchema },
-        { type: TitleSchema },
-        { type: ParagraphSchema },
-        { type: ListSchema },
-        { type: SignatureSchema },
-        { type: ImageSchema },
-        { type: LinkSchema }
+        SectionSchema,
+        TitleSchema,
+        ParagraphSchema,
+        ListSchema,
+        SignatureSchema,
+        ImageSchema,
+        LinkSchema
     ]
 });
 
@@ -190,21 +190,18 @@ const TemplateSchema = new mongoose.Schema({
     size: String,
     signature:SignatureSchema,
     content: [
-        { type: ChapterSchema },
-        { type: SectionSchema },
-        { type: TitleSchema },
-        { type: ParagraphSchema },
-        { type: ListSchema },
-        { type: SignatureSchema },
-        { type: ImageSchema },
-        { type: LinkSchema }
+        ChapterSchema,
+        SectionSchema,
+        TitleSchema,
+        ParagraphSchema,
+        ListSchema,
+        SignatureSchema,
+        ImageSchema,
+        LinkSchema
     ]
 });
 
 
 const Template = mongoose.model('Template', TemplateSchema);
-const Chapter = mongoose.model('Chapter', ChapterSchema);
-const Section = mongoose.model('Section', SectionSchema);
-const Subsection = mongoose.model('Subsection', SubsectionSchema);
 
-export  {Template, Chapter, Section, Subsection}
+export  {Template}
