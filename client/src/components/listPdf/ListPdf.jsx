@@ -3,10 +3,10 @@ import { getPDF } from '../../services/pdfServices';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
+import PreviewPdf from '../PreviewPdf/PreviewPdf';
 
 const ListPdf = () => {
   const [documents, setDocuments] = useState([]);
@@ -25,19 +25,12 @@ const ListPdf = () => {
   }, []);
 
   return (
-    <div className='listPdfContainer' style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-      {/* <h3>Lista de plantillas</h3> */}
+    <div className='listPdfContainer' style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
       {documents.map((document, index) => (
-        <Card key={index} sx={{ maxWidth: 345 }}>
+        <Card key={index} sx={{ width: '280px', height: '280px', margin: '30px' }}>
           <CardActionArea>
-            <CardMedia
-              component="img"
-              height="140"
-              width="280"
-              image={document.image} 
-              alt="document"
-            />
-            <CardContent>
+            <CardContent> 
+              <PreviewPdf config={document} />
               <Typography gutterBottom variant="h5" component="div">
                 {document.name}
               </Typography>
