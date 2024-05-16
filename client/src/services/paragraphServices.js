@@ -27,7 +27,7 @@ export const updateParagraph = async (templateId, paragraphId, updatedParagraph)
 
 export const deleteParagraph = async (templateId, paragraphId)=>{
   try {
-    const response = await axios.delete(`${URL}/${templateId}/paragraph/${chapterId}`);
+    const response = await axios.delete(`${URL}/${templateId}/paragraph/${linkId}`);
     alert('Párrafo eliminado correctamente');
     return response;
   } catch (error) {
