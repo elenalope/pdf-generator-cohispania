@@ -24,6 +24,7 @@ import CardMedia from '@mui/material/CardMedia';
 import BookIcon from '@mui/icons-material/Book';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import ArticleIcon from '@mui/icons-material/Article';
+import TitleIcon from '@mui/icons-material/Title';
 
 export default function TitleDialog() {
     const location = useLocation();
@@ -74,8 +75,8 @@ export default function TitleDialog() {
               <ListItemIcon>
               <ArticleIcon />
               </ListItemIcon>
-              <ListItemText primary="Titulo" /> 
-              <AddIcon onClick={handleClickOpen} />
+              <ListItemText primary="Título" /> 
+             <TitleIcon onClick={handleClickOpen}/>
             </ListItemButton>
           </ListItem>
           <Divider />
@@ -115,7 +116,7 @@ export default function TitleDialog() {
                   <Typography
                     sx={{ mb: 2 , mt: 1 }}
                     >
-                    Subsección
+                    Título
                   </Typography>
                 </Box>
               );
@@ -138,7 +139,7 @@ export default function TitleDialog() {
           },
         }}
       >
-        <DialogTitle>Crear Subsección</DialogTitle>
+        <DialogTitle>Crear Título</DialogTitle>
         <DialogContent sx={{ width: '70vh'}}>
           <TextField
             autoFocus
