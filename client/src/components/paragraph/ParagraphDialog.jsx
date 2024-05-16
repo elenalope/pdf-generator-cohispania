@@ -21,6 +21,7 @@ import LongMenu from '../cards/DropDownMenu.jsx';
 import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
+import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
 
 export default function ParagraphDialog() {
     const location = useLocation();
@@ -55,7 +56,7 @@ export default function ParagraphDialog() {
   });
 
   const handleParagraphClick = () => {
-    setElements([...elements, { type: 'paragraph', data: { title: '', subtitle: '', image: '' } }]);
+    setElements([...elements, { type: 'paragraph', data: { title: ''} }]);
     
   }
 
@@ -69,7 +70,7 @@ export default function ParagraphDialog() {
         <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <ImportContactsIcon />
+                <ViewHeadlineIcon/>
               </ListItemIcon>
               <ListItemText primary="Párrafo" /> 
               <AddIcon onClick={handleClickOpen} />
@@ -130,6 +131,8 @@ export default function ParagraphDialog() {
             type="text"
             fullWidth
             variant="standard"
+            multiline
+            rows={15} 
           />
         </DialogContent>
         <DialogActions>
