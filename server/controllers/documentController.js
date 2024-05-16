@@ -49,6 +49,7 @@ export const createDocument = async(request,response)=>{
      
     try {
         const document = await Template.create(request.body)
+        console.log(document)
         response.status(201).json(document); 
     } catch (error) {
 
