@@ -6,7 +6,7 @@ export const URL = 'http://localhost:3000/api/document';
 export const addChapter = async (templateId, newChapter) => {
     try {
       console.log("Datos del Chapter enviados:", newChapter);
-      const response = await axios.post(`${URL}/${templateId}/chapter`, newChapter);
+      const response = await axios.post(`${URL}/${templateId}`, newChapter);
       alert("Capítulo añadido exitosamente");
       return response;
     } catch (error) {
@@ -27,7 +27,7 @@ export const updateChapter = async (templateId, chapterId, updatedChapter)=>{
 
 export const deleteChapter = async (templateId, chapterId)=>{
   try {
-    const response = await axios.delete(`${URL}/${templateId}/chapter/${chapterId}`);
+    const response = await axios.delete(`${URL}/${templateId}`);
     alert('Capítulo eliminado correctamente');
     return response;
   } catch (error) {

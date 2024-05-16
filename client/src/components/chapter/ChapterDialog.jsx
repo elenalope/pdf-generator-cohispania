@@ -22,25 +22,18 @@ import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 
-export default function ChapterDialog() {
+export default function ChapterDialog({setOpen}) {
     const location = useLocation();
     const config = location.state?.config;
     const { title = '', cover = '',  ImgCover = '' } = config || {};
     const [elements, setElements] = useState([]);
   
+    const handleClose = ()=>{
+      setOpen(false);
+    }
     const handleDownloadPdf = async () => {
     
     }
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -66,15 +59,6 @@ export default function ChapterDialog() {
       <Box>
       <nav>
         <List sx={{  backgroundColor: '#E9EAEC'}}>
-        <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <ImportContactsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Capítulo" /> 
-              <AddIcon onClick={handleClickOpen} />
-            </ListItemButton>
-          </ListItem>
           <Divider />
         </List>
       </nav>

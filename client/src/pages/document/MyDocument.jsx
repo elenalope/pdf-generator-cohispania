@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useForm } from "react-hook-form";
-import { useDocument } from '../../context/DocumentContext';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import { postPDF } from '../../services/pdfServices';
 import './MyDocument.css';
@@ -30,14 +29,21 @@ import ImageIcon from '@mui/icons-material/Image';
 import LinkIcon from '@mui/icons-material/Link';
 import DrawIcon from '@mui/icons-material/Draw';
 import AddIcon from '@mui/icons-material/Add';
+import ChapterDialog from '../../components/chapter/ChapterDialog.jsx';
 
 
 const MyDocument = () => {  
-  const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
-  const config = location.state?.config;
-  const {data, setData, setConfig} = useDocument();
+  const location = useLocation();
+  const { config } = location.state; 
+
+  const [open, setOpen] = useState(false);
+  const {data, setData} = useState(config);
+  useEffect(() => {
+    console.log('config desde doc', config);
+  }, [config]);
+
   const methods = useForm({
     defaultValues: config,
   })
@@ -48,7 +54,7 @@ const onSubmit = async (formData) =>{
   try {
     const newData = {...config, formData};
     setData(newData);
-    console.log('',data)
+    console.log('confiiii',config)
     const response = await postPDF(newData);
     console.log('newData',newData)
  } catch (error) {
@@ -58,6 +64,9 @@ const onSubmit = async (formData) =>{
   const handlePreview = () =>{
     setShowPreview(!showPreview);
 }
+const handleChapterClick = () => {
+  setOpen(true);
+};
 const PdfDoc = ({ config }) => (
   <Document>
      <Page size={config.size}>
@@ -85,12 +94,11 @@ const generatePdf = async () => {
   } catch (error) {
     console.error('Error al generar el PDF:', error);
   }
- 
 };
 
   return (
     <>
-    <form onSubmit={handleSubmit(onSubmit)} className='formMyDocument'>
+    <form /* onSubmit={handleSubmit(onSubmit)} */ className='formMyDocument'>
       <div className='template-name'>{config ? config.name : ''}</div>
             <Stack direction="row" spacing={2} sx={{ marginLeft: '2%', marginRight: '2%', marginTop: '20px' }}>
                 <Button variant="contained" type="submit">
@@ -109,92 +117,12 @@ const generatePdf = async () => {
       <Box>
       <nav aria-label="main mailbox folders">
         <List>
-        <ListItem disablePadding onClick={()=> navigate(`/document/${id}/chapter`)}>
+        <ListItem disablePadding onClick={handleChapterClick}>
             <ListItemButton>
               <ListItemIcon>
                 <ImportContactsIcon />
               </ListItemIcon>
               <ListItemText primary="Capítulo" />
-              {/* <AddIcon /> */}
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <BookIcon />
-              </ListItemIcon>
-              <ListItemText primary="Sección"/>
-              {/* <AddIcon /> */}
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <TitleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Título"/>
-              <AddIcon />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <FormatAlignJustifyIcon />
-              </ListItemIcon>
-              <ListItemText primary="Párrafo"/>
-              <AddIcon />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <FormatListBulletedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Lista"/>
-              <AddIcon />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <DrawIcon />
-              </ListItemIcon>
-              <ListItemText primary="Firma"/>
-              <AddIcon />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <ImageIcon />
-              </ListItemIcon>
-              <ListItemText primary="Imagen"/>
-              <AddIcon />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <LinkIcon />
-              </ListItemIcon>
-              <ListItemText primary="Link"/>
-              <AddIcon />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <MoveDownIcon />
-              </ListItemIcon>
-              <ListItemText primary="Salto"/>
               <AddIcon />
             </ListItemButton>
           </ListItem>
@@ -203,20 +131,18 @@ const generatePdf = async () => {
       </nav>
     </Box>
       </div>
-               
-                <React.Fragment>
-                  <CssBaseline />
-                  <Container fixed>
-                    <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
-                      
-                      </Box>
-                  </Container>
-                </React.Fragment>
+      <CssBaseline />
+      <Container fixed>
+        <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
+        </Box>
+        </Container>
     </div>
     <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
       <Button variant="contained" onClick={()=>navigate('/')}>SALIR SIN GUARDAR</Button>
     </Stack>
     </form>{showPreview && <PreviewPdf config={config} data={data} />}
+            {open && <ChapterDialog setOpen={setOpen} />}
+
      </>
   )
 }

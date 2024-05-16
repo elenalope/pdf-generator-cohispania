@@ -5,10 +5,9 @@ import { addChapter, deleteChapter,updateChapter } from '../controllers/chapterC
 const router = express.Router();
 
 
-router.post('/document/:id/chapter', addChapter);
-router.delete('/document/:id/chapter/:chapterId', deleteChapter);
+router.post('/document/:id', addChapter);
+router.delete('/document/:id', deleteChapter);
 router.put('/document/:id/chapter/:chapterId', updateChapter);
-
 
 
 export default router;
