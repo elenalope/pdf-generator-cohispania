@@ -71,10 +71,10 @@ const MyDocument = () => {
 
   const handleChapterCreate = async (chapterData) => {
     try {
-      const newChapter = await addChapter(id, chapterData);
+      const newChapter = await addChapter(id, { chapter: chapterData });
       setData(prevData => ({
         ...prevData,
-        chapters: [...prevData.chapters, newChapter]
+        chapters: [...prevData.chapters, newChapter.chapter]
       }));
     } catch (error) {
       console.error('Error al crear el capítulo:', error);
@@ -149,25 +149,23 @@ const MyDocument = () => {
           <CssBaseline />
           <Container fixed>
             <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
-              gg
-              <CardContent sx={{ pl: 4 , pr: 4 , mb: 3, pt:2 , pb: 2 , backgroundColor: '#E9EAEC'}} /* key={index} */>
+              {data.chapters.map((chapter, index)=>(
+                chapter && chapter.title && (
+                <CardContent key={index} sx={{ pl: 4 , pr: 4 , mb: 3, pt:2 , pb: 2 , backgroundColor: '#E9EAEC'}} >
                   <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>
 {/*                     <LongMenu />
  */}                  </Box>
                   <Typography
                     sx={{ mb: 2 , mt: 1 }}
-                    /* value={element.data.title} */
-                    /* onChange={(e) => handleInputChange(e, index)} */>
-                    Título
+                    > {chapter.title}
                   </Typography>
                   <Divider/>
                   <Typography 
-                    sx={{ mb: 2, mt: 2}}
-                    /* value={element.data.subtitle} */
-                    /* onChange={(e) => handleInputChange(e, index)} */>
-                    Subtítulo
+                    sx={{ mb: 2, mt: 2}}>
+                    {chapter.subtitle}
                   </Typography>
                   <Divider/>
+                  {chapter.img && (
                   <CardMedia
                   sx={{ mt: 2 }}
                     component="img"
@@ -175,9 +173,11 @@ const MyDocument = () => {
                     width="280"
                     image=""
                     alt="chapter-image"
-                   />
+                   />)}
                 </CardContent>
-              gg
+                )
+              ))}
+              
             </Box>
           </Container>
         </div>

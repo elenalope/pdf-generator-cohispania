@@ -14,7 +14,7 @@ export const addChapter = async (templateId, newChapter) => {
        throw error; }
    };
 
-export const getChapters = async (templateId) => {
+   export const getChapters = async (templateId) => {
     try {
         const response = await axios.get(`${URL}/${templateId}/chapters`);
         return response.data;

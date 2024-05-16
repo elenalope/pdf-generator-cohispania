@@ -24,7 +24,8 @@ import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 
 export default function ChapterDialog({open, setOpen, onChapterCreate}) {
-    const { register, handleSubmit } = useForm(); 
+    const methods = useForm();
+    const { register, handleSubmit, reset } = methods; 
     const [imageFile, setImageFile] = useState(null); 
     /* const location = useLocation();
     const config = location.state?.config;
@@ -36,20 +37,24 @@ export default function ChapterDialog({open, setOpen, onChapterCreate}) {
     };
     const onSubmit = (data) => {
       const chapterData = {
-        chapter: {
-          title: data.title,
-          subtitle: data.subtitle,
-          img: imageFile ? URL.createObjectURL(imageFile) : "", // URL de la imagen
-          content: []
-        }
+        title: data.title,
+        subtitle: data.subtitle,
+        img: imageFile ? URL.createObjectURL(imageFile) : "", 
+      content: []
+        
       };
-        console.log("Chapter data submitted:", chapterData); // Debug: Verifica los datos capturados
         onChapterCreate(chapterData);
         handleClose();
+        reset();
     };
     const handleDownloadPdf = async () => {
     
     }
+
+    const handleImageChange = (e) => {
+      setImageFile(e.target.files[0]);
+    };
+
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
