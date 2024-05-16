@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -22,15 +23,30 @@ import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 
-export default function ChapterDialog({setOpen}) {
-    const location = useLocation();
+export default function ChapterDialog({open, setOpen, onChapterCreate}) {
+    const { register, handleSubmit } = useForm(); 
+    const [imageFile, setImageFile] = useState(null); 
+    /* const location = useLocation();
     const config = location.state?.config;
     const { title = '', cover = '',  ImgCover = '' } = config || {};
-    const [elements, setElements] = useState([]);
+    const [elements, setElements] = useState([]); */
   
-    const handleClose = ()=>{
+    const handleClose = () => {
       setOpen(false);
-    }
+    };
+    const onSubmit = (data) => {
+      const chapterData = {
+        chapter: {
+          title: data.title,
+          subtitle: data.subtitle,
+          img: imageFile ? URL.createObjectURL(imageFile) : "", // URL de la imagen
+          content: []
+        }
+      };
+        console.log("Chapter data submitted:", chapterData); // Debug: Verifica los datos capturados
+        onChapterCreate(chapterData);
+        handleClose();
+    };
     const handleDownloadPdf = async () => {
     
     }
@@ -47,13 +63,13 @@ export default function ChapterDialog({setOpen}) {
     width: 1,
   });
 
-  const handleChapterClick = () => {
+  /* const handleChapterClick = () => {
     setElements([...elements, { type: 'chapter', data: { title: '', subtitle: '', image: '' } }]);
     
-  }
+  } */
 
   return (
-    <React.Fragment>
+    
     <div className='document-body'>
          <div className='option-list'>
       <Box>
@@ -65,7 +81,7 @@ export default function ChapterDialog({setOpen}) {
     </Box>
       </div>
       <div className='pdf-background'>
-      <Box sx={{ mt: 1, ml: 5, mr: 5, mb: 1, p:2   }} >
+      {/* <Box sx={{ mt: 1, ml: 5, mr: 5, mb: 1, p:2   }} >
             {elements.map((element, index) => {
               return element.type === 'chapter' ? (
                 <CardContent sx={{ pl: 4 , pr: 4 , mb: 3, pt:2 , pb: 2 , backgroundColor: '#E9EAEC'}} key={index}>
@@ -99,66 +115,50 @@ export default function ChapterDialog({setOpen}) {
                 <Box sx={{ pl:3 , pt:2 , pb:2 , mb: 3,  backgroundColor: '#E9EAEC', fontFamily: 'Open Sans'}} key={index}>
                   <h3 className='break-title'>Salto de página</h3>
                 </Box>
-              );
-            })}
-          </Box>
+              ); */}
+            {/* })}
+          </Box> */}
       </div>
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          component: 'form',
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            console.log(email);
-            handleClose();
-          },
-        }}
-      >
-        <DialogTitle>Crear Capítulo</DialogTitle>
-        <DialogContent sx={{ p: 3 }}>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="title"
-            name="email"
-            label="Título"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="subtitle"
-            name="email"
-            label="Subtítulo"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <Button
-                sx={{ mt: 3 }}
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<CloudUploadIcon />}
-                >
-                Seleccionar Imagen
-                <VisuallyHiddenInput type="file" onChange={(e) => handleInputChange(e, index)} />
-           </Button>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit" variant='contained' onClick={handleChapterClick} >Crear</Button>
-        </DialogActions>
-      </Dialog>
+      <Dialog open={open} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
+      <DialogTitle>Crear Capítulo</DialogTitle>
+      <DialogContent sx={{ p: 3 }}>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="title"
+          label="Título"
+          type="text"
+          fullWidth
+          variant="standard"
+          {...register('title', { required: true })}
+        />
+        <TextField
+          margin="dense"
+          id="subtitle"
+          label="Subtítulo"
+          type="text"
+          fullWidth
+          variant="standard"
+          {...register('subtitle')}
+        />
+        <Button
+          sx={{ mt: 3 }}
+          component="label"
+          role={undefined}
+          variant="contained"
+          tabIndex={-1}
+          startIcon={<CloudUploadIcon />}
+        >
+          Seleccionar Imagen
+          <VisuallyHiddenInput type="file" {...register('image')} />
+        </Button>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button type="submit" variant='contained'>Crear</Button>
+      </DialogActions>
+    </Dialog>
       </div>
-    </React.Fragment>
   );
 }
