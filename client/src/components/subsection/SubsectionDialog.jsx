@@ -23,6 +23,7 @@ import { Switch, Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import BookIcon from '@mui/icons-material/Book';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import ArticleIcon from '@mui/icons-material/Article';
 
 export default function SectionDialog() {
     const location = useLocation();
@@ -57,7 +58,7 @@ export default function SectionDialog() {
   });
 
   const handleSectionClick = () => {
-    setElements([...elements, { type: 'section', data: { title: '', subtitle: '', image: '' } }]);
+    setElements([...elements, { type: 'subsection', data: { title: '', subtitle: '', image: '' } }]);
     
   }
 
@@ -71,9 +72,9 @@ export default function SectionDialog() {
         <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-              <BookIcon />
+              <ArticleIcon />
               </ListItemIcon>
-              <ListItemText primary="Sección" /> 
+              <ListItemText primary="Subsección" /> 
               <AddIcon onClick={handleClickOpen} />
             </ListItemButton>
           </ListItem>
@@ -85,7 +86,7 @@ export default function SectionDialog() {
       <div className='pdf-background'>
       <Box sx={{ mt: 1, ml: 5, mr: 5, mb: 1, p:2   }} >
             {elements.map((element, index) => {
-              return element.type === 'section' ? (
+              return element.type === 'subection' ? (
                 <CardContent sx={{ pl: 4 , pr: 4 , mb: 3, pt:2 , pb: 2 , backgroundColor: '#E9EAEC'}} key={index}>
                   <Box sx={{ position: 'absolute' }}>
                   <BookIcon />
@@ -109,8 +110,13 @@ export default function SectionDialog() {
                    />
                 </CardContent>
               ) : (
-                <Box sx={{ pl:3 , pt:2 , pb:2 , mb: 3,  backgroundColor: '#E9EAEC', fontFamily: 'Open Sans'}} key={index}>
-                  <h3 className='break-title'>Salto de página</h3>
+                <Box sx={{ pl:3 , pt:2 , pb:2 , mt:2 ,  backgroundColor: '#E9EAEC', fontFamily: 'Open Sans'}} key={index}>
+                  <ArticleIcon />
+                  <Typography
+                    sx={{ mb: 2 , mt: 1 }}
+                    >
+                    Subsección
+                  </Typography>
                 </Box>
               );
             })}
@@ -132,8 +138,8 @@ export default function SectionDialog() {
           },
         }}
       >
-        <DialogTitle>Crear Sección</DialogTitle>
-        <DialogContent sx={{ p: 3 }}>
+        <DialogTitle>Crear Subsección</DialogTitle>
+        <DialogContent sx={{ width: '70vh'}}>
           <TextField
             autoFocus
             margin="dense"
@@ -144,22 +150,6 @@ export default function SectionDialog() {
             fullWidth
             variant="standard"
           />
-          <Button
-                sx={{ mt: 3 }}
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<CloudUploadIcon />}
-                >
-                Seleccionar Imagen
-                <VisuallyHiddenInput type="file" onChange={(e) => handleInputChange(e, index)} />
-           </Button>
-           <FormControlLabel 
-           sx={{ ml: 4 , mt: 3 }}
-           control={<Switch />} 
-           label="Portada" />
-
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
