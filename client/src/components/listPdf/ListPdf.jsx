@@ -1,7 +1,5 @@
-import React, {useEffect,useContext} from 'react';
+import React, { useEffect, useState } from 'react';
 import { getPDF, deletePDF } from '../../services/pdfServices';
-import { DocumentContext } from '../../context/DocumentContext';
-import { useNavigate } from 'react-router-dom'; 
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
@@ -9,26 +7,25 @@ import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import PreviewPdf from '../PreviewPdf/PreviewPdf';
-
+import { useNavigate } from 'react-router-dom';
 
 const ListPdf = () => {
-
+  const [documents, setDocuments] = useState([]);
   const navigate = useNavigate();
-  const { documents, setDocuments } = useContext(DocumentContext);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const data = await getPDF();
-        setDocuments(data);
+        const response = await getPDF();
+        setDocuments(response);
       } catch (error) {
-        console.error('Error fetching documents', error.message);
+        console.error('Error fetching documents:', error.message);
       }
     };
 
     fetchDocuments();
-  }, [setDocuments]);
+  }, []);
+
   const handleDeleteDocument = async (id) => {
     const confirmDelete = window.confirm("¿Estás seguro que deseas borrar el documento?");
     if (confirmDelete) {
@@ -41,8 +38,6 @@ const ListPdf = () => {
       }
     }
   };
-
-
 
   return (
     <div className='listPdfContainer' style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>

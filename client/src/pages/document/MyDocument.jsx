@@ -207,11 +207,9 @@ const generatePdf = async () => {
                 <React.Fragment>
                   <CssBaseline />
                   <Container fixed>
-                   
-                 
-
-
-                    <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }} />
+                    <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
+                      
+                      </Box>
                   </Container>
                 </React.Fragment>
     </div>
