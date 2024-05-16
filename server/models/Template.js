@@ -6,16 +6,37 @@ const TitleSchema = new mongoose.Schema({
     level: {
         type: String,
         enum: ['h1', 'h2', 'h3', 'h4', 'h5'], 
-        default: 'h3' 
+        default: 'h4' 
     },
-    bold: Boolean,
-    font: String,
-    color: String,
+    bold: {
+        type: Boolean,
+        default: true,
+    },
+    font: {
+        type: String,
+        default: 'open sans',
+    },
+    color: {
+        type: String,
+        default: 'black',
+    },
     margin: {
-        top: Number,
-        bottom: Number,
-        left: Number,
-        right: Number
+        top: {
+            type: Number,
+            default: 10,
+        },
+        bottom: {
+            type: Number,
+            default: 10,
+        },
+        left: {
+            type: Number,
+            default: 10,
+        },
+        right: {
+            type: Number,
+            default: 10,
+        }
     }
 })
 
