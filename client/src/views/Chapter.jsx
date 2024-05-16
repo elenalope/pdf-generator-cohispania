@@ -5,6 +5,7 @@ import { addChapter } from '../services/chapterServices';
 import './Chapter.css';
 import { styled } from '@mui/material/styles';
 import ChapterDialog from '../components/chapter/ChapterDialog';
+import SectionDialog from '../components/section/SectionDialog';
 
 const Chapter = () => {
   const [formDataArray, setFormDataArray] = useState([]);
@@ -54,7 +55,11 @@ const Chapter = () => {
   });
 
   return (
+    <>
     <ChapterDialog/>
+    <SectionDialog/>
+    
+    </>
   );
 }
 
