@@ -54,7 +54,9 @@ const Chapter = () => {
   });
 
   return (
+    <>
     <ChapterDialog/>
+    </>
   );
 }
 
