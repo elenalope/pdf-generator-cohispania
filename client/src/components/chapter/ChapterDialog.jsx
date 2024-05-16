@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -56,6 +56,7 @@ export default function ChapterDialog() {
 
   const handleChapterClick = () => {
     setElements([...elements, { type: 'chapter', data: { title: '', subtitle: '', image: '' } }]);
+    
   }
 
   return (
