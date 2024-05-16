@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-
-
-function Section() {
-  return (
-    <div>Section</div>
-=======
 import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
@@ -247,7 +239,6 @@ const Section = (data) => {
     </Button>
     </Link>
     </>
->>>>>>> a8dc850b67d251891789adb3eb8b4addf8969fed
   )
 }
 
