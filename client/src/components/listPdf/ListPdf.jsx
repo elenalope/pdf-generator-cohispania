@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import React, {useEffect, useState} from 'react';
-import { getPDF } from '../../services/pdfServices';
-=======
 import React, {useEffect,useContext} from 'react';
 import { getPDF, deletePDF } from '../../services/pdfServices';
 import { DocumentContext } from '../../context/DocumentContext';
@@ -13,36 +9,10 @@ import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import PreviewPdf from '../PreviewPdf/PreviewPdf';
->>>>>>> a8dc850b67d251891789adb3eb8b4addf8969fed
 
 
 const ListPdf = () => {
 
-<<<<<<< HEAD
-  const [documents, setDocuments] = useState([]);
-
-  useEffect(()=>{
-
-    const getDocuments = async () => {
-      const response = await getPDF();
-      console.log(response)
-       setDocuments(response)
-      }
-
-    getDocuments();
-  }, [])
-
-
-  return (
-    <div className='listPdfContainer'>
-      <h3>Lista de plantillas</h3>
-      <ul>
-        {documents.map((document) => (
-          <li key={document._id}>{document.title}</li>
-        ))}
-      </ul>
-     
-=======
   const navigate = useNavigate();
   const { documents, setDocuments } = useContext(DocumentContext);
 
@@ -94,13 +64,8 @@ const ListPdf = () => {
           </div>
         </Card>
       ))}
->>>>>>> a8dc850b67d251891789adb3eb8b4addf8969fed
     </div>
   );
 };
 
-<<<<<<< HEAD
-export default ListPdf
-=======
 export default ListPdf;
->>>>>>> a8dc850b67d251891789adb3eb8b4addf8969fed

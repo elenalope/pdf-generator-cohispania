@@ -15,16 +15,10 @@ export const getPDF = async () => {
 };
 
 //POST
-<<<<<<< HEAD
-export const postPDF = async (data) => {
-  try {
-     const response = await axios.post(`${URL}`, data);
-=======
 export const postPDF = async (newData) => {
   try {
     console.log("Datos enviados:", newData);
      const response = await axios.post(`${URL}/document`, newData);
->>>>>>> a8dc850b67d251891789adb3eb8b4addf8969fed
      alert("Document create succesfully");
      return response;
   } catch (error) {
@@ -35,11 +29,7 @@ export const postPDF = async (newData) => {
 //DELETE
 export const deletePDF = async (id) =>{
   try {
-<<<<<<< HEAD
-    let urlId = `${URL}/${id}`;
-=======
     let urlId = `${URL}/document/${id}`;
->>>>>>> a8dc850b67d251891789adb3eb8b4addf8969fed
     const response = await axios.delete(urlId);
     alert("Document deleted");
     return response;
@@ -53,11 +43,7 @@ export const deletePDF = async (id) =>{
 //UPDATE
 export const updateData = async (data, id) => {
   try {
-<<<<<<< HEAD
-    let urlId = `${URL}/${id}`;
-=======
     let urlId = `${URL}/document/${id}`;
->>>>>>> a8dc850b67d251891789adb3eb8b4addf8969fed
     const response = await axios.put(urlId, data);
     alert('Document updated succesfully');
     return response;
@@ -70,11 +56,7 @@ export const updateData = async (data, id) => {
 //GET BY ID
 export const getById = async (id) => {
   try {
-<<<<<<< HEAD
-    const response = await axios.get(`${URL}/${id}`);
-=======
     const response = await axios.get(`${URL}/document/${id}`);
->>>>>>> a8dc850b67d251891789adb3eb8b4addf8969fed
     return response;
   } catch (error) {
     console.error('Error get document', error.message);
