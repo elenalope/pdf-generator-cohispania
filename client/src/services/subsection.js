@@ -5,7 +5,7 @@ export const URL = 'http://localhost:3000/api/document';
 
 export const addsubSection = async (templateId, newsubSection) => {
     try {
-      console.log("Datos del subSection enviados:", sectionData);
+      console.log("Datos del subSection enviados:", subsectionData);
       const response = await axios.post(`${URL}/${templateId}/subsection`, newsubSection);
       alert("subSección añadidaa exitosamente");
       return response;
@@ -16,7 +16,7 @@ export const addsubSection = async (templateId, newsubSection) => {
 
 export const updateSection = async (templateId, subsectionId, updatedsubSection)=>{
   try {
-    const response = await axios.put(`${URL}/${templateId}/subsection/${subsectionId}`, {subsection: updatedSection});
+    const response = await axios.put(`${URL}/${templateId}/subsection/${subsectionId}`, {subsection: updatedsubSection});
     alert("subSección actualizada exitosamente");
     return response;
   } catch (error) {
@@ -27,7 +27,7 @@ export const updateSection = async (templateId, subsectionId, updatedsubSection)
 
 export const deletesubSection = async (templateId, subSectionId)=>{
   try {
-    const response = await axios.delete(`${URL}/${templateId}/subSection/${subSectionIdsectionId}`);
+    const response = await axios.delete(`${URL}/${templateId}/subSection/${subSectionId}`);
     alert('subSección eliminada correctamente');
     return response;
   } catch (error) {
