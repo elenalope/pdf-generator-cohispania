@@ -3,7 +3,7 @@ import LayoutPublic from '../layout/LayoutPublic';
 import LayoutDocument from '../layout/LayoutDocument';
 import Home from '../pages/home/Home.jsx';
 import Config from '../pages/config/Config.jsx';
-import Chapter from '../views/Chapter.jsx';
+import Chapter from '../views/chapter/Chapter.jsx';
 import Section from '../views/Section.jsx';
 import Subsection from  '../views/Subsection.jsx';
 
