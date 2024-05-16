@@ -6,6 +6,7 @@ import Chapter from '../views/Chapter.jsx';
 import Section from '../views/Section.jsx';
 import Subsection from  '../views/Subsection.jsx';
 import MyDocument from "../pages/document/MyDocument.jsx";
+import LayoutDocument from "../layout/LayoutDocument.jsx"
 
 
 const router = createBrowserRouter([
@@ -26,19 +27,23 @@ const router = createBrowserRouter([
         element: <Config />,
       },
       {
-        path: "/document",
-        element: <MyDocument />,
+        path: "/document/:id",
+        element: <LayoutDocument />,
         children: [
+          {
+            index: true,
+            element: <MyDocument/>,
+          },
           {
             path: "chapter",
             element: <Chapter />,
           },
           {
-            path: "section",
+            path: "section/:id",
             element: <Section />,
           },
           {
-            path: "subsection",
+            path: "subsection/:id",
             element: <Subsection />,
           },
         ]

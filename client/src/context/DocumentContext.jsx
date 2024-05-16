@@ -1,13 +1,19 @@
 import React from 'react'
 import { useContext, useState, createContext } from 'react'
 
+
 export const DocumentContext = createContext()
 
 const DocumentProvider = ({children}) => {
-      const [data, setData] = useState({});
-      const [config, setConfig] = useState(null);
+  const [documents, setDocuments] = useState([]);
+  const [currentDocument, setCurrentDocument] = useState(null);
+
+
   return (
-    <DocumentContext.Provider value={{ config, setConfig, data, setData }}>
+    <DocumentContext.Provider value={{ documents,
+      setDocuments,
+      currentDocument,
+      setCurrentDocument }}>
         {children}
     </DocumentContext.Provider>
   )
