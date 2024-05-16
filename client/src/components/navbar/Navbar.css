@@ -2,7 +2,7 @@ body {
     margin: 0;
 }
 .navbar {
-    background-color: #2196F3;
+    background-color: #1976D2;
     height: 10vh;
     width: 100%;
     display: flex;
@@ -12,10 +12,7 @@ body {
 } 
 .logo {
     width: 20vh;
-    margin-left: 2%;
-<<<<<<< HEAD
-}
-=======
+    margin-left: 10%;
 }
 
 >>>>>>> a8dc850b67d251891789adb3eb8b4addf8969fed
