@@ -50,6 +50,7 @@ const MyDocument = () => {
   const initialConfig = { ...config, chapters: Array.isArray(config.chapters) ? config.chapters : [] };
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(initialConfig);
+  const [chapterId, setChapterId] = useState(null); 
 
   useEffect(() => {
     console.log('config desde doc', config);
@@ -83,15 +84,19 @@ const MyDocument = () => {
 
   const handleChapterCreate = async (chapterData) => {
     try {
-      await addChapter(id, { chapter: chapterData });
+      const document = await addChapter(id, { chapter: chapterData }); // Capturar la respuesta que contiene el documento actualizado
+      const newChapter = document.content[document.content.length - 1]; // Obtener el capítulo recién creado
       setData(prevData => ({
         ...prevData,
-        chapters: [...prevData.chapters, chapterData] 
+        chapters: [...prevData.chapters, newChapter] // Usar newChapter directamente
       }));
+      setChapterId(newChapter._id); // Almacenar el ID del capítulo recién creado
     } catch (error) {
       console.error('Error al crear el capítulo:', error);
     }
   };
+
+
 
   const PdfDoc = ({ config }) => (
     <Document>
@@ -122,9 +127,11 @@ const MyDocument = () => {
       console.error('Error al generar el PDF:', error);
     }
   };
-  console.log('id chapter', )
-  const handleEnterChapter = (chapterId) => {
-    navigate(`chapter/${chapterId}`);
+  console.log('id chapter', chapterId)
+  const handleEnterChapter = () => {
+    if (chapterId) {
+      navigate(`chapter/${chapterId}`);
+    }
   };
 
   return (
@@ -204,7 +211,7 @@ const MyDocument = () => {
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
                     sx={{ width: 100 , ml: 'auto'}} 
-                    onClick={() => handleEnterChapter(chapter._id)}/* type="submit" */ /* onClick={()=> navigate('/document')} */ >
+                    onClick={handleEnterChapter}/* type="submit" */ /* onClick={()=> navigate('/document')} */ >
                     Entrar
                     </Button>
                     </div>
