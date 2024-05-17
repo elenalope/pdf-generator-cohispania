@@ -23,11 +23,14 @@ import Divider from '@mui/material/Divider';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import AddIcon from '@mui/icons-material/Add';
 import { addChapter } from '../../services/chapterServices.js';
+import { addSection} from '../../services/sectionServices.js';
 import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import SendIcon from '@mui/icons-material/Send';
 import { styled } from '@mui/material/styles';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -234,6 +237,8 @@ const MyDocument = () => {
                         alt="chapter-image"
                       />
                     )}
+                    <Divider/>
+                    <FormControlLabel disabled control={<Switch />} label={data.cover} />
                     <div className='buttons-chapter-mydocument'>
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
@@ -296,7 +301,8 @@ const MyDocument = () => {
       
 
       {showPreview && <PreviewPdf config={config} data={data} />}
-      {openSection && <SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate}/>}
+      {openSection &&<SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate} />}
+
     </>
   );
 }
