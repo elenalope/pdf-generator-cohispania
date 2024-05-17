@@ -60,7 +60,7 @@ const Config = () => {
             const response = await postPDF(data);
             const documentId = response.data._id;
             navigate(`/document/${documentId}`, {
-              state: { config: response.data } 
+              state: { config: data, documentId: documentId } 
             });
          
         } catch (error) {

@@ -19,6 +19,44 @@ export const addChapter = async (request, response) => {
     }
 };
 
+export const getChapterById = async (request, response) => {
+    try {
+        const { id: templateId, chapterId } = request.params;
+        const document = await Template.findById(templateId);
+
+        if (!document) {
+            return response.status(404).json({ message: "Document not found" });
+        }
+
+        const chapter = document.content.id(chapterId);
+        
+        if (!chapter) {
+            return response.status(404).json({ message: "Chapter not found" });
+        }
+
+        response.status(200).json(chapter);
+    } catch (error) {
+        response.status(500).json({ message: error.message });
+    }
+};
+
+
+export const getChapters = async (request, response) => {
+    try {
+        const { id } = request.params;
+        const document = await Template.findById(id);
+
+        if (!document) {
+            return response.status(404).json({ message: "Document not found" });
+        }
+
+        response.status(200).json(document.content);
+    } catch (error) {
+        response.status(500).json({ message: error.message });
+    }
+};
+
+
 export const deleteChapter = async (request, response) => {
     try {
         const { id: templateId , chapterId } = request.params;

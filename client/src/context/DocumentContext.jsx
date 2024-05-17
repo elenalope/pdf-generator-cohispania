@@ -7,13 +7,13 @@ export const DocumentContext = createContext()
 const DocumentProvider = ({children}) => {
   const [documents, setDocuments] = useState([]);
   const [currentDocument, setCurrentDocument] = useState(null);
-
+  const [data, setData] = useState(null);
 
   return (
     <DocumentContext.Provider value={{ documents,
       setDocuments,
       currentDocument,
-      setCurrentDocument }}>
+      setCurrentDocument, data, setData}}>
         {children}
     </DocumentContext.Provider>
   )
