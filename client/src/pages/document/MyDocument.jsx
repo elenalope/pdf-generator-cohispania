@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { postPDF } from '../../services/pdfServices';
-import './MyDocument.css';
 import { pdf, Document, Page, Text, View } from '@react-pdf/renderer';
 import PreviewPdf from '../../components/PreviewPdf/PreviewPdf.jsx';
 import ChapterDialog from '../../components/chapter/ChapterDialog.jsx';
@@ -190,17 +189,7 @@ const MyDocument = () => {
                       />
                     )}
                     <div className='buttons-chapter-mydocument'>
-                      <Button
-                          sx={{ mb: 1 }}
-                          component="label"
-                          role={undefined}
-                          variant="contained"
-                          tabIndex={-1}
-                          startIcon={<CloudUploadIcon />}
-                            >
-                          Seleccionar Imagen
-                          <VisuallyHiddenInput type="file" /* onChange={(e) => handleInputChange(e, index)} */ />
-                    </Button>
+
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
                     sx={{ width: 100 , ml: 'auto'}} 

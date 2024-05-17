@@ -57,7 +57,6 @@ const Chapter = () => {
 
   return (
     <>
-    <ChapterDialog/>
     <ParagraphDialog/>
     <LinkDialog/>
     </>
