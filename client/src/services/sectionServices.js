@@ -6,9 +6,10 @@ export const URL = 'http://localhost:3000/api/document';
 export const addSection = async (templateId, newSection) => {
     try {
       console.log("Datos del Chapter enviados:", newSection);
-      const response = await axios.post(`${URL}/${templateId}/section`, newSection);
+      const response = await axios.post(`${URL}/${templateId}`, newSection);
+      console.log('soy section desde servicios', response.data)
       alert("Sección añadida exitosamente");
-      return response;
+      return response.data;
     } catch (error) {
        console.error('Error creating section', error.message);
        throw error; }

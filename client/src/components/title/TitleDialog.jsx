@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 export default function TitleDialog({ openTitle, setOpenTitle, onTitleCreate}) {
   const { register, handleSubmit, reset } = useForm();
+  
 
   const handleClose = () => {
     setOpenTitle(false);
@@ -17,7 +18,8 @@ export default function TitleDialog({ openTitle, setOpenTitle, onTitleCreate}) {
 
   const onSubmit = (data) => {
     const titleData = {
-      title: data.title
+      title: data.title,
+      content: []
     };
     onTitleCreate(titleData);
     handleClose();

@@ -70,6 +70,7 @@ const MyDocument = () => {
   const [data, setData] = useState(initialConfig);
   const [chapterId, setChapterId] = useState(null); 
   const [sectionId, setSectionId] = useState(null);
+  const [titleId, setTitleId] = useState(null);
   
 
   useEffect(() => {
@@ -126,6 +127,7 @@ const MyDocument = () => {
   };
 
   const handleSectionCreate = async (sectionData) => {
+    console.log('la section data esta aqui', sectionData)
     try {
     console.log('ID:', id);
     console.log('Datos de la sección:', sectionData);
@@ -136,15 +138,6 @@ const MyDocument = () => {
     }
     console.log('Contenido del documento:', document.content);
     const newSection = document.content[document.content.length - 1];
-
-    
-    console.log('Nueva sección creada:', newSection);
-
- 
-    if (!newSection) {
-      throw new Error('No se pudo obtener la nueva sección');
-    }
-
     setData(prevData => ({
       ...prevData,
       sections: [...prevData.sections, newSection] 
@@ -316,6 +309,7 @@ const MyDocument = () => {
             </Box>
           </div>
           <CssBaseline />
+
           <div className='pdf-background'>
           <Container fixed>
             <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
@@ -421,12 +415,7 @@ const MyDocument = () => {
 
       {showPreview && <PreviewPdf config={config} data={data} />}
       {openChapter && <ChapterDialog openChapter={openChapter} setOpenChapter={setOpenChapter} onChapterCreate={handleChapterCreate}/>}
-      
-
-      {/* {showPreview && <PreviewPdf config={config} data={data} />} */}
       {openSection &&<SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate} />}
-
-      {/* {showPreview && <PreviewPdf config={config} data={data} />} */}
       {openTitle &&<TitleDialog openTitle={openTitle} setOpenTitle={setOpenTitle} onTitleCreate={handleTitleCreate}/>}
 
 
