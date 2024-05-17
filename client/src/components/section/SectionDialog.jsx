@@ -35,9 +35,9 @@ export default function SectionDialog({ openSection, setOpenSection, onSectionCr
   const onSubmit = (data) => {
     const sectionData = {
       title: data.title,
-      cover: data.cover,
       img: imageFile ? URL.createObjectURL(imageFile) : "",
-      content: []
+      content: [],
+      
     };
     onSectionCreate(sectionData);
     handleClose();

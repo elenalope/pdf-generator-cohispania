@@ -31,6 +31,13 @@ import SendIcon from '@mui/icons-material/Send';
 import { styled } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import BookIcon from '@mui/icons-material/Book';
+import TitleIcon from '@mui/icons-material/Title';
+import ArticleIcon from '@mui/icons-material/Article';
+import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import MoveDownIcon from '@mui/icons-material/MoveDown'
+
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -112,15 +119,34 @@ const MyDocument = () => {
 
   const handleSectionCreate = async (sectionData) => {
     try {
-      const document = await addSection(id, { section: sectionData });
-      const newSection = document.content[document.content.length - 1];
-      setData(prevData => ({
-        ...prevData,
-        sections: [...prevData.sections, newSection]
-      }));
-      setSectionId(newSection._id);
-    } catch (error) {
-      console.error('Error al crear la sección:', error);
+    console.log('ID:', id);
+    console.log('Datos de la sección:', sectionData);
+    const document = await addSection(id, { section: sectionData });
+    console.log('Documento recibido:', document);
+    if (!document || !document.content) {
+      throw new Error('El documento devuelto no es válido');
+    }
+    console.log('Contenido del documento:', document.content);
+    const newSection = document.content[document.content.length - 1];
+
+    
+    console.log('Nueva sección creada:', newSection);
+
+ 
+    if (!newSection) {
+      throw new Error('No se pudo obtener la nueva sección');
+    }
+
+    setData(prevData => ({
+      ...prevData,
+      sections: [...prevData.sections, newSection] 
+    }));
+
+    
+    setSectionId(newSection._id);
+  } catch (error) {
+    
+    console.error('Error al crear la sección:', error);
     }
   };
 
@@ -187,25 +213,76 @@ const MyDocument = () => {
             <Box>
               <nav aria-label="main mailbox folders">
                 <List>
-                  <ListItem disablePadding onClick={handleChapterClick}>
+                  <ListItem disablePadding>
                     <ListItemButton>
                       <ListItemIcon>
-                        <ImportContactsIcon />
+                      <ImportContactsIcon />
                       </ListItemIcon>
                       <ListItemText primary="Capítulo" />
-                      <AddIcon />
+                      <AddIcon onClick={handleChapterClick}/>
                     </ListItemButton>
                   </ListItem>
                   <Divider />
-                  <ListItem disablePadding onClick={handleSectionClick}>
+                  <ListItem disablePadding>
                     <ListItemButton>
                       <ListItemIcon>
-                        <ImportContactsIcon />
+                      <BookIcon />
                       </ListItemIcon>
                       <ListItemText primary="Sección" />
+                      <AddIcon onClick={handleSectionClick}/>
+                    </ListItemButton>
+                  </ListItem>
+                  <Divider/>
+                <ListItem disablePadding>
+                    <ListItemButton disabled>
+                      <ListItemIcon>
+                      <ArticleIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Subsección" />
                       <AddIcon />
                     </ListItemButton>
                   </ListItem>
+                  <Divider/>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>
+                      <TitleIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Título" />
+                      <AddIcon onClick={handleSectionClick}/>
+                    </ListItemButton>
+                  </ListItem>
+                  <Divider/>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>
+                      <FormatAlignJustifyIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Párrafo" />
+                      <AddIcon onClick={handleSectionClick}/>
+                    </ListItemButton>
+                  </ListItem>
+                  <Divider/>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>
+                      <FormatListBulletedIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Lista" />
+                      <AddIcon onClick={handleSectionClick}/>
+                    </ListItemButton>
+                  </ListItem>
+                  <Divider/>
+                <ListItem disablePadding>
+                    <ListItemButton disabled>
+                      <ListItemIcon>
+                      <MoveDownIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Salto" />
+                      <AddIcon />
+                    </ListItemButton>
+                  </ListItem>
+                  
                 </List>
               </nav>
             </Box>
@@ -237,8 +314,6 @@ const MyDocument = () => {
                         alt="chapter-image"
                       />
                     )}
-                    <Divider/>
-                    <FormControlLabel disabled control={<Switch />} label={data.cover} />
                     <div className='buttons-chapter-mydocument'>
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
@@ -275,6 +350,8 @@ const MyDocument = () => {
                         alt="section-image"
                       />
                     )}
+                     <Divider/>
+                    <FormControlLabel disabled control={<Switch />} label={data.cover} />
                     <div className='buttons-section-mydocument'>
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
