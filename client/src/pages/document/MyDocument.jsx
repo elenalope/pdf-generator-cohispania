@@ -171,7 +171,23 @@ const MyDocument = () => {
                         alt="chapter-image"
                       />
                     )}
+                    <Button
+                sx={{ mb: 2 }}
+                component="label"
+                role={undefined}
+                variant="contained"
+                tabIndex={-1}
+                startIcon={<CloudUploadIcon />}
+                   >
+                 Seleccionar Imagen
+                 <VisuallyHiddenInput type="file" /* onChange={(e) => handleInputChange(e, index)} */ />
+                 </Button>
+                <Button variant="contained" endIcon={<SendIcon />} size="small"
+                sx={{ width: 100 , ml: 'auto'}} /* type="submit" */ /* onClick={()=> navigate('/document')} */ >
+                Crear
+                </Button>
                   </CardContent>
+                  
                 )
               ))}
             </Box>
