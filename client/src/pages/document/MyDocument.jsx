@@ -316,6 +316,7 @@ const MyDocument = () => {
             </Box>
           </div>
           <CssBaseline />
+          <div className='pdf-background'>
           <Container fixed>
             <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
               {data.chapters.map((chapter, index) => (
@@ -355,9 +356,7 @@ const MyDocument = () => {
                   
                 )
               ))}
-            </Box>
-          
-            <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
+              <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
             {data.sections.map((section, index) => (
                 section && section.title && (
                   <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
@@ -392,25 +391,28 @@ const MyDocument = () => {
                 </CardContent>
                 )
               ))}
-            </Box>
 
-            <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
-            {data.titles.map((title, index) => (
-                title && title.title && (
-                  <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
+              {data.titles.map((title, index) => (
+                  title && title.title && (
+                    <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                       {/* <LongMenu /> */}
-                    </Box>
-                    <Typography sx={{ mb: 2, mt: 1 }}>
-                      {title.title}
-                    </Typography>
+                      </Box>
+                      <Typography sx={{ mb: 2, mt: 1 }}>
+                        {title.title}
+                      </Typography>
                     
-                  </CardContent>
-                )
-              ))}
-            </Box>
+                    </CardContent>
+                  )
+               ))}
+              </Box>
+              </Box>
+              </Box>
+        
           </Container>
 
+          </div>
         </div>
           <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
           <Button variant="contained" onClick={() => navigate('/')}>SALIR SIN GUARDAR</Button>
@@ -421,10 +423,10 @@ const MyDocument = () => {
       {openChapter && <ChapterDialog openChapter={openChapter} setOpenChapter={setOpenChapter} onChapterCreate={handleChapterCreate}/>}
       
 
-      {showPreview && <PreviewPdf config={config} data={data} />}
+      {/* {showPreview && <PreviewPdf config={config} data={data} />} */}
       {openSection &&<SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate} />}
 
-      {showPreview && <PreviewPdf config={config} data={data} />}
+      {/* {showPreview && <PreviewPdf config={config} data={data} />} */}
       {openTitle &&<TitleDialog openTitle={openTitle} setOpenTitle={setOpenTitle} onTitleCreate={handleTitleCreate}/>}
 
 
