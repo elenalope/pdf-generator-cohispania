@@ -5,6 +5,7 @@ import { postPDF } from '../../services/pdfServices';
 import { pdf, Document, Page, Text, View } from '@react-pdf/renderer';
 import PreviewPdf from '../../components/PreviewPdf/PreviewPdf.jsx';
 import ChapterDialog from '../../components/chapter/ChapterDialog.jsx';
+import SectionDialog from '../../components/section/SectionDialog.jsx';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -26,7 +27,6 @@ import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import SendIcon from '@mui/icons-material/Send';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 
 const VisuallyHiddenInput = styled('input')({
@@ -40,16 +40,23 @@ const VisuallyHiddenInput = styled('input')({
   whiteSpace: 'nowrap',
   width: 1,
 });
+
 const MyDocument = () => {
   const navigate = useNavigate();
   const { id } = useParams(); 
   const location = useLocation();
   const { config = {}, documentId } = location.state || {};
 
-  const initialConfig = { ...config, chapters: Array.isArray(config.chapters) ? config.chapters : [] };
-  const [open, setOpen] = useState(false);
+  const initialConfig = { ...config, 
+    chapters: Array.isArray(config.chapters) ? config.chapters : [],
+    sections: Array.isArray(config.sections) ? config.sections : [] 
+  };
+  const [openChapter, setOpenChapter] = useState(false);
+  const [openSection, setOpenSection] = useState(false);
   const [data, setData] = useState(initialConfig);
   const [chapterId, setChapterId] = useState(null); 
+  const [sectionId, setSectionId] = useState(null);
+  
 
   useEffect(() => {
     console.log('config desde doc', config);
@@ -59,6 +66,7 @@ const MyDocument = () => {
   const methods = useForm({
     defaultValues: initialConfig,
   });
+
   const { register, handleSubmit, reset, formState: { errors } } = methods;
   const [showPreview, setShowPreview] = useState(false);
 
@@ -78,7 +86,11 @@ const MyDocument = () => {
   };
 
   const handleChapterClick = () => {
-    setOpen(true);
+    setOpenChapter(true);
+  };
+
+  const handleSectionClick = () => {
+    setOpenSection(true);
   };
 
   const handleChapterCreate = async (chapterData) => {
@@ -95,7 +107,19 @@ const MyDocument = () => {
     }
   };
 
-
+  const handleSectionCreate = async (sectionData) => {
+    try {
+      const document = await addSection(id, { section: sectionData });
+      const newSection = document.content[document.content.length - 1];
+      setData(prevData => ({
+        ...prevData,
+        sections: [...prevData.sections, newSection]
+      }));
+      setSectionId(newSection._id);
+    } catch (error) {
+      console.error('Error al crear la sección:', error);
+    }
+  };
 
   const PdfDoc = ({ config }) => (
     <Document>
@@ -126,10 +150,16 @@ const MyDocument = () => {
       console.error('Error al generar el PDF:', error);
     }
   };
-  console.log('id chapter', chapterId)
+
   const handleEnterChapter = () => {
     if (chapterId) {
       navigate(`chapter/${chapterId}`);
+    }
+  };
+
+  const handleEnterSection = () => {
+    if (sectionId) {
+      navigate(`section/${sectionId}`);
     }
   };
 
@@ -164,6 +194,15 @@ const MyDocument = () => {
                     </ListItemButton>
                   </ListItem>
                   <Divider />
+                  <ListItem disablePadding onClick={handleSectionClick}>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <ImportContactsIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Sección" />
+                      <AddIcon />
+                    </ListItemButton>
+                  </ListItem>
                 </List>
               </nav>
             </Box>
@@ -196,7 +235,6 @@ const MyDocument = () => {
                       />
                     )}
                     <div className='buttons-chapter-mydocument'>
-
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
                     sx={{ width: 100 , ml: 'auto'}} 
@@ -210,14 +248,55 @@ const MyDocument = () => {
                 )
               ))}
             </Box>
+          
+            <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
+            {data.sections.map((section, index) => (
+                section && section.title && (
+                  <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      {/* <LongMenu /> */}
+                    </Box>
+                    <Typography sx={{ mb: 2, mt: 1 }}>
+                      {section.title}
+                    </Typography>
+                    <Divider />
+                    {section.img && (
+                      <CardMedia
+                        sx={{ mt: 2 }}
+                        component="img"
+                        height="140"
+                        width="280"
+                        image={section.img}
+                        alt="section-image"
+                      />
+                    )}
+                    <div className='buttons-section-mydocument'>
+    
+                    <Button variant="contained" endIcon={<SendIcon />} size="small"
+                    sx={{ width: 100 , ml: 'auto'}} 
+                    onClick={handleEnterSection}/* type="submit" */ /* onClick={()=> navigate('/document')} */ >
+                    Entrar
+                    </Button>
+                    </div>
+                    
+                </CardContent>
+                )
+              ))}
+            </Box>
           </Container>
+
         </div>
         <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
           <Button variant="contained" onClick={() => navigate('/')}>SALIR SIN GUARDAR</Button>
         </Stack>
       </form>
+
       {showPreview && <PreviewPdf config={config} data={data} />}
-      {open && <ChapterDialog open={open} setOpen={setOpen} onChapterCreate={handleChapterCreate} />}
+      {openChapter && <ChapterDialog openChapter={openChapter} setOpenChapter={setOpenChapter} onChapterCreate={handleChapterCreate}/>}
+      
+
+      {showPreview && <PreviewPdf config={config} data={data} />}
+      {openSection && <SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate}/>}
     </>
   );
 }

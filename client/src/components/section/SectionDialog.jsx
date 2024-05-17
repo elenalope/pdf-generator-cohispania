@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -8,6 +7,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
+import { useForm } from "react-hook-form";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -21,18 +23,19 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function SectionDialog( open, setOpen, onSectionCreate) {
+export default function SectionDialog({ openSection, setOpenSection, onSectionCreate }) {
   const { register, handleSubmit, reset } = useForm();
   const [imageFile, setImageFile] = useState(null);
 
   const handleClose = () => {
-    setOpen(false);
+    setOpenSection(false);
     reset();
   };
 
   const onSubmit = (data) => {
     const sectionData = {
       title: data.title,
+      cover: data.cover,
       img: imageFile ? URL.createObjectURL(imageFile) : "",
       content: []
     };
@@ -44,9 +47,8 @@ export default function SectionDialog( open, setOpen, onSectionCreate) {
     setImageFile(e.target.files[0]);
   };
 
-
   return (
-    <Dialog open={open} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
+    <Dialog open={openSection} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
       <DialogTitle>Crear Sección</DialogTitle>
       <DialogContent sx={{ p: 3 }}>
         <TextField
@@ -70,6 +72,12 @@ export default function SectionDialog( open, setOpen, onSectionCreate) {
           Seleccionar Imagen
           <VisuallyHiddenInput type="file" onChange={handleImageChange} />
         </Button>
+        <FormControlLabel
+          control={
+            <Switch {...register('includeBackCover')} id="includeBackCover-switch" inputProps={{ 'aria-label': 'controlled' }}/>
+          } 
+          label="Portada" 
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancelar</Button>
