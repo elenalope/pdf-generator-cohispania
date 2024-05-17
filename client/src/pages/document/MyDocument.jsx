@@ -84,13 +84,13 @@ const MyDocument = () => {
 
   const handleChapterCreate = async (chapterData) => {
     try {
-      const document = await addChapter(id, { chapter: chapterData }); // Capturar la respuesta que contiene el documento actualizado
-      const newChapter = document.content[document.content.length - 1]; // Obtener el capítulo recién creado
+      const document = await addChapter(id, { chapter: chapterData }); 
+      const newChapter = document.content[document.content.length - 1]; 
       setData(prevData => ({
         ...prevData,
-        chapters: [...prevData.chapters, newChapter] // Usar newChapter directamente
+        chapters: [...prevData.chapters, newChapter] 
       }));
-      setChapterId(newChapter._id); // Almacenar el ID del capítulo recién creado
+      setChapterId(newChapter._id); 
     } catch (error) {
       console.error('Error al crear el capítulo:', error);
     }
