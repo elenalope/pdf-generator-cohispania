@@ -23,19 +23,17 @@ import Divider from '@mui/material/Divider';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import AddIcon from '@mui/icons-material/Add';
 import { addChapter } from '../../services/chapterServices.js';
-/* import LongMenu from '../cards/DropDownMenu.jsx';
- */import CardContent from '@mui/material/CardContent';
+import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
-
 
 const MyDocument = () => {
   const navigate = useNavigate();
   const { id } = useParams(); 
   const location = useLocation();
-  const { config= {}, documentId } = location.state || {};
+  const { config = {}, documentId } = location.state || {};
 
-  const initialConfig = {...config, chapters: Array.isArray(config.chapters) ? config.chapters : [] };
+  const initialConfig = { ...config, chapters: Array.isArray(config.chapters) ? config.chapters : [] };
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(initialConfig);
 
@@ -71,10 +69,10 @@ const MyDocument = () => {
 
   const handleChapterCreate = async (chapterData) => {
     try {
-      const newChapter = await addChapter(id, { chapter: chapterData });
+      await addChapter(id, { chapter: chapterData });
       setData(prevData => ({
         ...prevData,
-        chapters: [...prevData.chapters, newChapter.chapter]
+        chapters: [...prevData.chapters, chapterData] // Use chapterData directly
       }));
     } catch (error) {
       console.error('Error al crear el capítulo:', error);
@@ -149,36 +147,33 @@ const MyDocument = () => {
           <CssBaseline />
           <Container fixed>
             <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
-              gg
-              {data.chapters.map((chapter, index)=>(
+              {data.chapters.map((chapter, index) => (
                 chapter && chapter.title && (
-                <CardContent key={index} sx={{ pl: 4 , pr: 4 , mb: 3, pt:2 , pb: 2 , backgroundColor: '#E9EAEC'}} >
-                  <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>
-                    <LongMenu />
-                  </Box>
-                  <Typography
-                    sx={{ mb: 2 , mt: 1 }}
-                    > {chapter.title}
-                  </Typography>
-                  <Divider/>
-                  <Typography 
-                    sx={{ mb: 2, mt: 2}}>
-                    {chapter.subtitle}
-                  </Typography>
-                  <Divider/>
-                  {chapter.img && (
-                  <CardMedia
-                  sx={{ mt: 2 }}
-                    component="img"
-                    height="140"
-                    width="280"
-                    image=""
-                    alt="chapter-image"
-                   />)}
-                </CardContent>
+                  <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      {/* <LongMenu /> */}
+                    </Box>
+                    <Typography sx={{ mb: 2, mt: 1 }}>
+                      {chapter.title}
+                    </Typography>
+                    <Divider />
+                    <Typography sx={{ mb: 2, mt: 2 }}>
+                      {chapter.subtitle}
+                    </Typography>
+                    <Divider />
+                    {chapter.img && (
+                      <CardMedia
+                        sx={{ mt: 2 }}
+                        component="img"
+                        height="140"
+                        width="280"
+                        image={chapter.img}
+                        alt="chapter-image"
+                      />
+                    )}
+                  </CardContent>
                 )
               ))}
-              
             </Box>
           </Container>
         </div>
