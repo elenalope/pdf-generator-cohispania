@@ -12,6 +12,7 @@ export const addChapter = async (request, response) => {
         }
         document.content.push(chapter);
         await document.save();
+        /* const newChapter = document.content[document.content.length - 1]; */
 
         response.status(200).json(document);
     } catch (error) {
