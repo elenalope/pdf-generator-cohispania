@@ -26,8 +26,21 @@ import { addChapter } from '../../services/chapterServices.js';
 import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
+import SendIcon from '@mui/icons-material/Send';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { styled } from '@mui/material/styles';
 
-
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
 const MyDocument = () => {
   const navigate = useNavigate();
   const { id } = useParams(); 
@@ -73,7 +86,7 @@ const MyDocument = () => {
       await addChapter(id, { chapter: chapterData });
       setData(prevData => ({
         ...prevData,
-        chapters: [...prevData.chapters, chapterData] // Use chapterData directly
+        chapters: [...prevData.chapters, chapterData] 
       }));
     } catch (error) {
       console.error('Error al crear el capítulo:', error);
@@ -108,6 +121,10 @@ const MyDocument = () => {
     } catch (error) {
       console.error('Error al generar el PDF:', error);
     }
+  };
+  console.log('id chapter', )
+  const handleEnterChapter = (chapterId) => {
+    navigate(`chapter/${chapterId}`);
   };
 
   return (
@@ -172,22 +189,27 @@ const MyDocument = () => {
                         alt="chapter-image"
                       />
                     )}
-                    <Button
-                sx={{ mb: 2 }}
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<CloudUploadIcon />}
-                   >
-                 Seleccionar Imagen
-                 <VisuallyHiddenInput type="file" /* onChange={(e) => handleInputChange(e, index)} */ />
-                 </Button>
-                <Button variant="contained" endIcon={<SendIcon />} size="small"
-                sx={{ width: 100 , ml: 'auto'}} /* type="submit" */ /* onClick={()=> navigate('/document')} */ >
-                Crear
-                </Button>
-                  </CardContent>
+                    <div className='buttons-chapter-mydocument'>
+                      <Button
+                          sx={{ mb: 1 }}
+                          component="label"
+                          role={undefined}
+                          variant="contained"
+                          tabIndex={-1}
+                          startIcon={<CloudUploadIcon />}
+                            >
+                          Seleccionar Imagen
+                          <VisuallyHiddenInput type="file" /* onChange={(e) => handleInputChange(e, index)} */ />
+                    </Button>
+    
+                    <Button variant="contained" endIcon={<SendIcon />} size="small"
+                    sx={{ width: 100 , ml: 'auto'}} 
+                    onClick={() => handleEnterChapter(chapter._id)}/* type="submit" */ /* onClick={()=> navigate('/document')} */ >
+                    Entrar
+                    </Button>
+                    </div>
+                    
+                </CardContent>
                   
                 )
               ))}
