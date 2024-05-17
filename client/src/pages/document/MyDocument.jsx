@@ -6,6 +6,7 @@ import { pdf, Document, Page, Text, View } from '@react-pdf/renderer';
 import PreviewPdf from '../../components/PreviewPdf/PreviewPdf.jsx';
 import ChapterDialog from '../../components/chapter/ChapterDialog.jsx';
 import SectionDialog from '../../components/section/SectionDialog.jsx';
+import TitleDialog from '../../components/title/TitleDialog.jsx';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -24,6 +25,7 @@ import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import AddIcon from '@mui/icons-material/Add';
 import { addChapter } from '../../services/chapterServices.js';
 import { addSection} from '../../services/sectionServices.js';
+import { addTitle} from '../../services/titleService.js';
 import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
@@ -59,10 +61,12 @@ const MyDocument = () => {
 
   const initialConfig = { ...config, 
     chapters: Array.isArray(config.chapters) ? config.chapters : [],
-    sections: Array.isArray(config.sections) ? config.sections : [] 
+    sections: Array.isArray(config.sections) ? config.sections : [],
+    titles:  Array.isArray(config.sections) ? config.sections : []
   };
   const [openChapter, setOpenChapter] = useState(false);
   const [openSection, setOpenSection] = useState(false);
+  const [openTitle, setOpenTitle] = useState(false);
   const [data, setData] = useState(initialConfig);
   const [chapterId, setChapterId] = useState(null); 
   const [sectionId, setSectionId] = useState(null);
@@ -102,6 +106,10 @@ const MyDocument = () => {
   const handleSectionClick = () => {
     setOpenSection(true);
   };
+
+  const handleTitleClick = () => {
+    setOpenTitle(true);
+  }
 
   const handleChapterCreate = async (chapterData) => {
     try {
@@ -150,6 +158,20 @@ const MyDocument = () => {
     }
   };
 
+  const handleTitleCreate = async (titleData) => {
+    try {
+      const document = await addTitle(id, { title: titleData }); 
+      const newTitle= document.content[document.content.length - 1]; 
+      setData(prevData => ({
+        ...prevData,
+        titles: [...prevData.titles, newTitle] 
+      }));
+      setTitleId(newTitle._id); 
+    } catch (error) {
+      console.error('Error al crear el título:', error);
+    }
+  };
+
   const PdfDoc = ({ config }) => (
     <Document>
       <Page size={config.size}>
@@ -191,6 +213,12 @@ const MyDocument = () => {
       navigate(`section/${sectionId}`);
     }
   };
+
+  // const handleEnterTitle = () => {
+  //   if (titleId) {
+  //     navigate(`title/${titleId}`);
+  //   }
+  // };
 
   return (
     <>
@@ -249,7 +277,7 @@ const MyDocument = () => {
                       <TitleIcon />
                       </ListItemIcon>
                       <ListItemText primary="Título" />
-                      <AddIcon onClick={handleSectionClick}/>
+                      <AddIcon onClick={handleTitleClick}/>
                     </ListItemButton>
                   </ListItem>
                   <Divider/>
@@ -259,7 +287,7 @@ const MyDocument = () => {
                       <FormatAlignJustifyIcon />
                       </ListItemIcon>
                       <ListItemText primary="Párrafo" />
-                      <AddIcon onClick={handleSectionClick}/>
+                      <AddIcon />
                     </ListItemButton>
                   </ListItem>
                   <Divider/>
@@ -269,7 +297,7 @@ const MyDocument = () => {
                       <FormatListBulletedIcon />
                       </ListItemIcon>
                       <ListItemText primary="Lista" />
-                      <AddIcon onClick={handleSectionClick}/>
+                      <AddIcon />
                     </ListItemButton>
                   </ListItem>
                   <Divider/>
@@ -365,10 +393,26 @@ const MyDocument = () => {
                 )
               ))}
             </Box>
+
+            <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
+            {data.titles.map((title, index) => (
+                title && title.title && (
+                  <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      {/* <LongMenu /> */}
+                    </Box>
+                    <Typography sx={{ mb: 2, mt: 1 }}>
+                      {title.title}
+                    </Typography>
+                    
+                  </CardContent>
+                )
+              ))}
+            </Box>
           </Container>
 
         </div>
-        <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
+          <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
           <Button variant="contained" onClick={() => navigate('/')}>SALIR SIN GUARDAR</Button>
         </Stack>
       </form>
@@ -379,6 +423,10 @@ const MyDocument = () => {
 
       {showPreview && <PreviewPdf config={config} data={data} />}
       {openSection &&<SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate} />}
+
+      {showPreview && <PreviewPdf config={config} data={data} />}
+      {openTitle &&<TitleDialog openTitle={openTitle} setOpenTitle={setOpenTitle} onTitleCreate={handleTitleCreate}/>}
+
 
     </>
   );

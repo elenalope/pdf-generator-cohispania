@@ -37,7 +37,6 @@ export default function SectionDialog({ openSection, setOpenSection, onSectionCr
       title: data.title,
       img: imageFile ? URL.createObjectURL(imageFile) : "",
       content: [],
-      
     };
     onSectionCreate(sectionData);
     handleClose();
