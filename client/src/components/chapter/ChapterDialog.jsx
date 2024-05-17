@@ -45,7 +45,6 @@ export default function ChapterDialog({open, setOpen, onChapterCreate}) {
       };
         onChapterCreate(chapterData);
         handleClose();
-        reset();
     };
     const handleDownloadPdf = async () => {
     
@@ -75,55 +74,7 @@ export default function ChapterDialog({open, setOpen, onChapterCreate}) {
 
   return (
     
-    <div className='document-body'>
-         <div className='option-list'>
-      <Box>
-      <nav>
-        <List sx={{  backgroundColor: '#E9EAEC'}}>
-          <Divider />
-        </List>
-      </nav>
-    </Box>
-      </div>
-      <div className='pdf-background'>
-      {/* <Box sx={{ mt: 1, ml: 5, mr: 5, mb: 1, p:2   }} >
-            {elements.map((element, index) => {
-              return element.type === 'chapter' ? (
-                <CardContent sx={{ pl: 4 , pr: 4 , mb: 3, pt:2 , pb: 2 , backgroundColor: '#E9EAEC'}} key={index}>
-                  <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>
-                    <LongMenu />
-                  </Box>
-                  <Typography
-                    sx={{ mb: 2 , mt: 1 }}
-                    value={element.data.title}
-                    onChange={(e) => handleInputChange(e, index)}>
-                    Título
-                  </Typography>
-                  <Divider/>
-                  <Typography 
-                    sx={{ mb: 2, mt: 2}}
-                    value={element.data.subtitle}
-                    onChange={(e) => handleInputChange(e, index)}>
-                    Subtítulo
-                  </Typography>
-                  <Divider/>
-                  <CardMedia
-                  sx={{ mt: 2 }}
-                    component="img"
-                    height="140"
-                    width="280"
-                    image=""
-                    alt="chapter-image"
-                   />
-                </CardContent>
-              ) : (
-                <Box sx={{ pl:3 , pt:2 , pb:2 , mb: 3,  backgroundColor: '#E9EAEC', fontFamily: 'Open Sans'}} key={index}>
-                  <h3 className='break-title'>Salto de página</h3>
-                </Box>
-              ); */}
-            {/* })}
-          </Box> */}
-      </div>
+    <div /* className='document-body' */>
 
       <Dialog open={open} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
       <DialogTitle>Crear Capítulo</DialogTitle>
@@ -156,7 +107,7 @@ export default function ChapterDialog({open, setOpen, onChapterCreate}) {
           startIcon={<CloudUploadIcon />}
         >
           Seleccionar Imagen
-          <VisuallyHiddenInput type="file" {...register('image')} />
+          <VisuallyHiddenInput type="file" {...register('image')} onChange={handleImageChange}/>
         </Button>
       </DialogContent>
       <DialogActions>
@@ -164,6 +115,6 @@ export default function ChapterDialog({open, setOpen, onChapterCreate}) {
         <Button type="submit" variant='contained'>Crear</Button>
       </DialogActions>
     </Dialog>
-      </div>
+</div>
   );
 }

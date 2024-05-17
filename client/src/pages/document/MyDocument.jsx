@@ -149,12 +149,13 @@ const MyDocument = () => {
           <CssBaseline />
           <Container fixed>
             <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
+              gg
               {data.chapters.map((chapter, index)=>(
                 chapter && chapter.title && (
                 <CardContent key={index} sx={{ pl: 4 , pr: 4 , mb: 3, pt:2 , pb: 2 , backgroundColor: '#E9EAEC'}} >
                   <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>
-{/*                     <LongMenu />
- */}                  </Box>
+                    <LongMenu />
+                  </Box>
                   <Typography
                     sx={{ mb: 2 , mt: 1 }}
                     > {chapter.title}
