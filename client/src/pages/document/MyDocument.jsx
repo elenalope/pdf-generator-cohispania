@@ -23,19 +23,31 @@ import Divider from '@mui/material/Divider';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import AddIcon from '@mui/icons-material/Add';
 import { addChapter } from '../../services/chapterServices.js';
-/* import LongMenu from '../cards/DropDownMenu.jsx';
- */import CardContent from '@mui/material/CardContent';
+import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
+import SendIcon from '@mui/icons-material/Send';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { styled } from '@mui/material/styles';
 
-
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
 const MyDocument = () => {
   const navigate = useNavigate();
   const { id } = useParams(); 
   const location = useLocation();
-  const { config= {}, documentId } = location.state || {};
+  const { config = {}, documentId } = location.state || {};
 
-  const initialConfig = {...config, chapters: Array.isArray(config.chapters) ? config.chapters : [] };
+  const initialConfig = { ...config, chapters: Array.isArray(config.chapters) ? config.chapters : [] };
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(initialConfig);
 
@@ -71,10 +83,10 @@ const MyDocument = () => {
 
   const handleChapterCreate = async (chapterData) => {
     try {
-      const newChapter = await addChapter(id, { chapter: chapterData });
+      await addChapter(id, { chapter: chapterData });
       setData(prevData => ({
         ...prevData,
-        chapters: [...prevData.chapters, newChapter.chapter]
+        chapters: [...prevData.chapters, chapterData] 
       }));
     } catch (error) {
       console.error('Error al crear el capítulo:', error);
@@ -109,6 +121,10 @@ const MyDocument = () => {
     } catch (error) {
       console.error('Error al generar el PDF:', error);
     }
+  };
+  console.log('id chapter', )
+  const handleEnterChapter = (chapterId) => {
+    navigate(`chapter/${chapterId}`);
   };
 
   return (
@@ -149,35 +165,54 @@ const MyDocument = () => {
           <CssBaseline />
           <Container fixed>
             <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
-              {data.chapters.map((chapter, index)=>(
+              {data.chapters.map((chapter, index) => (
                 chapter && chapter.title && (
-                <CardContent key={index} sx={{ pl: 4 , pr: 4 , mb: 3, pt:2 , pb: 2 , backgroundColor: '#E9EAEC'}} >
-                  <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>
-{/*                     <LongMenu />
- */}                  </Box>
-                  <Typography
-                    sx={{ mb: 2 , mt: 1 }}
-                    > {chapter.title}
-                  </Typography>
-                  <Divider/>
-                  <Typography 
-                    sx={{ mb: 2, mt: 2}}>
-                    {chapter.subtitle}
-                  </Typography>
-                  <Divider/>
-                  {chapter.img && (
-                  <CardMedia
-                  sx={{ mt: 2 }}
-                    component="img"
-                    height="140"
-                    width="280"
-                    image=""
-                    alt="chapter-image"
-                   />)}
+                  <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      {/* <LongMenu /> */}
+                    </Box>
+                    <Typography sx={{ mb: 2, mt: 1 }}>
+                      {chapter.title}
+                    </Typography>
+                    <Divider />
+                    <Typography sx={{ mb: 2, mt: 2 }}>
+                      {chapter.subtitle}
+                    </Typography>
+                    <Divider />
+                    {chapter.img && (
+                      <CardMedia
+                        sx={{ mt: 2 }}
+                        component="img"
+                        height="140"
+                        width="280"
+                        image={chapter.img}
+                        alt="chapter-image"
+                      />
+                    )}
+                    <div className='buttons-chapter-mydocument'>
+                      <Button
+                          sx={{ mb: 1 }}
+                          component="label"
+                          role={undefined}
+                          variant="contained"
+                          tabIndex={-1}
+                          startIcon={<CloudUploadIcon />}
+                            >
+                          Seleccionar Imagen
+                          <VisuallyHiddenInput type="file" /* onChange={(e) => handleInputChange(e, index)} */ />
+                    </Button>
+    
+                    <Button variant="contained" endIcon={<SendIcon />} size="small"
+                    sx={{ width: 100 , ml: 'auto'}} 
+                    onClick={() => handleEnterChapter(chapter._id)}/* type="submit" */ /* onClick={()=> navigate('/document')} */ >
+                    Entrar
+                    </Button>
+                    </div>
+                    
                 </CardContent>
+                  
                 )
               ))}
-              
             </Box>
           </Container>
         </div>
