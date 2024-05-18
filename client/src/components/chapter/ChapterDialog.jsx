@@ -34,7 +34,6 @@ export default function ChapterDialog({ open, setOpen, onChapterCreate }) {
     const chapterData = {
       title: data.title,
       subtitle: data.subtitle,
-      _id: data._id,
       img: imageFile ? URL.createObjectURL(imageFile) : "",
       
       content: []

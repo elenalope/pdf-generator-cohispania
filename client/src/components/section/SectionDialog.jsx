@@ -10,6 +10,7 @@ import { styled } from '@mui/material/styles';
 import { useForm } from "react-hook-form";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import { addSectionFromChapter } from '../../services/sectionFromChapter';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -23,7 +24,7 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function SectionDialog({ openSection, setOpenSection, onSectionCreate }) {
+export default function SectionDialog({ openSection, setOpenSection, onSectionCreate, templateId, chapterId }) {
   const { register, handleSubmit, reset } = useForm();
   const [imageFile, setImageFile] = useState(null);
 
@@ -32,15 +33,16 @@ export default function SectionDialog({ openSection, setOpenSection, onSectionCr
     reset();
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    console.log(data)
     const sectionData = {
       title: data.title,
       cover: data.cover,
       img: imageFile ? URL.createObjectURL(imageFile) : "",
       content: []
     };
-    onSectionCreate(sectionData);
-    handleClose();
+      onSectionCreate(sectionData);
+      handleClose();
   };
 
   const handleImageChange = (e) => {
@@ -63,7 +65,7 @@ export default function SectionDialog({ openSection, setOpenSection, onSectionCr
         />
         <FormControlLabel
           control={
-            <Switch {...register('includeBackCover')} id="includeBackCover-switch" inputProps={{ 'aria-label': 'controlled' }}/>
+            <Switch {...register('cover')} id="cover-switch" inputProps={{ 'aria-label': 'controlled' }}/>
           } 
           label="Portada" 
         />
