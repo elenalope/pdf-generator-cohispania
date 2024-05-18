@@ -98,7 +98,7 @@ const MyDocument = () => {
   };
 
   const handlePreview = () => {
-    setShowPreview(true);
+    setShowPreview(!showPreview);
   };
 
   const handleChapterClick = () => {

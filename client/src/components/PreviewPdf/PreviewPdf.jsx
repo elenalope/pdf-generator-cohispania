@@ -30,17 +30,26 @@ const PreviewPdf = ({config, data}) => {
     console.log('titulo preview', titleContent)
     return (
         <>
-        <Document>
+       <Document>
             <Page size={size} style={styles.page}>
                 <View style={styles.section}>
                     {toc && <Text>Índice:</Text>}
                     <Text>Título: {titleContent}</Text>
-                    <Text>Subtítulo: {config?.subtitle}</Text>
+                    <Text>Subtítulo: {subtitle}</Text>
                     <Text>{coverLogo}</Text>
                     <Text>{theme}</Text>
                 </View>
-        </Page>
-    </Document>
+                {data && data.chapters && data.chapters.map((chapter, index) => (
+                    <View key={index} style={styles.chapter}>
+                        <Text style={styles.chapterTitle}>{chapter.title}</Text>
+                        <Text style={styles.chapterSubtitle}>{chapter.subtitle}</Text>
+                        {chapter.paragraphs && chapter.paragraphs.map((paragraph, idx) => (
+                            <Text key={idx} style={styles.paragraph}>{paragraph.content}</Text>
+                        ))}
+                    </View>
+                ))}
+            </Page>
+        </Document>
         </>
     
 
