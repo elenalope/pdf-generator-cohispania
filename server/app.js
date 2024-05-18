@@ -8,7 +8,7 @@ import chapterRouter from './routes/chapterRouter.js'
 import sectionRouter from './routes/sectionRouter.js'
 import subsectionRouter from './routes/subsectionRouter.js'
 import moduleRouter from './routes/moduleRouter.js';
-import { addSectionFromChapter } from '../client/src/services/sectionFromChapter.js';
+import sectionFromChapter from './routes/sectionFromChapterRouter.js'
 
 const app = express()
 
