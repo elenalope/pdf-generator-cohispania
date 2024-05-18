@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { postPDF } from '../../services/pdfServices';
-import './MyDocument.css';
 import { pdf, Document, Page, Text, View } from '@react-pdf/renderer';
 import PreviewPdf from '../../components/PreviewPdf/PreviewPdf.jsx';
 import ChapterDialog from '../../components/chapter/ChapterDialog.jsx';
+import SectionDialog from '../../components/section/SectionDialog.jsx';
+import TitleDialog from '../../components/title/TitleDialog.jsx';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -23,12 +24,22 @@ import Divider from '@mui/material/Divider';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import AddIcon from '@mui/icons-material/Add';
 import { addChapter } from '../../services/chapterServices.js';
+import { addSection} from '../../services/sectionServices.js';
+import { addTitle} from '../../services/titleService.js';
 import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import SendIcon from '@mui/icons-material/Send';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import BookIcon from '@mui/icons-material/Book';
+import TitleIcon from '@mui/icons-material/Title';
+import ArticleIcon from '@mui/icons-material/Article';
+import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import MoveDownIcon from '@mui/icons-material/MoveDown'
+
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -41,16 +52,26 @@ const VisuallyHiddenInput = styled('input')({
   whiteSpace: 'nowrap',
   width: 1,
 });
+
 const MyDocument = () => {
   const navigate = useNavigate();
   const { id } = useParams(); 
   const location = useLocation();
   const { config = {}, documentId } = location.state || {};
 
-  const initialConfig = { ...config, chapters: Array.isArray(config.chapters) ? config.chapters : [] };
-  const [open, setOpen] = useState(false);
+  const initialConfig = { ...config, 
+    chapters: Array.isArray(config.chapters) ? config.chapters : [],
+    sections: Array.isArray(config.sections) ? config.sections : [],
+    titles:  Array.isArray(config.titles) ? config.titles : []
+  };
+  const [openChapter, setOpenChapter] = useState(false);
+  const [openSection, setOpenSection] = useState(false);
+  const [openTitle, setOpenTitle] = useState(false);
   const [data, setData] = useState(initialConfig);
   const [chapterId, setChapterId] = useState(null); 
+  const [sectionId, setSectionId] = useState(null);
+  const [titleId, setTitleId] = useState(null);
+  
 
   useEffect(() => {
     console.log('config desde doc', config);
@@ -60,6 +81,8 @@ const MyDocument = () => {
   const methods = useForm({
     defaultValues: initialConfig,
   });
+  console.log('methods está aquí', methods)
+
   const { register, handleSubmit, reset, formState: { errors } } = methods;
   const [showPreview, setShowPreview] = useState(false);
 
@@ -79,8 +102,16 @@ const MyDocument = () => {
   };
 
   const handleChapterClick = () => {
-    setOpen(true);
+    setOpenChapter(true);
   };
+
+  const handleSectionClick = () => {
+    setOpenSection(true);
+  };
+
+  const handleTitleClick = () => {
+    setOpenTitle(true);
+  }
 
   const handleChapterCreate = async (chapterData) => {
     try {
@@ -96,7 +127,44 @@ const MyDocument = () => {
     }
   };
 
+  const handleSectionCreate = async  (sectionData) => {
+    console.log('la section data esta aqui', sectionData)
+    try {
+    console.log('ID:', id);
+    console.log('Datos de la sección:', sectionData);
+    const document = await addSection(id, { section: sectionData });
+    console.log('Documento recibido:', document);
+    if (!document || !document.content) {
+      throw new Error('El documento devuelto no es válido');
+    }
+    console.log('Contenido del documento:', document.content);
+    const newSection = document.content[document.content.length - 1];
+    setData(prevData => ({
+      ...prevData,
+      sections: [...prevData.sections, newSection] 
+    }));
 
+    
+    setSectionId(newSection._id);
+  } catch (error) {
+    
+    console.error('Error al crear la sección:', error);
+    }
+  };
+
+  const handleTitleCreate = async (titleData) => {
+    try {
+      const document = await addTitle(id, { title: titleData }); 
+      const newTitle= document.content[document.content.length - 1]; 
+      setData(prevData => ({
+        ...prevData,
+        titles: [...prevData.titles, newTitle] 
+      }));
+      setTitleId(newTitle._id); 
+    } catch (error) {
+      console.error('Error al crear el título:', error);
+    }
+  };
 
   const PdfDoc = ({ config }) => (
     <Document>
@@ -127,12 +195,24 @@ const MyDocument = () => {
       console.error('Error al generar el PDF:', error);
     }
   };
-  console.log('id chapter', chapterId)
+
   const handleEnterChapter = () => {
     if (chapterId) {
       navigate(`chapter/${chapterId}`);
     }
   };
+
+  const handleEnterSection = () => {
+    if (sectionId) {
+      navigate(`section/${sectionId}`);
+    }
+  };
+
+  // const handleEnterTitle = () => {
+  //   if (titleId) {
+  //     navigate(`title/${titleId}`);
+  //   }
+  // };
 
   return (
     <>
@@ -155,29 +235,88 @@ const MyDocument = () => {
             <Box>
               <nav aria-label="main mailbox folders">
                 <List>
-                  <ListItem disablePadding onClick={handleChapterClick}>
+                  <ListItem disablePadding>
                     <ListItemButton>
                       <ListItemIcon>
-                        <ImportContactsIcon />
+                      <ImportContactsIcon />
                       </ListItemIcon>
                       <ListItemText primary="Capítulo" />
-                      <AddIcon />
+                      <AddIcon onClick={handleChapterClick}/>
                     </ListItemButton>
                   </ListItem>
                   <Divider />
+                  <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>
+                      <BookIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Sección" />
+                      <AddIcon onClick={handleSectionClick}/>
+                    </ListItemButton>
+                  </ListItem>
+                  <Divider/>
+                <ListItem disablePadding>
+                    <ListItemButton disabled>
+                      <ListItemIcon>
+                      <ArticleIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Subsección" />
+                      <AddIcon />
+                    </ListItemButton>
+                  </ListItem>
+                  <Divider/>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>
+                      <TitleIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Título" />
+                      <AddIcon onClick={handleTitleClick}/>
+                    </ListItemButton>
+                  </ListItem>
+                  <Divider/>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>
+                      <FormatAlignJustifyIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Párrafo" />
+                      <AddIcon />
+                    </ListItemButton>
+                  </ListItem>
+                  <Divider/>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>
+                      <FormatListBulletedIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Link" />
+                      <AddIcon />
+                    </ListItemButton>
+                  </ListItem>
+                  <Divider/>
+                <ListItem disablePadding>
+                    <ListItemButton disabled>
+                      <ListItemIcon>
+                      <MoveDownIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Salto" />
+                      <AddIcon />
+                    </ListItemButton>
+                  </ListItem>
+                  
                 </List>
               </nav>
             </Box>
           </div>
           <CssBaseline />
+
+          <div className='pdf-background'>
           <Container fixed>
             <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
               {data.chapters.map((chapter, index) => (
                 chapter && chapter.title && (
                   <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      {/* <LongMenu /> */}
-                    </Box>
                     <Typography sx={{ mb: 2, mt: 1 }}>
                       {chapter.title}
                     </Typography>
@@ -197,21 +336,10 @@ const MyDocument = () => {
                       />
                     )}
                     <div className='buttons-chapter-mydocument'>
-                      <Button
-                          sx={{ mb: 1 }}
-                          component="label"
-                          role={undefined}
-                          variant="contained"
-                          tabIndex={-1}
-                          startIcon={<CloudUploadIcon />}
-                            >
-                          Seleccionar Imagen
-                          <VisuallyHiddenInput type="file" /* onChange={(e) => handleInputChange(e, index)} */ />
-                    </Button>
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
                     sx={{ width: 100 , ml: 'auto'}} 
-                    onClick={handleEnterChapter}/* type="submit" */ /* onClick={()=> navigate('/document')} */ >
+                    onClick={handleEnterChapter}>
                     Entrar
                     </Button>
                     </div>
@@ -220,15 +348,72 @@ const MyDocument = () => {
                   
                 )
               ))}
-            </Box>
+            {data.sections.map((section, index) => (
+                section && section.title && (
+                  <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      {/* <LongMenu /> */}
+                    </Box>
+                    <Typography sx={{ mb: 2, mt: 1 }}>
+                      {section.title}
+                    </Typography>
+                    <Divider />
+                    {section.img && (
+                      <CardMedia
+                        sx={{ mt: 2 }}
+                        component="img"
+                        height="140"
+                        width="280"
+                        image={section.img}
+                        alt="section-image"
+                      />
+                    )}
+                     <Divider/>
+                    {/* <FormControlLabel disabled control={<Switch />} label={data.cover} /> */}
+                    <div className='buttons-section-mydocument'>
+    
+                    <Button variant="contained" endIcon={<SendIcon />} size="small"
+                    sx={{ width: 100 , ml: 'auto'}} 
+                    onClick={handleEnterSection}/* type="submit" */ /* onClick={()=> navigate('/document')} */ >
+                    Entrar
+                    </Button>
+                    </div>
+                    
+                </CardContent>
+                )
+              ))}
+
+              {data.titles.map((title, index) => (
+                  title && title.title && (
+                    <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      {/* <LongMenu /> */}
+                      </Box>
+                      <Typography sx={{ mb: 2, mt: 1 }}>
+                        {title.title}
+                      </Typography>
+                    
+                    </CardContent>
+                  )
+               ))}
+              
+              </Box>
+        
           </Container>
+
+          </div>
         </div>
-        <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
+          <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
           <Button variant="contained" onClick={() => navigate('/')}>SALIR SIN GUARDAR</Button>
         </Stack>
       </form>
+
       {showPreview && <PreviewPdf config={config} data={data} />}
-      {open && <ChapterDialog open={open} setOpen={setOpen} onChapterCreate={handleChapterCreate} />}
+      {openChapter && <ChapterDialog openChapter={openChapter} setOpenChapter={setOpenChapter} onChapterCreate={handleChapterCreate}/>}
+      {openSection &&<SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate} />}
+      {openTitle &&<TitleDialog openTitle={openTitle} setOpenTitle={setOpenTitle} onTitleCreate={handleTitleCreate}/>}
+
+
     </>
   );
 }

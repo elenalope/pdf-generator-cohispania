@@ -21,12 +21,12 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function ChapterDialog({ open, setOpen, onChapterCreate }) {
+export default function ChapterDialog({ openChapter, setOpenChapter, onChapterCreate }) {
   const { register, handleSubmit, reset } = useForm();
   const [imageFile, setImageFile] = useState(null);
 
   const handleClose = () => {
-    setOpen(false);
+    setOpenChapter(false);
     reset();
   };
 
@@ -35,7 +35,6 @@ export default function ChapterDialog({ open, setOpen, onChapterCreate }) {
       title: data.title,
       subtitle: data.subtitle,
       img: imageFile ? URL.createObjectURL(imageFile) : "",
-      
       content: []
     };
     onChapterCreate(chapterData);
@@ -47,7 +46,7 @@ export default function ChapterDialog({ open, setOpen, onChapterCreate }) {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
+    <Dialog open={openChapter} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
       <DialogTitle>Crear Capítulo</DialogTitle>
       <DialogContent sx={{ p: 3 }}>
         <TextField

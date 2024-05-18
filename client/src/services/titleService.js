@@ -5,9 +5,11 @@ export const URL = 'http://localhost:3000/api/document';
 export const addTitle = async (templateId, newTitle) => {
   try {
     console.log("Datos del título enviados:", newTitle);
-    const response = await axios.post(`${URL}/${templateId}/title`, newTitle);
+    const response = await axios.post(`${URL}/${templateId}`, newTitle);
+    console.log("Hola, soy la response.data", response.data)
     alert("Título añadido exitosamente");
-    return response;
+    return response.data;
+    
   } catch (error) {
      console.error('Error creating title', error.message);
      throw error;
