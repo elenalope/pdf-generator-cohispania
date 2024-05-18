@@ -8,7 +8,7 @@ import chapterRouter from './routes/chapterRouter.js'
 import sectionRouter from './routes/sectionRouter.js'
 import subsectionRouter from './routes/subsectionRouter.js'
 import moduleRouter from './routes/moduleRouter.js';
-import sectionFromChapter from './routes/sectionFromChapterRouter.js'
+import sectionFromChapterRouter from './routes/sectionFromChapterRouter.js'
 
 const app = express()
 
@@ -19,7 +19,7 @@ app.use('/api', chapterRouter);
 app.use('/api', sectionRouter);
 app.use('/api', subsectionRouter);
 app.use('/api', moduleRouter);
-app.use('/api', sectionFromChapter)
+app.use('/api', sectionFromChapterRouter)
 
 connect();
 

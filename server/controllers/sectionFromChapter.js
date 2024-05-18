@@ -1,6 +1,6 @@
 import { Template } from '../models/Template.js';
 
-export const addSection = async (req, res) => {
+export const addSectionFromChapter = async (req, res) => {
     try {
         const { id } = req.params;
         const { section } = req.body;
@@ -20,7 +20,7 @@ export const addSection = async (req, res) => {
     }
 };
 
-export const deleteSection = async (req, res) => {
+export const deleteSectionFromChapter = async (req, res) => {
     try {
         const { id: templateId, sectionId } = req.params;
         const document = await Template.findById(templateId);
@@ -44,7 +44,7 @@ export const deleteSection = async (req, res) => {
     }
 };
 
-export const updateSection = async (request, response) => {
+export const updateSectionFromChapter = async (request, response) => {
     try {
         const { id: templateId, sectionId } = request.params;
         const { section: updatedSection } = request.body;

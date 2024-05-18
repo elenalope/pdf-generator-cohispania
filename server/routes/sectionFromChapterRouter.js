@@ -1,5 +1,5 @@
 import express from 'express';
-import { addSectionFromChapter, deleteSectionFromChapter, updateSectionFromChapter } from '../controllers/sectionFromChapter';
+import { addSectionFromChapter, deleteSectionFromChapter, updateSectionFromChapter } from '../controllers/sectionFromChapter.js';
 
 const router = express.Router();
 
