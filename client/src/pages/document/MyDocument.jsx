@@ -76,6 +76,8 @@ const MyDocument = () => {
   const [sectionId, setSectionId] = useState(null);
   const [titleId, setTitleId] = useState(null);
   const [paragraphId, setParagraphId] = useState(null);
+  const [selectedType, setSelectedType] = useState(null);
+  
 
   useEffect(() => {
     console.log('config desde doc', config);
@@ -107,18 +109,22 @@ const MyDocument = () => {
 
   const handleChapterClick = () => {
     setOpenChapter(true);
+    setSelectedType('chapter');
   };
 
   const handleSectionClick = () => {
     setOpenSection(true);
+    setSelectedType('section');
   };
 
   const handleTitleClick = () => {
     setOpenTitle(true);
+    setSelectedType('title');
   }
 
   const handleParagraphClick = () => {
     setOpenParagraph(true);
+    setSelectedType('paragraph');
   }
 
   const handleChapterCreate = async (chapterData) => {
@@ -238,6 +244,10 @@ const MyDocument = () => {
       navigate(`paragraph/${paragraphId}`);
     }
   };
+  const handleCancelDialog = () => {
+    setSelectedType(null);
+  };
+  const isDisabled = selectedType !== null;
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className='formMyDocument'>
@@ -260,7 +270,7 @@ const MyDocument = () => {
               <nav aria-label="main mailbox folders">
                 <List>
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton disabled={isDisabled && selectedType !== 'chapter'}>
                       <ListItemIcon>
                       <ImportContactsIcon />
                       </ListItemIcon>
@@ -270,7 +280,7 @@ const MyDocument = () => {
                   </ListItem>
                   <Divider />
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton disabled={isDisabled && selectedType !== 'section'}>
                       <ListItemIcon>
                       <BookIcon />
                       </ListItemIcon>
@@ -290,7 +300,7 @@ const MyDocument = () => {
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton disabled={isDisabled && selectedType !== 'title'}>
                       <ListItemIcon>
                       <TitleIcon />
                       </ListItemIcon>
@@ -300,7 +310,7 @@ const MyDocument = () => {
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton disabled={isDisabled && selectedType !== 'paragraph'}>
                       <ListItemIcon>
                       <FormatAlignJustifyIcon />
                       </ListItemIcon>
@@ -310,7 +320,7 @@ const MyDocument = () => {
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton disabled={isDisabled && selectedType !== 'link'}>
                       <ListItemIcon>
                       <FormatListBulletedIcon />
                       </ListItemIcon>
@@ -454,10 +464,10 @@ const MyDocument = () => {
       </form>
 
       {showPreview && <PreviewPdf config={config} data={data} />}
-      {openChapter && <ChapterDialog openChapter={openChapter} setOpenChapter={setOpenChapter} onChapterCreate={handleChapterCreate}/>}
-      {openSection &&<SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate} />}
-      {openTitle &&<TitleDialog openTitle={openTitle} setOpenTitle={setOpenTitle} onTitleCreate={handleTitleCreate}/>}
-      {openParagraph &&<ParagraphDialog openParagraph={openParagraph} setOpenParagraph={setOpenParagraph} onParagraphCreate={handleParagraphCreate}/>}
+      {openChapter && <ChapterDialog openChapter={openChapter} setOpenChapter={setOpenChapter} onChapterCreate={handleChapterCreate} onCancel={handleCancelDialog}/>}
+      {openSection &&<SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate} onCancel={handleCancelDialog}/>}
+      {openTitle &&<TitleDialog openTitle={openTitle} setOpenTitle={setOpenTitle} onTitleCreate={handleTitleCreate} onCancel={handleCancelDialog}/>}
+      {openParagraph &&<ParagraphDialog openParagraph={openParagraph} setOpenParagraph={setOpenParagraph} onParagraphCreate={handleParagraphCreate} onCancel={handleCancelDialog}/>}
 
 
     </>

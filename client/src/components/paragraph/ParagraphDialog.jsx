@@ -7,13 +7,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogParagraph from '@mui/material/DialogTitle';
 
-export default function ParagraphDialog({ openParagraph, setOpenParagraph, onParagraphCreate}) {
+export default function ParagraphDialog({ openParagraph, setOpenParagraph, onParagraphCreate, onCancel}) {
   const { register, handleSubmit, reset } = useForm();
   
 
   const handleClose = () => {
     setOpenParagraph(false);
-    reset();
+    onCancel();
   };
 
   const onSubmit = (data) => {
@@ -22,7 +22,7 @@ export default function ParagraphDialog({ openParagraph, setOpenParagraph, onPar
       content: []
     };
     onParagraphCreate(paragraphData);
-    handleClose();
+   /*  handleClose(); */
   };
   
   return (
