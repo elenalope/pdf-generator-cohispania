@@ -62,7 +62,7 @@ const MyDocument = () => {
   const initialConfig = { ...config, 
     chapters: Array.isArray(config.chapters) ? config.chapters : [],
     sections: Array.isArray(config.sections) ? config.sections : [],
-    titles:  Array.isArray(config.sections) ? config.sections : []
+    titles:  Array.isArray(config.titles) ? config.titles : []
   };
   const [openChapter, setOpenChapter] = useState(false);
   const [openSection, setOpenSection] = useState(false);
@@ -81,6 +81,7 @@ const MyDocument = () => {
   const methods = useForm({
     defaultValues: initialConfig,
   });
+  console.log('methods está aquí', methods)
 
   const { register, handleSubmit, reset, formState: { errors } } = methods;
   const [showPreview, setShowPreview] = useState(false);
@@ -126,7 +127,7 @@ const MyDocument = () => {
     }
   };
 
-  const handleSectionCreate = async (sectionData) => {
+  const handleSectionCreate = async  (sectionData) => {
     console.log('la section data esta aqui', sectionData)
     try {
     console.log('ID:', id);
@@ -289,7 +290,7 @@ const MyDocument = () => {
                       <ListItemIcon>
                       <FormatListBulletedIcon />
                       </ListItemIcon>
-                      <ListItemText primary="Lista" />
+                      <ListItemText primary="Link" />
                       <AddIcon />
                     </ListItemButton>
                   </ListItem>
@@ -316,9 +317,6 @@ const MyDocument = () => {
               {data.chapters.map((chapter, index) => (
                 chapter && chapter.title && (
                   <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      {/* <LongMenu /> */}
-                    </Box>
                     <Typography sx={{ mb: 2, mt: 1 }}>
                       {chapter.title}
                     </Typography>
@@ -341,7 +339,7 @@ const MyDocument = () => {
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
                     sx={{ width: 100 , ml: 'auto'}} 
-                    onClick={handleEnterChapter}/* type="submit" */ /* onClick={()=> navigate('/document')} */ >
+                    onClick={handleEnterChapter}>
                     Entrar
                     </Button>
                     </div>
@@ -350,7 +348,6 @@ const MyDocument = () => {
                   
                 )
               ))}
-              <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
             {data.sections.map((section, index) => (
                 section && section.title && (
                   <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
@@ -372,7 +369,7 @@ const MyDocument = () => {
                       />
                     )}
                      <Divider/>
-                    <FormControlLabel disabled control={<Switch />} label={data.cover} />
+                    {/* <FormControlLabel disabled control={<Switch />} label={data.cover} /> */}
                     <div className='buttons-section-mydocument'>
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
@@ -386,7 +383,6 @@ const MyDocument = () => {
                 )
               ))}
 
-              <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
               {data.titles.map((title, index) => (
                   title && title.title && (
                     <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
@@ -400,8 +396,7 @@ const MyDocument = () => {
                     </CardContent>
                   )
                ))}
-              </Box>
-              </Box>
+              
               </Box>
         
           </Container>

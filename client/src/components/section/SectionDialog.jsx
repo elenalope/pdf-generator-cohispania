@@ -74,7 +74,7 @@ export default function SectionDialog({ openSection, setOpenSection, onSectionCr
         </Button>
         <FormControlLabel
           control={
-            <Switch {...register('includeBackCover')} id="includeBackCover-switch" inputProps={{ 'aria-label': 'controlled' }}/>
+            <Switch {...register('cover')} id="cover-switch" inputProps={{ 'aria-label': 'controlled' }}/>
           } 
           label="Portada" 
         />
