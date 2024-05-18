@@ -34,16 +34,19 @@ export default function SectionDialog({ openSection, setOpenSection, onSectionCr
   };
 
   const onSubmit = async (data) => {
-    console.log(data)
     const sectionData = {
       title: data.title,
       cover: data.cover,
+      subsection: data.subsection,
       img: imageFile ? URL.createObjectURL(imageFile) : "",
       content: []
     };
-      onSectionCreate(sectionData);
-      handleClose();
+
+    console.log('Section Data:', JSON.stringify(sectionData, null, 2));
+    await onSectionCreate(sectionData);
+    handleClose();
   };
+
 
   const handleImageChange = (e) => {
     setImageFile(e.target.files[0]);
