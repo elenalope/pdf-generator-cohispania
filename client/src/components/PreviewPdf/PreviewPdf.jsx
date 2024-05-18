@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         gap: '20px',
         backgroundColor: 'white', 
-        width: '210mm', 
-        height: '297mm',
+        width: '148mm', 
+        height: '210mm',
     },
     body:{
         paddingTop: 35,

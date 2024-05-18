@@ -24,8 +24,7 @@
 }
 
 .pdf-background {
-    height: 50vh;
-    width: 153vh;
+    width: 55vh;
     background-color: #C9C9CE;
     margin-left: 1%;
     flex-grow: 1; 
@@ -50,8 +49,15 @@
 }
 
 .previewContainer {
-    height: 100vh;  
+    height: 65vh;
     overflow-y: auto; 
     background-color: #E0E0E0; 
-    padding: 20px; 
+    padding: 30px; 
   }
+
+  .previewContainer.empty {
+    padding: 0;
+    height: 0;
+    overflow: hidden;
+    background-color: transparent;
+}

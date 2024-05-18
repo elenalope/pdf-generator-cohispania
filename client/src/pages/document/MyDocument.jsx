@@ -404,7 +404,7 @@ const MyDocument = () => {
 
           </div>
           
-          <div className='previewContainer'>
+          <div className={showPreview ? 'previewContainer' : 'previewContainer empty'}>
           {showPreview && <PreviewPdf config={config} data={data} />}
           </div>
 
