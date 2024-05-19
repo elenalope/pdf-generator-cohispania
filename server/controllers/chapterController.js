@@ -1,104 +1,101 @@
-import { Template } from '../models/Template.js'; 
+import { Template, Chapter } from '../models/Template.js';
 
-export const addChapter = async (request, response) => {
-    try {
-        const { id } = request.params;
-        const { chapter } = request.body;
+export const addChapter = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { chapter } = req.body;
+    const newChapter = new Chapter(chapter);
+    await newChapter.save();
 
-        const document = await Template.findById(id);
-
-        if (!document) {
-            return response.status(404).json({ message: "Document not found" });
-        }
-        document.content.push(chapter);
-        await document.save();
-        /* const newChapter = document.content[document.content.length - 1]; */
-
-        response.status(200).json(document);
-    } catch (error) {
-        response.status(500).json({ message: error.message });
+    const document = await Template.findById(id);
+    if (!document) {
+      return res.status(404).json({ message: "Document not found" });
     }
-};
 
-export const getChapterById = async (request, response) => {
-    try {
-        const { id: templateId, chapterId } = request.params;
-        const document = await Template.findById(templateId);
+    document.content.push(newChapter._id);
+    await document.save();
 
-        if (!document) {
-            return response.status(404).json({ message: "Document not found" });
-        }
-
-        const chapter = document.content.id(chapterId);
-        
-        if (!chapter) {
-            return response.status(404).json({ message: "Chapter not found" });
-        }
-
-        response.status(200).json(chapter);
-    } catch (error) {
-        response.status(500).json({ message: error.message });
-    }
+    const populatedDocument = await Template.findById(id).populate('content');
+    res.status(200).json(populatedDocument);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 
-export const getChapters = async (request, response) => {
+export const getChapters = async (req, res) => {
     try {
-        const { id } = request.params;
-        const document = await Template.findById(id);
-
-        if (!document) {
-            return response.status(404).json({ message: "Document not found" });
-        }
-
-        response.status(200).json(document.content);
+      const { id } = req.params;
+      const document = await Template.findById(id).populate('content');
+      if (!document) {
+        return res.status(404).json({ message: "Document not found" });
+      }
+      res.status(200).json(document.content);
     } catch (error) {
-        response.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message });
     }
-};
+  };
+  
 
-
-export const deleteChapter = async (request, response) => {
+  export const getChapterById = async (req, res) => {
     try {
-        const { id: templateId , chapterId } = request.params;
-        const document = await Template.findById(templateId);
-
-        if (!document) {
-            return response.status(404).json({ message: "Template not found" });
-        }
-        const chapterIndex = document.content.findIndex(chapter => chapter._id.equals(chapterId));
-
-        if (chapterIndex === -1) {
-            return response.status(404).json({ message: "Chapter not found in this template" });
-        }
-        document.content.splice(chapterIndex, 1);
-        await document.save();
-
-        response.status(200).json(document);
+      const { id, chapterId } = req.params;
+      const document = await Template.findById(id).populate('content');
+      if (!document) {
+        return res.status(404).json({ message: "Document not found" });
+      }
+      const chapter = document.content.id(chapterId);
+      if (!chapter) {
+        return res.status(404).json({ message: "Chapter not found" });
+      }
+      res.status(200).json(chapter);
     } catch (error) {
-        response.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message });
     }
-}
+  };
+  
 
-
-export const updateChapter = async (request, response) => {
+  export const updateChapter = async (req, res) => {
     try {
-        const { id: templateId, chapterId } = request.params;
-        const { chapter: updatedChapter } = request.body;
-        const document = await Template.findById(templateId);// me busca el doc por el id
-        if (!document) {
-            return response.status(404).json({ message: "Template not found" });
-        }
-        const chapterIndex = document.content.findIndex(chapter => chapter._id.equals(chapterId));  // me busca el chapter por id
-
-        if (chapterIndex === -1) {
-            return response.status(404).json({ message: "Chapter not found in this template" });
-        }
-        document.content[chapterIndex] = { ...document.content[chapterIndex]._doc, ...updatedChapter };//estoy actualizando los datos de chapter
-        await document.save();
-
-        response.status(200).json(document);
+      const { id, chapterId } = req.params;
+      const { chapter } = req.body;
+  
+      const document = await Template.findById(id);
+      if (!document) {
+        return res.status(404).json({ message: "Document not found" });
+      }
+  
+      const chapterIndex = document.content.findIndex(ch => ch._id.toString() === chapterId);
+      if (chapterIndex === -1) {
+        return res.status(404).json({ message: "Chapter not found" });
+      }
+  
+      document.content[chapterIndex] = { ...document.content[chapterIndex], ...chapter };
+      await document.save();
+  
+      const updatedDocument = await Template.findById(id).populate('content');
+      res.status(200).json(updatedDocument);
     } catch (error) {
-        response.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message });
     }
-};
+  };
+  
+
+  export const deleteChapter = async (req, res) => {
+    try {
+      const { id, chapterId } = req.params;
+  
+      const document = await Template.findById(id);
+      if (!document) {
+        return res.status(404).json({ message: "Document not found" });
+      }
+  
+      document.content = document.content.filter(ch => ch._id.toString() !== chapterId);
+      await document.save();
+  
+      const updatedDocument = await Template.findById(id).populate('content');
+      res.status(200).json(updatedDocument);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };

@@ -8,6 +8,7 @@ import ChapterDialog from '../../components/chapter/ChapterDialog.jsx';
 import SectionDialog from '../../components/section/SectionDialog.jsx';
 import ParagraphDialog from '../../components/paragraph/ParagraphDialog.jsx'
 import TitleDialog from '../../components/title/TitleDialog.jsx';
+import LinkDialog from '../../components/link/LinkDialog.jsx'
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -28,13 +29,12 @@ import { addChapter } from '../../services/chapterServices.js';
 import { addSection} from '../../services/sectionServices.js';
 import { addTitle} from '../../services/titleService.js';
 import { addParagraph} from '../../services/paragraphServices.js';
+import {addLink} from '../../services/linkServices.js'
 import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import SendIcon from '@mui/icons-material/Send';
 import { styled } from '@mui/material/styles';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import BookIcon from '@mui/icons-material/Book';
 import TitleIcon from '@mui/icons-material/Title';
 import ArticleIcon from '@mui/icons-material/Article';
@@ -65,38 +65,35 @@ const MyDocument = () => {
     chapters: Array.isArray(config.chapters) ? config.chapters : [],
     sections: Array.isArray(config.sections) ? config.sections : [],
     titles:  Array.isArray(config.titles) ? config.titles : [],
-    paragraphs:  Array.isArray(config.paragraphs) ? config.paragraphs : []
+    paragraphs:  Array.isArray(config.paragraphs) ? config.paragraphs : [],
+    links:  Array.isArray(config.links) ? config.links : [],
   };
   const [openChapter, setOpenChapter] = useState(false);
   const [openSection, setOpenSection] = useState(false);
   const [openTitle, setOpenTitle] = useState(false);
   const [openParagraph, setOpenParagraph] = useState(false);
+  const [openLink, setOpenLink] = useState(false);
   const [data, setData] = useState(initialConfig);
   const [chapterId, setChapterId] = useState(null); 
   const [sectionId, setSectionId] = useState(null);
   const [titleId, setTitleId] = useState(null);
   const [paragraphId, setParagraphId] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
-  
+  const [linkId, setLinkId]= useState(null);
 
   useEffect(() => {
-    console.log('config desde doc', config);
-    console.log('documentId desde doc', documentId);
   }, [config, documentId]);
-
   const methods = useForm({
     defaultValues: initialConfig,
   });
-  console.log('methods está aquí', methods)
 
-  const { register, handleSubmit, reset, formState: { errors } } = methods;
+  const { handleSubmit, formState: { errors } } = methods;
   const [showPreview, setShowPreview] = useState(false);
 
   const onSubmit = async (formData) => {
     try {
       const newData = { ...config, ...formData };
       setData(newData);
-      console.log('newData', newData);
       await postPDF(newData);
     } catch (error) {
       console.error('Error creating document', error.message);
@@ -127,36 +124,34 @@ const MyDocument = () => {
     setSelectedType('paragraph');
   }
 
+  const handleLinkClick = () => {
+    setOpenLink(true);
+    setSelectedType('link');
+  }
+
   const handleChapterCreate = async (chapterData) => {
     try {
-      const document = await addChapter(id, { chapter: chapterData }); 
-      const newChapter = document.content[document.content.length - 1]; 
+      const document = await addChapter(id, { chapter: chapterData });  
+      const newChapter = document.content[document.content.length - 1];
       setData(prevData => ({
         ...prevData,
-        chapters: [...prevData.chapters, newChapter] 
+        chapters: [...prevData.chapters, newChapter]
       }));
-      setChapterId(newChapter._id); 
+      setChapterId(newChapter._id);
     } catch (error) {
       console.error('Error al crear el capítulo:', error);
     }
   };
+  
 
   const handleSectionCreate = async (sectionData) => {
     try {
-      console.log('Section Data:', JSON.stringify(sectionData, null, 2));
       const document = await addSection(id, { section: sectionData });
-      console.log('Document:', JSON.stringify(document, null, 2));
-  
-      const newSection = document.content[document.content.length - 1];
-      /* if (!newSection || !newSection._id) {
-        throw new Error('La sección no se añadió correctamente');
-      } */
-  
+      const newSection = document.content.find(item => item.title === sectionData.title);
       setData(prevData => ({
         ...prevData,
         sections: [...prevData.sections, newSection]
       }));
-  
       setSectionId(newSection._id);
     } catch (error) {
       console.error('Error al crear la sección:', error);
@@ -166,13 +161,13 @@ const MyDocument = () => {
  
   const handleTitleCreate = async (titleData) => {
     try {
-      const document = await addTitle(id, { title: titleData }); 
-      const newTitle= document.content[document.content.length - 1]; 
+      const document = await addTitle(id, { title: titleData });
+      const newTitle = document.content.find(item => item.content === titleData.content);
       setData(prevData => ({
         ...prevData,
-        titles: [...prevData.titles, newTitle] 
+        titles: [...prevData.titles, newTitle]
       }));
-      setTitleId(newTitle._id); 
+      setTitleId(newTitle._id);
     } catch (error) {
       console.error('Error al crear el título:', error);
     }
@@ -180,17 +175,32 @@ const MyDocument = () => {
 
   const handleParagraphCreate = async (paragraphData) => {
     try {
-      const document = await addParagraph(id, { paragraph: paragraphData }); 
-      const newParagraph= document.content[document.content.length - 1]; 
+      const document = await addParagraph(id, { paragraph: paragraphData });
+      const newParagraph = document.content.find(item => item.text === paragraphData.text);
       setData(prevData => ({
         ...prevData,
-        paragraphs: [...prevData.paragraphs, newParagraph] 
+        paragraphs: [...prevData.paragraphs, newParagraph]
       }));
-      setParagraphId(newParagraph._id); 
+      setParagraphId(newParagraph._id);
     } catch (error) {
       console.error('Error al crear el párrafo:', error);
     }
   };
+
+  const handleLinkCreate = async (linkData) => {
+    try {
+        const document = await addLink(id, linkData);
+        const newLink = document.content.find(item => item.src === linkData.src);
+        setData(prevData => ({
+            ...prevData,
+            links: [...prevData.links, newLink]
+        }));
+        setLinkId(newLink._id);
+    } catch (error) {
+        console.error('Error al crear el link:', error);
+    }
+};
+
 
   const PdfDoc = ({ config }) => (
     <Document>
@@ -247,6 +257,9 @@ const MyDocument = () => {
   const handleCancelDialog = () => {
     setSelectedType(null);
   };
+  const handleEnterLink = (linkId) => {
+    navigate(`link/${linkId}`);
+};
   const isDisabled = selectedType !== null;
   return (
     <>
@@ -325,7 +338,7 @@ const MyDocument = () => {
                       <FormatListBulletedIcon />
                       </ListItemIcon>
                       <ListItemText primary="Link" />
-                      <AddIcon />
+                      <AddIcon onClick={handleLinkClick}/>
                     </ListItemButton>
                   </ListItem>
                   <Divider/>
@@ -417,32 +430,26 @@ const MyDocument = () => {
                 )
               ))}
 
-              {data.titles.map((title, index) => (
-                  title && title.title && (
+                {data.titles.map((title, index) => (
+                  title && title.content && (
                     <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
                       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      {/* <LongMenu /> */}
                       </Box>
                       <Typography sx={{ mb: 2, mt: 1 }}>
-                        {title.title}
+                        {title.content}
                       </Typography>
-                      <Button variant="contained" endIcon={<SendIcon />} size="small"
-                    sx={{ width: 100 , ml: 'auto'}} 
-                    onClick={handleEnterTitle}>
-                    Entrar
-                    </Button>
                     </CardContent>
                   )
-               ))}
+                ))}
               
               {data.paragraphs.map((paragraph, index) => (
-                  paragraph && paragraph.paragraph && (
+                  paragraph && paragraph.text && (
                     <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
                       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                       {/* <LongMenu /> */}
                       </Box>
                       <Typography sx={{ mb: 2, mt: 1 }}>
-                        {paragraph.title}
+                        {paragraph.text}
                       </Typography>
                       <Button variant="contained" endIcon={<SendIcon />} size="small"
                         sx={{ width: 100 , ml: 'auto'}} 
@@ -452,6 +459,17 @@ const MyDocument = () => {
                     </CardContent>
                   )
                ))}
+               {data.links.map((link, index) => (
+                  link && link.src && (
+                    <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      </Box>
+                      <Typography sx={{ mb: 2, mt: 1 }}>
+                        {link.src}
+                      </Typography>
+                    </CardContent>
+                  )
+                ))}
               </Box>
         
           </Container>
@@ -468,6 +486,7 @@ const MyDocument = () => {
       {openSection &&<SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate} onCancel={handleCancelDialog}/>}
       {openTitle &&<TitleDialog openTitle={openTitle} setOpenTitle={setOpenTitle} onTitleCreate={handleTitleCreate} onCancel={handleCancelDialog}/>}
       {openParagraph &&<ParagraphDialog openParagraph={openParagraph} setOpenParagraph={setOpenParagraph} onParagraphCreate={handleParagraphCreate} onCancel={handleCancelDialog}/>}
+      {openLink &&<LinkDialog openLink={openLink} setOpenLink={setOpenLink} onLinkCreate={handleLinkCreate} onCancel={handleCancelDialog}/>}
 
 
     </>

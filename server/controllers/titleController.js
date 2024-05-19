@@ -1,46 +1,44 @@
-import { Template, TitleSchema } from '../models/Template.js';
-import mongoose from 'mongoose';
+import { Template, Title } from '../models/Template.js';
 
 export const addTitle = async (req, res) => {
     try {
         const { id } = req.params;
         const { title } = req.body;
+        const newTitle = new Title(title);
+        await newTitle.save();
 
         const document = await Template.findById(id);
-
         if (!document) {
             return res.status(404).json({ message: "Document not found" });
         }
-        /* const Title = mongoose.model('Title', TitleSchema);
-        const newTitle = new Title(title); */
-        document.content.push(title);
-        await document.save();
 
-        res.status(200).json(document);
+        document.content.push(newTitle._id);
+        await document.save();
+        const populatedDocument = await Template.findById(id).populate({
+            path: 'content',
+            model: 'Title'
+          }).exec();
+        res.status(200).json(populatedDocument);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
+
 export const deleteTitle = async (req, res) => {
     try {
-        const { id: templateId, titleId } = req.params;
-        const document = await Template.findById(templateId);
+        const { id, titleId } = req.params;
+        const document = await Template.findById(id);
 
         if (!document) {
-            return res.status(404).json({ message: "Template not found" });
+            return res.status(404).json({ message: "Section not found" });
         }
 
-        const titleIndex = document.content.findIndex(title => title._id.toString() === titleId);
-
-        if (titleIndex === -1) {
-            return res.status(404).json({ message: "Title not found in this template" });
-        }
-
-        document.content.splice(titleIndex, 1);
+        document.content = document.content.filter(ch => ch._id.toString() !== titleId);
         await document.save();
 
-        res.status(200).json(document);
+        const updatedDocument = await Template.findById(id).populate('content');
+      res.status(200).json(updatedDocument);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -48,21 +46,23 @@ export const deleteTitle = async (req, res) => {
 
 export const updateTitle = async (request, response) => {
     try {
-        const { id: templateId, titleId } = request.params;
-        const { title: updatedTitle } = request.body;
-        const document = await Template.findById(templateId);// me busca el doc por el id
+        const { id, titleId } = request.params;
+        const { title } = request.body;
+
+        const document = await Template.findById(id);
         if (!document) {
-            return response.status(404).json({ message: "Template not found" });
+            return response.status(404).json({ message: "Title not found" });
         }
-        const titleIndex = document.content.findIndex(title => title._id.equals(titleId));  // me busca el title por id
-
-        if (titleIndex === -1) {
-            return response.status(404).json({ message: "Title not found in this template" });
-        }
-        document.content[titleIndex] = { ...document.content[titleIndex]._doc, ...updatedTitle };//estoy actualizando los datos de title
-        await document.save();
-
-        response.status(200).json(document);
+        const titleIndex = document.content.findIndex(ch => ch._id.toString() === titleId);
+      if (titleIndex === -1) {
+        return res.status(404).json({ message: "title not found" });
+      }
+  
+      document.content[titleIndex] = { ...document.content[titleIndex], ...title};
+      await document.save();
+  
+      const updatedDocument = await Template.findById(id).populate('content');
+      res.status(200).json(updatedDocument);
     } catch (error) {
         response.status(500).json({ message: error.message });
     }

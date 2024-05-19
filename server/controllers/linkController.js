@@ -1,24 +1,34 @@
-import { Template } from '../models/Template.js';
+import { Template, Link } from '../models/Template.js';
 
 export const addLink = async (req, res) => {
     try {
         const { id } = req.params;
         const { link } = req.body;
+        if (!link || !link.src) {
+            return res.status(400).json({ message: 'Invalid link data: src is required' });
+        }
+        const newLink = new Link(link);
+        await newLink.save();
 
         const document = await Template.findById(id);
-
         if (!document) {
             return res.status(404).json({ message: "Document not found" });
         }
 
-        document.content.push(link);
+        document.content.push(newLink._id);
         await document.save();
 
-        res.status(200).json(document);
+        const populatedDocument = await Template.findById(id).populate({
+            path: 'content',
+            model: 'Link'
+        }).exec();
+        res.status(200).json(populatedDocument);
     } catch (error) {
+        console.error('Error:', error);
         res.status(500).json({ message: error.message });
     }
 };
+
 
 export const deleteLink = async (req, res) => {
     try {
@@ -28,14 +38,12 @@ export const deleteLink = async (req, res) => {
         if (!document) {
             return res.status(404).json({ message: "Template not found" });
         }
-
-        const linkIndex = document.content.findIndex(link => link._id.toString() === linkId);
-
-        if (linkIndex === -1) {
-            return res.status(404).json({ message: "Link not found in this template" });
+        const link = section.content.id(linkId);
+        if (!link) {
+            return res.status(404).json({ message: "Link not found" });
         }
 
-        document.content.splice(linkIndex, 1);
+        link.remove();
         await document.save();
 
         res.status(200).json(document);
@@ -43,6 +51,7 @@ export const deleteLink = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 export const updateLink = async (request, response) => {
     try {

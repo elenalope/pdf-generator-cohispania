@@ -13,16 +13,16 @@ export default function ParagraphDialog({ openParagraph, setOpenParagraph, onPar
 
   const handleClose = () => {
     setOpenParagraph(false);
-    onCancel();
+    // onCancel();
   };
 
   const onSubmit = (data) => {
     const paragraphData = {
-      paragraph: data.paragraph,
+      text: data.text,
       content: []
     };
     onParagraphCreate(paragraphData);
-   /*  handleClose(); */
+    handleClose();
   };
   
   return (
@@ -32,12 +32,12 @@ export default function ParagraphDialog({ openParagraph, setOpenParagraph, onPar
         <TextField
           autoFocus
           margin="dense"
-          id="paragraph"
+          id="text"
           label="Párrafo"
           type="text"
           fullWidth
           variant="standard"
-          {...register('paragraph', { required: true })}
+          {...register('text', { required: true })}
         />
       </DialogContent>
       <DialogActions>
