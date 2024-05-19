@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import {Schema} from 'mongoose'
 
-const TitleSchema = new mongoose.Schema({
+export const TitleSchema = new mongoose.Schema({
     content: { type: String, required: true },
     level: {
         type: String,
@@ -40,8 +40,8 @@ const TitleSchema = new mongoose.Schema({
     }
 })
 
-const ParagraphSchema = new mongoose.Schema({
-    content: { type: String, required: true },
+export const ParagraphSchema = new mongoose.Schema({
+    text: { type: String, required: true },
     highlight: Boolean,
     color:String,
     fontSize: Number,
@@ -62,7 +62,8 @@ const ParagraphSchema = new mongoose.Schema({
         type: String, 
         enum: ['left', 'center', 'right', 'justify', 'initial', 'inherit'], 
         default: 'initial' 
-    },})
+    }
+})
 
 const ListSchema = new mongoose.Schema({
         content: [String],
@@ -142,8 +143,8 @@ const LinkSchema = new mongoose.Schema({
 })
 
 const SubsectionSchema = new mongoose.Schema({
-    title: TitleSchema,
-    paragraph: ParagraphSchema,
+    title: String,
+    paragraph: String,
     content: [
         TitleSchema,
         ParagraphSchema,
@@ -155,14 +156,9 @@ const SubsectionSchema = new mongoose.Schema({
 
 
 const SectionSchema = new mongoose.Schema({
-    title:{ type: String, required: true },
-    paragraph: String,
+    title: String,
     cover: Boolean,
     img: String,
-    orientation: String,
-    size: String,
-    link: LinkSchema,
-    Subsections: [SubsectionSchema],
     content: [
         TitleSchema,
         ParagraphSchema,

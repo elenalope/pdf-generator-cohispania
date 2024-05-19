@@ -7,13 +7,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function TitleDialog({ openTitle, setOpenTitle, onTitleCreate}) {
+export default function TitleDialog({ openTitle, setOpenTitle, onTitleCreate, onCancel}) {
   const { register, handleSubmit, reset } = useForm();
   
 
   const handleClose = () => {
     setOpenTitle(false);
-    reset();
+    /* onCancel(); */
   };
 
   const onSubmit = (data) => {

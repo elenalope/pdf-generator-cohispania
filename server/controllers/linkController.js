@@ -1,9 +1,9 @@
 import { Template } from '../models/Template.js';
 
-export const addSectionFromChapter = async (req, res) => {
+export const addLink = async (req, res) => {
     try {
         const { id } = req.params;
-        const { section } = req.body;
+        const { link } = req.body;
 
         const document = await Template.findById(id);
 
@@ -11,7 +11,7 @@ export const addSectionFromChapter = async (req, res) => {
             return res.status(404).json({ message: "Document not found" });
         }
 
-        document.content.push(section);
+        document.content.push(link);
         await document.save();
 
         res.status(200).json(document);
@@ -20,22 +20,22 @@ export const addSectionFromChapter = async (req, res) => {
     }
 };
 
-export const deleteSectionFromChapter = async (req, res) => {
+export const deleteLink = async (req, res) => {
     try {
-        const { id: templateId, sectionId } = req.params;
+        const { id: templateId, linkId } = req.params;
         const document = await Template.findById(templateId);
 
         if (!document) {
             return res.status(404).json({ message: "Template not found" });
         }
 
-        const sectionIndex = document.content.findIndex(section => section._id.toString() === sectionId);
+        const linkIndex = document.content.findIndex(link => link._id.toString() === linkId);
 
-        if (sectionIndex === -1) {
-            return res.status(404).json({ message: "Section not found in this template" });
+        if (linkIndex === -1) {
+            return res.status(404).json({ message: "Link not found in this template" });
         }
 
-        document.content.splice(sectionIndex, 1);
+        document.content.splice(linkIndex, 1);
         await document.save();
 
         res.status(200).json(document);
@@ -44,20 +44,20 @@ export const deleteSectionFromChapter = async (req, res) => {
     }
 };
 
-export const updateSectionFromChapter = async (request, response) => {
+export const updateLink = async (request, response) => {
     try {
-        const { id: templateId, sectionId } = request.params;
-        const { section: updatedSection } = request.body;
+        const { id: templateId, linkId } = request.params;
+        const { link: updatedLink } = request.body;
         const document = await Template.findById(templateId);// me busca el doc por el id
         if (!document) {
             return response.status(404).json({ message: "Template not found" });
         }
-        const sectionIndex = document.content.findIndex(section => section._id.equals(sectionId));  // me busca el section por id
+        const linkIndex = document.content.findIndex(link => link._id.equals(linkId));  // me busca el link por id
 
-        if (sectionIndex === -1) {
-            return response.status(404).json({ message: "Section not found in this template" });
+        if (linkIndex === -1) {
+            return response.status(404).json({ message: "Link not found in this template" });
         }
-        document.content[sectionIndex] = { ...document.content[sectionIndex]._doc, ...updatedSection };//estoy actualizando los datos de section
+        document.content[linkIndex] = { ...document.content[linkIndex]._doc, ...updatedLink };//estoy actualizando los datos de link
         await document.save();
 
         response.status(200).json(document);

@@ -1,17 +1,22 @@
-import { Template } from '../models/Template.js';
+import { Template/* , SectionSchema */ } from '../models/Template.js';
 
 export const addSectionFromChapter = async (req, res) => {
     try {
         const { id } = req.params;
         const { section } = req.body;
 
+        const validation = new SectionSchema(section).validateSync();
+        if (validation) {
+            return res.status(400).json({ message: validation.message });
+        }
+
         const document = await Template.findById(id);
 
         if (!document) {
             return res.status(404).json({ message: "Document not found" });
         }
-
-        document.content.push(section);
+        const newSection = new SectionSchema(section);
+        document.content.push(newSection);
         await document.save();
 
         res.status(200).json(document);

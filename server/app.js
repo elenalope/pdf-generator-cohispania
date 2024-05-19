@@ -8,7 +8,10 @@ import chapterRouter from './routes/chapterRouter.js'
 import sectionRouter from './routes/sectionRouter.js'
 import subsectionRouter from './routes/subsectionRouter.js'
 import moduleRouter from './routes/moduleRouter.js';
-import { addSectionFromChapter } from '../client/src/services/sectionFromChapter.js';
+import sectionFromChapterRouter from './routes/sectionFromChapterRouter.js'
+import paragraphRouter from './routes/paragraphRouter.js'
+import titleRouter from './routes/titleRouter.js'
+import linkRouter from './routes/linkRouter.js'
 
 const app = express()
 
@@ -19,7 +22,10 @@ app.use('/api', chapterRouter);
 app.use('/api', sectionRouter);
 app.use('/api', subsectionRouter);
 app.use('/api', moduleRouter);
-app.use('/api', sectionFromChapter)
+app.use('/api', sectionFromChapterRouter);
+app.use('/api', paragraphRouter);
+app.use('/api', titleRouter);
+app.use('/api', linkRouter);
 
 connect();
 

@@ -23,26 +23,24 @@ import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 
-export default function LinkDialog() {
-    const location = useLocation();
-    const config = location.state?.config;
-    const { title = '', cover = '',  ImgCover = '' } = config || {};
-    const [elements, setElements] = useState([]);
+export default function LinkDialog({ openLink, setOpenLink, onLinkCreate, onCancel }) {
+  const { register, handleSubmit, reset } = useForm();
+  const [imageFile, setImageFile] = useState(null);
   
-    const handleDownloadPdf = async () => {
-    
-    }
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
-    setOpen(false);
+    setOpenLink(false);
+    onCancel();
   };
 
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
+  const onSubmit = (data) => {
+    const linkData = {
+      src: data.src,
+      content: []
+    };
+    onLinkCreate(linkData);
+    handleClose();
+  };
+ 
   const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
@@ -54,11 +52,6 @@ export default function LinkDialog() {
     whiteSpace: 'nowrap',
     width: 1,
   });
-
-  const handleLinkClick = () => {
-    setElements([...elements, { type: 'link', data: { title: ''} }]);
-    
-  }
 
   return (
     <React.Fragment>
