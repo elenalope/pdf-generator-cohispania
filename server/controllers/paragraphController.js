@@ -1,26 +1,30 @@
-import { Template, ParagraphSchema } from '../models/Template.js';
-import mongoose from 'mongoose';
+import { Template, Paragraph } from '../models/Template.js';
 
 export const addParagraph = async (req, res) => {
     try {
         const { id } = req.params;
         const { paragraph } = req.body;
 
-        const document = await Template.findById(id);
+        const newParagraph = new Paragraph(paragraph);
+        await newParagraph.save();
 
+        const document = await Template.findById(id);
         if (!document) {
             return res.status(404).json({ message: "Document not found" });
         }
-        const Paragraph = mongoose.model('Paragraph', ParagraphSchema);
-        const newParagraph = new Paragraph(paragraph);
-        document.content.push(newParagraph);
+        document.content.push(newParagraph._id);
         await document.save();
 
-        res.status(200).json(document);
+        const populatedDocument = await Template.findById(id).populate({
+            path: 'content',
+            model: 'Paragraph'
+          }).exec();
+        res.status(200).json(populatedDocument);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 export const deleteParagraph = async (req, res) => {
     try {
