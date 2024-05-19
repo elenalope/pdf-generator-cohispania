@@ -42,7 +42,7 @@ export default function SectionDialog({ openSection, setOpenSection, onSectionCr
       content: []
     };
 
-    console.log('Section Data:', JSON.stringify(sectionData, null, 2));
+    console.log('Section Data:',sectionData);
     await onSectionCreate(sectionData);
     handleClose();
   };

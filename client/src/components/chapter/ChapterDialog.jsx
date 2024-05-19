@@ -36,11 +36,11 @@ export default function ChapterDialog({ openChapter, setOpenChapter, onChapterCr
       subtitle: data.subtitle,
       img: imageFile ? URL.createObjectURL(imageFile) : "",
       content: []
-    };
+    }; 
     onChapterCreate(chapterData);
     handleClose();
   };
-
+ 
   const handleImageChange = (e) => {
     setImageFile(e.target.files[0]);
   };

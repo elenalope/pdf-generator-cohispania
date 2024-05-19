@@ -18,7 +18,7 @@ export const updateParagraph = async (templateId, paragraphId, updatedParagraph)
   try {
     const response = await axios.put(`${URL}/${templateId}/paragraph/${paragraphId}`, {paragraph: updatedParagraph});
     alert("Párrafo actualizado exitosamente");
-    return response;
+    return response.data;
   } catch (error) {
     console.error('Error updating paragraph', error.message);
     throw error;
@@ -29,7 +29,7 @@ export const deleteParagraph = async (templateId, paragraphId)=>{
   try {
     const response = await axios.delete(`${URL}/${templateId}/paragraph/${linkId}`);
     alert('Párrafo eliminado correctamente');
-    return response;
+    return response.data;
   } catch (error) {
     console.error('Error deleting paragraph', error.message);
     throw error;

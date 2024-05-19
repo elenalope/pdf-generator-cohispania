@@ -20,19 +20,7 @@ const Config = () => {
     const [config, setConfig] = useState({
         name: '',
         size: 'A4',
-        title: {
-            content: '', 
-            bold: false,
-            font: 'sans',
-            underline: false,
-            color: 'black',
-            size: '1em',
-            margin: {
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0
-            } },
+        title: '',
         subtitle: '',
         coverLogo: '',
         toc: false,
@@ -95,16 +83,13 @@ const[showPreview, setShowPreview] = useState(false);
               <div className='containerConfig'>
                 <label className='configLabel' htmlFor='title'>
                   <TextField
-                    {...register('title.content')}
+                    {...register('title')}
                     id='title'
                     label='Título'
                     variant='standard'
-                    value={config.title.content}
+                    value={config.title}
                     onChange={(e) =>
-                      setConfig({
-                        ...config,
-                        title: { ...config.title, content: e.target.value },
-                      })
+                      setConfig({ ...config, title: e.target.value })
                     }
                   />
                 </label>
