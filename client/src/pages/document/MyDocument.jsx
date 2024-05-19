@@ -204,17 +204,30 @@ const MyDocument = () => {
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
-    backgroundColor: '#E4E4E4',
+    backgroundColor: 'white',
     padding: 20,
   },
-  backgroundImage: {
+  pageWithBg: {
+    flexDirection: 'column',
+    padding: 20,
+    position: 'relative',
+    backgroundColor: 'white',
+  },
+  header: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    width: '100%',
-    height: '100%',
+    top: 10,
+    left: 10,
+    width: 50,
+    height: 50,
+  },
+  watermark: {
+    position: 'absolute',
+    top: '20%',
+    left: '20%',
+/*     transform: 'translate(-50%, -50%)',
+ */ opacity: 0.3,
+    fontSize: 50,
+    color: 'gray',
     zIndex: -1,
   },
   section: {
@@ -241,7 +254,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     margin: 10,
   },
+  backgroundImage: {
+    top: '10%',
+    left: '5%',
+    bottom: '10%',
+    right: '5%',
+    width: '90%',
+    height: '80%',
+/*     transform: 'translate(-50%, -50%)',
+ */    
+  },
 });
+
 
 
 const PdfDoc = ({ config }) => {
@@ -250,28 +274,42 @@ const PdfDoc = ({ config }) => {
 
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
-      {config.coverImg && (
-          <Image src={config.coverImg} style={styles.backgroundImage} />
+      <Page size="A4" style={config.coverImg ? styles.pageWithBg : styles.page}>
+        {config.coverImg && (
+          <Image style={styles.backgroundImage} src={config.coverImg} />
+        )}
+        {config.watermark && (
+          <Text style={styles.watermark}>{config.watermark}</Text>
         )}
         <View style={styles.section}>
-          <Text style={styles.title}>Título:{config.title}</Text>
-          <Text style={styles.subtitle}>Subtítulo:{config.subtitle}</Text>
-          <Text style={styles.docExplanation}>Descripción:{config.docExplanation}</Text>
+          <Text style={styles.title}>{config.title.content}</Text>
+          <Text style={styles.subtitle}>{config.subtitle}</Text>
           {config.toc && <Text style={styles.toc}>Índice:</Text>}
           <Text style={styles.text}>{config.theme}</Text>
         </View>
       </Page>
       {chapters.map((chapter, index) => (
         <Page key={`chapter-${index}`} size="A4" style={styles.page}>
+          {config.headerLogo && (
+            <Image style={styles.header} src={config.headerLogo} />
+          )}
+          {config.watermark && (
+            <Text style={styles.watermark}>{config.watermark}</Text>
+          )}
           <View style={styles.section}>
-            <Text style={styles.title}>Capítulo: {chapter.title}</Text>
+            <Text style={styles.title}>{chapter.title}</Text>
             <Text style={styles.text}>{chapter.subtitle}</Text>
           </View>
         </Page>
       ))}
       {sections.map((section, index) => (
         <Page key={`section-${index}`} size="A4" style={styles.page}>
+          {config.headerLogo && (
+            <Image style={styles.header} src={config.headerLogo} />
+          )}
+          {config.watermark && (
+            <Text style={styles.watermark}>{config.watermark}</Text>
+          )}
           <View style={styles.section}>
             <Text style={styles.title}>{section.title}</Text>
             <Text style={styles.text}>{section.subtitle}</Text>
@@ -281,6 +319,7 @@ const PdfDoc = ({ config }) => {
     </Document>
   );
 };
+
 
 
 const generatePdf = async () => {
