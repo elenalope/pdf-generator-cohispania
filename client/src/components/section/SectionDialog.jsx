@@ -30,7 +30,7 @@ export default function SectionDialog({ openSection, setOpenSection, onSectionCr
 
   const handleClose = () => {
     setOpenSection(false);
-    onCancel();
+    // onCancel();
   };
 
   const onSubmit = async (data) => {
@@ -44,7 +44,7 @@ export default function SectionDialog({ openSection, setOpenSection, onSectionCr
 
     console.log('Section Data:', JSON.stringify(sectionData, null, 2));
     await onSectionCreate(sectionData);
-    /* handleClose(); */
+    handleClose();
   };
 
 
