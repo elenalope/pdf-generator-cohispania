@@ -6,7 +6,7 @@ const Nav = () => {
     return (
       <div className='navbar'>
         <Link to="/" >
-          <img src={logo} alt="logo" className='logo'/>
+          <img src={logo} alt="Pdf Generator logo" className='logo'/>
         </Link>
      </div>
     );
