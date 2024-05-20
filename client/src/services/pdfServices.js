@@ -30,7 +30,7 @@ export const postPDF = async (newData) => {
 export const deletePDF = async (id) =>{
   try {
     const response = await axios.delete(`${URL}/document/${id}`);
-    alert("Document deleted");
+    //alert("Document deleted");
     return response;
   } catch (error) {
     console.error('Error delete document', error.message);

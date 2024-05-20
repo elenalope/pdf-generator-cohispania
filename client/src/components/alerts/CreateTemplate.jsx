@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './Alerts.css';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { CheckCircleOutline } from '@mui/icons-material';
@@ -11,7 +10,7 @@ const CreateTemplate = ({ onClose }) => {
         const timer = setTimeout(() => {
             setOpen(false);
             onClose && onClose();
-        }, 3000); // 3 segundos
+        }, 2500);
 
         return () => clearTimeout(timer);
     }, [onClose]);
