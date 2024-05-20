@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { postPDF } from '../../services/pdfServices';
@@ -42,6 +42,8 @@ import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import MoveDownIcon from '@mui/icons-material/MoveDown'
 import ExitWithoutSaving from '../../components/alerts/ExitWithoutSaving.jsx';
+import MoveDownIcon from '@mui/icons-material/MoveDown';
+import './MyDocument.css';
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -460,10 +462,15 @@ const MyDocument = () => {
                   )
                ))}
               </Box>
-        
+              
           </Container>
 
           </div>
+          
+          <div className={showPreview ? 'previewContainer' : 'previewContainer empty'}>
+          {showPreview && <PreviewPdf config={config} data={data} />}
+          </div>
+
         </div>
           <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
           <Button variant="contained" onClick={(handleShowAlert)}>SALIR SIN GUARDAR</Button>
@@ -471,7 +478,7 @@ const MyDocument = () => {
         </Stack>
       </form>
 
-      {showPreview && <PreviewPdf config={config} data={data} />}
+      {/* {showPreview && <PreviewPdf config={config} data={data} />} */}
       {openChapter && <ChapterDialog openChapter={openChapter} setOpenChapter={setOpenChapter} onChapterCreate={handleChapterCreate} onCancel={handleCancelDialog}/>}
       {openSection &&<SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate} onCancel={handleCancelDialog}/>}
       {openTitle &&<TitleDialog openTitle={openTitle} setOpenTitle={setOpenTitle} onTitleCreate={handleTitleCreate} onCancel={handleCancelDialog}/>}
