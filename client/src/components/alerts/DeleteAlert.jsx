@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const DeletePDF = ({ onClose, onConfirm }) => {
     const [open, setOpen] = useState(true);
@@ -19,7 +20,7 @@ const DeletePDF = ({ onClose, onConfirm }) => {
             <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
                 <DialogContent style={{ padding: 0 }}>
                     <div style={{ backgroundColor: '#D32F2F', padding: '16px', textAlign: 'center' }}>
-                        <div style={{ fontSize: '48px', color: 'white' }}>!</div>
+                        <DeleteIcon style={{ fontSize: '48px', color: 'white' }} />
                     </div>
                     <div style={{ backgroundColor: 'white', padding: '16px', textAlign: 'center' }}>
                         <DialogTitle id="alert-dialog-title">¿Estás seguro de que quieres eliminar el documento?</DialogTitle>
