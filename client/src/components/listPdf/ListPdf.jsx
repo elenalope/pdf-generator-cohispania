@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getPDF, deletePDF } from '../../services/pdfServices';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
@@ -12,6 +13,7 @@ import Deleting from '../alerts/DeleteConfirm';
 import IconButton from '@mui/material/IconButton';
 
 const ListPdf = () => {
+    const navigate = useNavigate();
     const [documents, setDocuments] = useState([]);
     const [showAlert, setShowAlert] = useState(false);
     const [showDeletingAlert, setShowDeletingAlert] = useState(false);
@@ -88,7 +90,7 @@ const ListPdf = () => {
                 },
                 borderRadius: '15px' }}>
                     <CardActionArea >
-                        <CardContent onClick={()=> handleNavigateDocument(document._id)}>
+                        <CardContent onClick={()=> navigate(`document/${document._id}`)}>
                             <div style={{ width: '100%', height: '160px', overflow: 'hidden', marginBottom: '9%'}}>
                             {document.coverImg && (
                             <img src={document.coverImg} alt="Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
