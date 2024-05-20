@@ -37,7 +37,7 @@ const Config = () => {
         coverLogo: '',
         sectionBreak: false,
         headerLogo: '',
-        watermark: 'https://pbs.twimg.com/profile_images/1179641400251600898/qW-KYjPj_400x400.png',
+        watermark: 'https://www.cohispania.com/wp-content/uploads/2023/05/cohispania-logo.jpeg',
         orientation: 'Vertical',
       });
 
