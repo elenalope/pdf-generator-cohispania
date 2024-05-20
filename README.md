@@ -141,6 +141,7 @@ __README.md:__ this file typically contains instructions on how to set up and ru
 <img width="50" src="https://cdn.worldvectorlogo.com/logos/nodemon.svg">&nbsp;
 <img width="50" src="https://express-validator.github.io/img/logo.svg">&nbsp;
 <img width="50" src="https://static-00.iconduck.com/assets.00/sequelize-original-icon-885x1024-r8dswyvj.png">&nbsp;
+<img width="50" src="https://seeklogo.com/images/M/mui-logo-56F171E991-seeklogo.com.png">&nbsp;
 
 # Authors
 
