@@ -41,6 +41,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import MoveDownIcon from '@mui/icons-material/MoveDown'
+import ExitWithoutSaving from '../../components/alerts/ExitWithoutSaving.jsx';
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -77,6 +78,7 @@ const MyDocument = () => {
   const [titleId, setTitleId] = useState(null);
   const [paragraphId, setParagraphId] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
   
 
   useEffect(() => {
@@ -248,6 +250,11 @@ const MyDocument = () => {
     setSelectedType(null);
   };
   const isDisabled = selectedType !== null;
+
+  const handleShowAlert = () => {
+    setShowAlert(true);
+};
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className='formMyDocument'>
@@ -459,7 +466,8 @@ const MyDocument = () => {
           </div>
         </div>
           <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
-          <Button variant="contained" onClick={() => navigate('/')}>SALIR SIN GUARDAR</Button>
+          <Button variant="contained" onClick={(handleShowAlert)}>SALIR SIN GUARDAR</Button>
+          {showAlert && <ExitWithoutSaving onClose={() => setShowAlert(false)} />}
         </Stack>
       </form>
 
