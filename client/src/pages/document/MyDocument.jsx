@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { postPDF } from '../../services/pdfServices';
-import { pdf, Document, Page, Text, View } from '@react-pdf/renderer';
+import { pdf, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import PreviewPdf from '../../components/PreviewPdf/PreviewPdf.jsx';
 import ChapterDialog from '../../components/chapter/ChapterDialog.jsx';
 import SectionDialog from '../../components/section/SectionDialog.jsx';
@@ -193,37 +193,143 @@ const MyDocument = () => {
         console.error('Error al crear el link:', error);
     }
 };
+// Descarga documento
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: 'column',
+    backgroundColor: 'white',
+    padding: 20,
+  },
+  pageWithBg: {
+    flexDirection: 'column',
+    padding: 20,
+    position: 'relative',
+    backgroundColor: 'white',
+  },
+  header: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    width: 50,
+    height: 50,
+  },
+  watermark: {
+    position: 'absolute',
+    top: '20%',
+    left: '20%',
+/*     transform: 'translate(-50%, -50%)',
+ */ opacity: 0.3,
+    fontSize: 50,
+    color: 'gray',
+    zIndex: -1,
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
+  },
+  title: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  subtitle: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  text: {
+    margin: 10,
+    fontSize: 14,
+    textAlign: 'justify',
+  },
+  toc: {
+    fontSize: 16,
+    margin: 10,
+  },
+  backgroundImage: {
+    top: '10%',
+    left: '5%',
+    bottom: '10%',
+    right: '5%',
+    width: '90%',
+    height: '80%',
+/*     transform: 'translate(-50%, -50%)',
+ */    
+  },
+});
 
 
-  const PdfDoc = ({ config }) => (
+
+const PdfDoc = ({ config }) => {
+  const chapters = config.chapters || [];
+  const sections = config.sections || [];
+
+  return (
     <Document>
-      <Page size={config.size}>
-        <View>
-          <Text>{config.title.content}</Text>
-          <Text>{config.subtitle}</Text>
-          <View>
-            {config.toc && <Text>Índice:</Text>}
-          </View>
-          <Text>{config.theme}</Text>
+      <Page size="A4" style={config.coverImg ? styles.pageWithBg : styles.page}>
+        {config.coverImg && (
+          <Image style={styles.backgroundImage} src={config.coverImg} />
+        )}
+        {config.watermark && (
+          <Text style={styles.watermark}>{config.watermark}</Text>
+        )}
+        <View style={styles.section}>
+          <Text style={styles.title}>{config.title.content}</Text>
+          <Text style={styles.subtitle}>{config.subtitle}</Text>
+          {config.toc && <Text style={styles.toc}>Índice:</Text>}
+          <Text style={styles.text}>{config.theme}</Text>
         </View>
       </Page>
+      {chapters.map((chapter, index) => (
+        <Page key={`chapter-${index}`} size="A4" style={styles.page}>
+          {config.headerLogo && (
+            <Image style={styles.header} src={config.headerLogo} />
+          )}
+          {config.watermark && (
+            <Text style={styles.watermark}>{config.watermark}</Text>
+          )}
+          <View style={styles.section}>
+            <Text style={styles.title}>{chapter.title}</Text>
+            <Text style={styles.text}>{chapter.subtitle}</Text>
+          </View>
+        </Page>
+      ))}
+      {sections.map((section, index) => (
+        <Page key={`section-${index}`} size="A4" style={styles.page}>
+          {config.headerLogo && (
+            <Image style={styles.header} src={config.headerLogo} />
+          )}
+          {config.watermark && (
+            <Text style={styles.watermark}>{config.watermark}</Text>
+          )}
+          <View style={styles.section}>
+            <Text style={styles.title}>{section.title}</Text>
+            <Text style={styles.text}>{section.subtitle}</Text>
+          </View>
+        </Page>
+      ))}
     </Document>
   );
+};
 
-  const generatePdf = async () => {
-    try {
-      const blob = await pdf(<PdfDoc config={config} />).toBlob();
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'documento.pdf');
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error('Error al generar el PDF:', error);
-    }
-  };
+
+
+const generatePdf = async () => {
+  try {
+    const blob = await pdf(<PdfDoc config={data} />).toBlob();
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'documento.pdf');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error('Error al generar el PDF:', error);
+  }
+};
+
 
   const handleEnterChapter = () => {
     if (chapterId) {
