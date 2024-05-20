@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
-import {useForm, FormProvider} from 'react-hook-form'
+import React, { useState } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import PreviewPdf from '../../components/PreviewPdf/PreviewPdf';
-import './Config.css'
+import './Config.css';
 import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
@@ -14,10 +14,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 import { postPDF } from '../../services/pdfServices';
+import CreateTemplate from '../../components/alerts/CreateTemplate';
 import { Typography } from '@mui/material';
 
 const Config = () => {
     const navigate = useNavigate();
+    const [showAlert, setShowAlert] = useState(false);
+    const [documentId, setDocumentId] = useState(null);
     const [config, setConfig] = useState({
         name: '',
         size: 'A4',
@@ -48,38 +51,37 @@ const Config = () => {
         headerLogo: '',
         watermark: '',
         orientation: '',
-      });
+    });
 
-      const methods = useForm({
+    const methods = useForm({
         defaultValues: config,
-      })
+    });
 
-      const {register, handleSubmit} = methods;
-      const onSubmit = async (data) => {
-        console.log('data de config.jsx',data);
+    const { register, handleSubmit } = methods;
+    const onSubmit = async (data) => {
+        console.log('data de config.jsx', data);
         try {
             const response = await postPDF(data);
             const documentId = response.data._id;
-            navigate(`/document/${documentId}`, {
-              state: { config: data, documentId: documentId } 
-            });
-         
+            setDocumentId(documentId);
+            setShowAlert(true);
+            setTimeout(() => {
+                navigate(`/document/${documentId}`, {
+                    state: { config: data, documentId: documentId }
+                });
+            }, 3000); // 3 segundos
         } catch (error) {
-            console.error('Error creating document')
+            console.error('Error creating document');
         }
-  };
+    };
 
-const[showPreview, setShowPreview] = useState(false);
- 
-    
-  
-    const handlePreview = () =>{
+    const [showPreview, setShowPreview] = useState(false);
+
+    const handlePreview = () => {
         setShowPreview(!showPreview);
-    }
-       
-  
-       
-       return (
+    };
+
+    return (
         <>
           <FormProvider {...methods} >
             <form onSubmit={handleSubmit(onSubmit)} className='formConfig'>
@@ -240,7 +242,7 @@ const[showPreview, setShowPreview] = useState(false);
             </form>
           </FormProvider>
         </>
-      )
-    }
-    
-    export default Config;
+    );
+};
+
+export default Config;

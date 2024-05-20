@@ -19,7 +19,7 @@ export const postPDF = async (newData) => {
   try {
     console.log("Datos enviados:", newData);
      const response = await axios.post(`${URL}/document`, newData);
-     alert("Document create succesfully");
+     //alert("Document create succesfully");
      return response;
   } catch (error) {
      console.error('Error creating document', error.message);
@@ -30,7 +30,7 @@ export const postPDF = async (newData) => {
 export const deletePDF = async (id) =>{
   try {
     const response = await axios.delete(`${URL}/document/${id}`);
-    alert("Document deleted");
+    //alert("Document deleted");
     return response;
   } catch (error) {
     console.error('Error delete document', error.message);
