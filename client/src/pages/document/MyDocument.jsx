@@ -469,7 +469,7 @@ const MyDocument = () => {
         </Stack>
       </form>
 
-      {showPreview && <PreviewPdf config={config} data={data} />}
+      {/* {showPreview && <PreviewPdf config={config} data={data} />} */}
       {openChapter && <ChapterDialog openChapter={openChapter} setOpenChapter={setOpenChapter} onChapterCreate={handleChapterCreate} onCancel={handleCancelDialog}/>}
       {openSection &&<SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate} onCancel={handleCancelDialog}/>}
       {openTitle &&<TitleDialog openTitle={openTitle} setOpenTitle={setOpenTitle} onTitleCreate={handleTitleCreate} onCancel={handleCancelDialog}/>}

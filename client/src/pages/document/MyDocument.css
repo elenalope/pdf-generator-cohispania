@@ -48,3 +48,17 @@
     flex-direction: column;
     gap: 10px;
 }
+
+.previewContainer {
+    height: 65vh;
+    overflow-y: auto; 
+    background-color: #E0E0E0; 
+    padding: 30px; 
+  }
+
+  .previewContainer.empty {
+    padding: 0;
+    height: 0;
+    overflow: hidden;
+    background-color: transparent;
+}
