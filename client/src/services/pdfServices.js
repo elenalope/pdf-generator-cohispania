@@ -19,7 +19,7 @@ export const postPDF = async (newData) => {
   try {
     console.log("Datos enviados:", newData);
      const response = await axios.post(`${URL}/document`, newData);
-     alert("Document create succesfully");
+     //alert("Document create succesfully");
      return response;
   } catch (error) {
      console.error('Error creating document', error.message);
