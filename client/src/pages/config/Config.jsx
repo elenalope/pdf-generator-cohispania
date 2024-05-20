@@ -14,6 +14,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 import { postPDF } from '../../services/pdfServices';
+import { Typography } from '@mui/material';
 
 const Config = () => {
     const navigate = useNavigate();
@@ -86,15 +87,11 @@ const[showPreview, setShowPreview] = useState(false);
                 <label className='configLabelName' htmlFor='name'>
                   <TextField {...register('name')} id='name' label="Nombre de la plantilla" variant='standard' value={config.name} onChange={(e) => setConfig({ ...config, name: e.target.value })} />
                 </label>
-                <ul className='listButtonsConfig'>
-                  <li><SaveIcon /></li>
-                  <li><GetAppIcon /></li>
-                  <li onClick={handlePreview}><VisibilityIcon /></li>
-                </ul>
               </div>
               <div className='containerConfig'>
-                <label className='configLabel' htmlFor='title'>
-                  <TextField
+                <div className='column-left'>
+                  <label className='configLabel' htmlFor='title'>
+                    <TextField
                     {...register('title.content')}
                     id='title'
                     label='Título'
@@ -106,20 +103,20 @@ const[showPreview, setShowPreview] = useState(false);
                         title: { ...config.title, content: e.target.value },
                       })
                     }
-                  />
-                </label>
-                <label className='configLabel' htmlFor='subtitle'>
-                  <TextField {...register('subtitle')} id='subtitle' label="Subtítulo" variant='standard' value={config.subtitle} onChange={(e) => setConfig({ ...config, subtitle: e.target.value })} />
-                </label>
-                <label htmlFor="standard-multiline-static">
-                  <Box component="form">
+                    />
+                  </label>
+                  <label className='configLabel' htmlFor='subtitle'>
+                    <TextField {...register('subtitle')} id='subtitle' label="Subtítulo" variant='standard' value={config.subtitle} onChange={(e) => setConfig({ ...config, subtitle: e.target.value })} />
+                  </label>
+                  <label htmlFor="standard-multiline-static">
+                    <Box component="form">
                     <div className='configLabel'>
                       <TextField id="standard-multiline-static" label="Descripción documento"
-                        multiline rows={3} variant="standard"
-                      /></div>
-                  </Box>
-                </label>
-                <label className='configLabel' htmlFor="includeCover-switch">
+                        multiline rows={3} variant="standard"/>
+                    </div>
+                    </Box>
+                  </label>
+                  <label className='configLabel' htmlFor="includeCover-switch">
                   <FormControlLabel
                     control={
                       <Switch {...register('includeCover')} id="includeCover-switch" checked={config.includeCover}
@@ -127,8 +124,8 @@ const[showPreview, setShowPreview] = useState(false);
                         inputProps={{ 'aria-label': 'controlled' }}
                       />
                     } label="Portada" />
-                </label>
-                {config.includeCover && (
+                  </label>
+                  {config.includeCover && (
                   <>
                     <label className='configLabel' htmlFor="coverImg">
                       <TextField {...register('coverImg')} id='coverImg' label="Imagen Portada" variant='standard' value={config.coverImg} onChange={(e) => setConfig({ ...config, coverImg: e.target.value })} />
@@ -137,10 +134,10 @@ const[showPreview, setShowPreview] = useState(false);
                       <TextField {...register('coverLogo')} id='coverLogo' label="Imagen Logo" variant='standard' value={config.coverLogo} onChange={(e) => setConfig({ ...config, coverLogo: e.target.value })} />
                     </label>
                   </>)}
-                <label className='configLabel' htmlFor="headerLogo">
-                  <TextField {...register('headerLogo')} id='headerLogo' label="Logo Cabecera" variant='standard' value={config.headerLogo} onChange={(e) => setConfig({ ...config, headerLogo: e.target.value })} />
-                </label>
-                <label className='configLabel' htmlFor="includeBackCover-switch">
+                  <label className='configLabel' htmlFor="headerLogo">
+                      <TextField {...register('headerLogo')} id='headerLogo' label="Logo Cabecera" variant='standard' value={config.headerLogo} onChange={(e) => setConfig({ ...config, headerLogo: e.target.value })} />
+                  </label>
+                  <label className='configLabel' htmlFor="includeBackCover-switch">
                   <FormControlLabel
                     control={
                       <Switch {...register('includeBackCover')} id="includeBackCover-switch" checked={config.includeBackCover}
@@ -148,9 +145,11 @@ const[showPreview, setShowPreview] = useState(false);
                         inputProps={{ 'aria-label': 'controlled' }}
                       />
                     } label="Contraportada" />
-                </label>
+                  </label>
+                </div>
+                <div className='column-right'>
                 <label className='configLabel' htmlFor="toc-switch">
-                  <FormControlLabel
+                    <FormControlLabel
                     control={
                       <Switch {...register('toc')} id="toc-switch" checked={config.toc}
                         onChange={(e) => setConfig({ ...config, toc: e.target.checked })}
@@ -176,19 +175,19 @@ const[showPreview, setShowPreview] = useState(false);
                     </label>
                   </>)}
                 <label htmlFor="demo-simple-select-filled-label" className='configLabel'>
-                  Padding:
-                  <Select
+                  <Typography>Padding:</Typography>
+                    <Select
                     {...register('padding')}
                     labelId="demo-simple-select-filled-label"
                     id="demo-simple-select-filled"
                     value={config.padding}
                     onChange={(e) => setConfig({ ...config, padding: e.target.value })}
                     label="Padding"
-                  >
-                    <MenuItem value={'5px'}>5px</MenuItem>
-                    <MenuItem value={'10px'}>10px</MenuItem>
-                    <MenuItem value={'20px'}>20px</MenuItem>
-                  </Select>
+                    >
+                      <MenuItem value={'5px'}>5px</MenuItem>
+                      <MenuItem value={'10px'}>10px</MenuItem>
+                      <MenuItem value={'20px'}>20px</MenuItem>
+                    </Select>
                 </label>
                 <label className='configLabel' htmlFor="sectionBreak-switch">
                   <FormControlLabel
@@ -206,7 +205,7 @@ const[showPreview, setShowPreview] = useState(false);
                   <TextField {...register('theme')} id='theme' label="Tema" variant='standard' value={config.theme} onChange={(e) => setConfig({ ...config, theme: e.target.value })} />
                 </label>
                 <label htmlFor="demo-simple-select-filled-label" className='configLabel'>
-                  Orientación:
+                  <Typography>Orientación:</Typography>
                   <Select
                     {...register('orientation')}
                     labelId="demo-simple-select-filled-label"
@@ -231,10 +230,11 @@ const[showPreview, setShowPreview] = useState(false);
                     <MenuItem value={'A3'}>A3</MenuItem>
                   </Select>
                 </label>
-              </div>
+                </div>
               <div className='containerButtonsConfig'>
                 <Button type="submit" variant="contained">Crear</Button>
                 <Button variant="outlined" onClick={() => navigate('/')}>Cancelar</Button>
+              </div>
               </div>
               {showPreview && <PreviewPdf config={config} />}
             </form>

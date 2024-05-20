@@ -8,20 +8,24 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 20px
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
+    gap: 7%;
 }
 .configLabel{
     background-color: #C9C9CE;
     margin: 10px 10px 10px 10px;
-    width: 30%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-top: 0.1%;
 }
 .configLabelSize{
     background-color: #C9C9CE;
     margin: 10px 10px 10px 10px;
-    width: 30%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -37,11 +41,14 @@
     box-shadow: 2px 2px 5px black;
 }
 .containerButtonsConfig{
-    display: flex;
-    gap: 2%;
-    justify-content: end;
-    background-color: #C9C9CE;
-    padding: 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end; 
+  align-items: center; 
+  padding: 10px; 
+  gap: 20px; 
+  background-color: #C9C9CE; 
+  margin-top: auto;
 }
 .lineConfig{
     color: black;
@@ -62,5 +69,11 @@
     justify-content: space-between;
 }
 .configLabelName{
-    margin-left: 3%;
+    margin-top: 1%;
+    margin-left: 2%;
+}
+
+.column-left{
+    display: flex;
+    flex-direction: column;
 }
