@@ -22,7 +22,6 @@ import SendIcon from '@mui/icons-material/Send';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import SectionFromChapterDialog from '../components/sectionFromChapter/SectionFromChapterDialog.jsx';
 
 
 
@@ -40,16 +39,20 @@ const SectionFromChapter = () => {
         console.log('actualizado data', data);
     }, [data]);
 
-    const handleSubsectionCreate = async (subsectionData) =>{
+    const handleSubsectionCreate = async (subsectionData) => {
         try {
-            const updatedSection = await addSubSection(templateId, chapterId, sectionId, {subsection: subsectionData});
-            console.log('response updated', updatedSection);
+            const response = await addSubSection(templateId, chapterId, sectionId, { subsection: subsectionData });
+            console.log('response updated', response);
 
-            setData({subsections: updatedSection.data.content });
-            console.log('content subsections data', updatedSection.content);
+            setData({ subsections: response.data.content });
+            console.log('content subsections data', response.data.content);
         } catch (error) {
-            console.error('Error creating chapter:', error); 
+            console.error('Error creating chapter:', error);
         }
+    };
+
+    const handleEnterSection = (subsectionId) => {
+        navigate(`/document/${templateId}/chapter/${chapterId}/sectionChapter/${sectionId}`);
     };
     
 
@@ -73,7 +76,7 @@ const SectionFromChapter = () => {
           <Box>
             <nav aria-label="main mailbox folders">
               <List>
-                <ListItem disablePadding onClick={handleSubsectionClick}>
+                <ListItem disablePadding /* onClick={handleSubsectionClick} */>
                   <ListItemButton>
                     <ListItemIcon>
                       <ImportContactsIcon />
@@ -104,6 +107,13 @@ const SectionFromChapter = () => {
                       {subsection.paragraph}
                       </Typography>
                     <Divider />
+                    <div className='buttons-section-mydocument'>
+                                        <Button variant="contained" endIcon={<SendIcon />} size="small"
+                                            sx={{ width: 100, ml: 'auto' }}
+                                            onClick={() => handleEnterSection(subsection._id)}>
+                                            Entrar
+                                        </Button>
+                                    </div>
                     {/* <FormControlLabel disabled control={<Switch />} label={data.cover} /> */}
                                        
                 </CardContent>

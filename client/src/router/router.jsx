@@ -40,8 +40,12 @@ const router = createBrowserRouter([
             element: <Chapter />,
           },
           {
-            path: "section/:sectionId",
-            element: <SectionFromChapter />,
+            path: "section/:id",
+            element: <Section/>,
+          },
+          {
+            path: "section",
+            element: <SectionFromChapter/>
           },
           {
             path: "subsection/:id",

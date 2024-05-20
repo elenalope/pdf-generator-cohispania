@@ -49,7 +49,7 @@ export default function SubsectionDialog({
           autoFocus
           margin="dense"
           id="paragraph"
-          label="Título"
+          label="Párrafo"
           type="text"
           fullWidth
           variant="standard"
