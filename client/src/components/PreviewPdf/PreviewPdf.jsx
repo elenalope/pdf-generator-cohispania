@@ -62,7 +62,7 @@ const PreviewPdf = ({config, data}) => {
     console.log('titulo preview', titleContent)
     return (
         <>
-        <Document>
+       <Document>
             <Page size={size} style={styles.page}>
                 <View style={styles.page}>
                     {toc && <Text>Índice:</Text>}
