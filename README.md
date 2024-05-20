@@ -1,8 +1,5 @@
-
-  <h1 align="center">
-  <img src="https://i.ibb.co/ZhFSgrC/logo-black-pdf-generator.png" alt="logo-black-pdf-generator" border="0" width="400">
-  <h1/>
-
+<img src="https://i.ibb.co/ZhFSgrC/logo-black-pdf-generator.png" alt="logo-black-pdf-generator" border="0" width="300">
+ 
 # Index
 
 + [Description](#description)
