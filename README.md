@@ -1,9 +1,10 @@
-<h1> 💻 PDF Generator 📑</h1>
 
+<img src="https://i.ibb.co/ZhFSgrC/logo-black-pdf-generator.png" alt="logo-black-pdf-generator" border="0" width="400">
 
 # Index
 
 + [Description](#description)
++ [Figma](#figma)
 + [Project Configuration](#project-configuration)
 + [Test](#test)
 + [Project Structure ](#project-structure)
@@ -14,7 +15,8 @@
 # Description
 
 Pdf Generator is a standalone application that allows users to generate and manage PDF document templates. The data structure provided to the library is in JSON format. Consequently, the application enables users to CREATE, EDIT, DELETE, and VIEW various JSON templates in a database. The application allows adding and configuring different modules in addition to the document itself. Last but not least, the application offers the option to download the PDF document.
-
+# Figma
+<a href="https://www.figma.com/design/fsnZrT7qmmAnIj6cZdWEGW/PDF-Generator?node-id=0%3A1&t=rgCzO5wngh4V8qbI-1"><img src="https://i.ibb.co/HVKSn8Z/figma-pdf-generator.png" alt="figma-pdf-generator" border="0"></a>
 ## Project Configuration
 
 1. **Clone the Repository:**
@@ -72,6 +74,8 @@ Pdf Generator is a standalone application that allows users to generate and mana
   npm run test
   ```
 This will run the front tests.
+<br><br>
+<img src="https://i.ibb.co/YpkJC3T/test-front-pdf-generator.png" alt="test-front-pdf-generator" border="0">
 
 * Copy code in your terminal to enter in the repository back folder:
   ```
