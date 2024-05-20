@@ -42,7 +42,6 @@ import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import MoveDownIcon from '@mui/icons-material/MoveDown'
 import ExitWithoutSaving from '../../components/alerts/ExitWithoutSaving.jsx';
-import MoveDownIcon from '@mui/icons-material/MoveDown';
 import './MyDocument.css';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 
