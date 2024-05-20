@@ -80,10 +80,10 @@ describe('POST /api/document', () => {
   });
 })
 
-it('debería devolver un objeto con el nuevo documento creado', async () => {
+it('should return an object with the newly created document', async () => {
   const nuevoDocumento = {
-    titulo: 'Mi nuevo documento',
-    contenido: 'Este es el contenido de mi nuevo documento.'
+    titulo: 'My new document.',
+    contenido: 'This is the content of my new document.'
   };
 })
 

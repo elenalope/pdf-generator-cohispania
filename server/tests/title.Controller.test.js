@@ -18,7 +18,7 @@ afterAll(async () => {
 });
 
 describe('GET /api', () => {
-  it('debería devolver todos los title', async () => {
+  it('should return all the title', async () => {
     const templates = [
       {
         title: { content: "Test Title 1", level: "h1" },
@@ -41,7 +41,7 @@ describe('GET /api', () => {
     expect(res.body[1].name).toBe(templates[1].name);
   });
 
-  it('debería devolver un array vacío si no hay titulo', async () => {
+  it('should return an empty array if there are no title', async () => {
     const res = await request(app)
       .get('/api')
       .expect(200);
@@ -51,7 +51,7 @@ describe('GET /api', () => {
 });
 
 describe('POST /api/document/', () => {
-    it('debería crear un nuevo title', async () => {
+    it('should create a new title', async () => {
       const newTemplate = {
         title: { content: "Test Title 3", level: "h1" },
       };

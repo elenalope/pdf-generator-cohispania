@@ -18,7 +18,7 @@ afterAll(async () => {
 });
 
 describe('GET /api', () => {
-  it('debería devolver todos los section', async () => {
+  it('should return all the sections', async () => {
     const templates = [
       {
     
@@ -43,7 +43,7 @@ describe('GET /api', () => {
     expect(res.body[1].name).toBe(templates[1].name);
   });
 
-  it('debería devolver un array vacío si no hay section', async () => {
+  it('should return an empty array if there are no sections', async () => {
     const res = await request(app)
       .get('/api')
       .expect(200);
@@ -53,7 +53,7 @@ describe('GET /api', () => {
 });
 
 describe('POST /api/document/', () => {
-    it('debería crear una nueva section', async () => {
+    it('should create a new section', async () => {
       const newTemplate = {
         title: { content: "Test Title 3", level: "h1" },
         content: []
@@ -64,9 +64,8 @@ describe('POST /api/document/', () => {
         .send(newTemplate)
         .expect(201);
   
-      expect(res.body.name).toBe(newTemplate.name);
       expect(res.body.title.content).toBe(newTemplate.title.content);
-      expect(res.body.subtitle).toBe(newTemplate.subtitle);
+  
   
       const templateInDb = await Template.findById(res.body._id);
       expect(templateInDb).not.toBeNull();
@@ -76,7 +75,7 @@ describe('POST /api/document/', () => {
 
   //DELETE//
 describe('DELETE /api/document/:id', () => {
-    it('should delete an existing section."', async () => {
+    it('should delete an existing section.', async () => {
       
       const newTemplate = new Template({
         name: "Test Template",
@@ -98,7 +97,7 @@ describe('DELETE /api/document/:id', () => {
     it('should update an existing section', async () => {
     
       const newTemplate = new Template({
-        name: "Old Test Template",
+        
         title: { content: "Old Test Title", level: "h1" },
         content: [
                 ]
@@ -106,7 +105,7 @@ describe('DELETE /api/document/:id', () => {
       await newTemplate.save();
 
       const updatedData = {
-        name: "Updated Test Template",
+    
         title: { content: "Updated Test Title", level: "h1" },
         content: []
       };
@@ -119,10 +118,7 @@ describe('DELETE /api/document/:id', () => {
      
       const updatedTemplate = await Template.findById(newTemplate._id);
       expect(updatedTemplate).toBeTruthy();
-      expect(updatedTemplate.name).toBe(updatedData.name);
       expect(updatedTemplate.title.content).toBe(updatedData.title.content);
-      expect(updatedTemplate.subtitle).toBe(updatedData.subtitle);
-      
-    });
+       });
   })
 

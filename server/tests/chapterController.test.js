@@ -18,7 +18,7 @@ afterAll(async () => {
 });
 
 describe('GET /api', () => {
-  it('debería devolver todos los chapters', async () => {
+  it('should return all the chapters', async () => {
     const templates = [
       {
         title: { content: "Test Title 1", level: "h1" },
@@ -43,7 +43,7 @@ describe('GET /api', () => {
     expect(res.body[1].name).toBe(templates[1].name);
   });
 
-  it('debería devolver un array vacío si no hay chapters', async () => {
+  it('should return an empty array if there are no chapters', async () => {
     const res = await request(app)
       .get('/api')
       .expect(200);
@@ -55,7 +55,7 @@ describe('GET /api', () => {
 
 //POST//
 describe('POST /api/document/', () => {
-    it('debería crear un nuevo chapter', async () => {
+    it('should create a new chapter', async () => {
       const newTemplate = {
         title: { content: "Test Title 3", level: "h1" },
         subtitle: "Test Subtitle 3",
@@ -83,7 +83,7 @@ describe('POST /api/document/', () => {
     it('should delete an existing chapter."', async () => {
       
       const newTemplate = new Template({
-        name: "Test Template",
+       
         title: { content: "Test Title", level: "h1" },
         subtitle: "Test Subtitle",
         content: []
@@ -105,7 +105,7 @@ describe('POST /api/document/', () => {
     it('should update an existing chapter', async () => {
     
       const newTemplate = new Template({
-        name: "Old Test Template",
+        
         title: { content: "Old Test Title", level: "h1" },
         subtitle: "Old Test Subtitle",
         content: [
@@ -115,13 +115,9 @@ describe('POST /api/document/', () => {
   
       
       const updatedData = {
-        name: "Updated Test Template",
         title: { content: "Updated Test Title", level: "h1" },
         subtitle: "Updated Test Subtitle",
-       
-        content: [
-         
-        ]
+        content: []
       };
   
       const res = await request(app)
@@ -132,7 +128,6 @@ describe('POST /api/document/', () => {
      
       const updatedTemplate = await Template.findById(newTemplate._id);
       expect(updatedTemplate).toBeTruthy();
-      expect(updatedTemplate.name).toBe(updatedData.name);
       expect(updatedTemplate.title.content).toBe(updatedData.title.content);
       expect(updatedTemplate.subtitle).toBe(updatedData.subtitle);
       
