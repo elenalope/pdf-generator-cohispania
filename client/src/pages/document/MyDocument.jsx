@@ -42,6 +42,7 @@ import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import MoveDownIcon from '@mui/icons-material/MoveDown';
 import './MyDocument.css';
+import InsertLinkIcon from '@mui/icons-material/InsertLink';
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -323,7 +324,7 @@ const MyDocument = () => {
                 <ListItem disablePadding>
                     <ListItemButton disabled={isDisabled && selectedType !== 'link'}>
                       <ListItemIcon>
-                      <FormatListBulletedIcon />
+                      <InsertLinkIcon />
                       </ListItemIcon>
                       <ListItemText primary="Link" />
                       <AddIcon />
@@ -469,7 +470,6 @@ const MyDocument = () => {
         </Stack>
       </form>
 
-      {/* {showPreview && <PreviewPdf config={config} data={data} />} */}
       {openChapter && <ChapterDialog openChapter={openChapter} setOpenChapter={setOpenChapter} onChapterCreate={handleChapterCreate} onCancel={handleCancelDialog}/>}
       {openSection &&<SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate} onCancel={handleCancelDialog}/>}
       {openTitle &&<TitleDialog openTitle={openTitle} setOpenTitle={setOpenTitle} onTitleCreate={handleTitleCreate} onCancel={handleCancelDialog}/>}
