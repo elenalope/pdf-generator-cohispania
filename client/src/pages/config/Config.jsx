@@ -14,8 +14,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 import { postPDF } from '../../services/pdfServices';
-import { Typography } from '@mui/material';
 import CreateTemplate from '../../components/alerts/CreateTemplate';
+import { Typography } from '@mui/material';
 
 const Config = () => {
     const navigate = useNavigate();
