@@ -1,8 +1,9 @@
-import { Template } from '../models/Template.js';
+import { Template, ParagraphSchema } from '../models/Template.js';
+import mongoose from 'mongoose';
 
 export const addParagraph = async (req, res) => {
     try {
-        const { id, chapterId, sectionId } = req.params;
+        const { id } = req.params;
         const { paragraph } = req.body;
 
         const document = await Template.findById(id);
@@ -10,18 +11,9 @@ export const addParagraph = async (req, res) => {
         if (!document) {
             return res.status(404).json({ message: "Document not found" });
         }
-
-        const chapter = document.content.id(chapterId);
-        if (!chapter) {
-            return res.status(404).json({ message: "Chapter not found" });
-        }
-
-        const section = chapter.content.id(sectionId);
-        if (!section) {
-            return res.status(404).json({ message: "Section not found" });
-        }
-
-        section.content.push(paragraph);
+        const Paragraph = mongoose.model('Paragraph', ParagraphSchema);
+        const newParagraph = new Paragraph(paragraph);
+        document.content.push(newParagraph);
         await document.save();
 
         res.status(200).json(document);
@@ -32,23 +24,12 @@ export const addParagraph = async (req, res) => {
 
 export const deleteParagraph = async (req, res) => {
     try {
-        const { id, chapterId, sectionId, paragraphId } = req.params;
-        const document = await Template.findById(id);
+        const { id: templateId, paragraphId } = req.params;
+        const document = await Template.findById(templateId);
 
         if (!document) {
             return res.status(404).json({ message: "Template not found" });
         }
-
-        const chapter = document.content.id(chapterId);
-        if (!chapter) {
-            return res.status(404).json({ message: "Chapter not found" });
-        }
-
-        const section = chapter.content.id(sectionId);
-        if (!section) {
-            return res.status(404).json({ message: "Section not found" });
-        }
-
         const paragraph = section.content.id(paragraphId);
         if (!paragraph) {
             return res.status(404).json({ message: "Paragraph not found" });

@@ -21,13 +21,13 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function ChapterDialog({ openChapter, setOpenChapter, onChapterCreate }) {
+export default function ChapterDialog({ openChapter, setOpenChapter, onChapterCreate, onCancel }) {
   const { register, handleSubmit, reset } = useForm();
   const [imageFile, setImageFile] = useState(null);
 
   const handleClose = () => {
     setOpenChapter(false);
-    reset();
+   /*  onCancel(); */
   };
 
   const onSubmit = (data) => {

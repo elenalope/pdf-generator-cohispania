@@ -8,7 +8,7 @@ export const addParagraph = async (templateId, newParagraph) => {
       console.log("Datos del párrafo enviados:", newParagraph);
       const response = await axios.post(`${URL}/${templateId}/paragraph`, newParagraph);
       alert("Párrafo añadido exitosamente");
-      return response;
+      return response.data;
     } catch (error) {
        console.error('Error creating paragraph', error.message);
        throw error; }
