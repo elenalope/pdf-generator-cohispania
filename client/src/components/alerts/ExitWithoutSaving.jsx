@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const ExitWithoutSaving = ({ onClose }) => {
     const [open, setOpen] = useState(true);
+    const navigate = useNavigate();
     
     const handleClose = () => {
         setOpen(false);
@@ -12,6 +14,7 @@ const ExitWithoutSaving = ({ onClose }) => {
     const handleExit = () => {
         console.log('Saliendo sin guardar...');
         setOpen(false);
+        navigate('/');
         onClose && onClose();
     };
 
@@ -26,7 +29,7 @@ const ExitWithoutSaving = ({ onClose }) => {
                         <DialogTitle id="alert-dialog-title">¿Estás seguro de que quieres salir sin guardar?</DialogTitle>
                         <DialogActions style={{ justifyContent: 'center' }}>
                             <Button onClick={handleClose} style={{ backgroundColor: '#2E7D32', color: 'white', margin: '0 8px' }}> Cancelar </Button>
-                            <Button onClick={handleExit} style={{ backgroundColor: '#D32F2F', color: 'white', margin: '0 8px' }} autoFocus> Salir </Button>
+                            <Button onClick={()=> navigate('/')} style={{ backgroundColor: '#D32F2F', color: 'white', margin: '0 8px' }} autoFocus> Salir </Button>
                         </DialogActions>
                     </div>
                 </DialogContent>
