@@ -7,6 +7,7 @@ import Section from '../views/Section.jsx';
 import Subsection from  '../views/Subsection.jsx';
 import MyDocument from "../pages/document/MyDocument.jsx";
 import LayoutDocument from "../layout/LayoutDocument.jsx"
+import SectionFromChapter from "../views/SectionFromChapter.jsx";
 
 
 const router = createBrowserRouter([
@@ -39,8 +40,8 @@ const router = createBrowserRouter([
             element: <Chapter />,
           },
           {
-            path: "section/:id",
-            element: <Section />,
+            path: "section/:sectionId",
+            element: <SectionFromChapter />,
           },
           {
             path: "subsection/:id",

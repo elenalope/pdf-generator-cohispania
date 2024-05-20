@@ -7,8 +7,7 @@ export const addSectionFromChapter = async (req, res) => {
 
         console.log('id chapter', chapterId);
         console.log('section data', section);
-
-        // Crear y guardar la nueva sección con los campos adecuados
+        
         const newSection = new Section({
             title: section.title,
             cover: section.cover,

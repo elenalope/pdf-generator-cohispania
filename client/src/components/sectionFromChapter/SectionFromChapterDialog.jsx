@@ -5,12 +5,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 import { useForm } from "react-hook-form";
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import { addSectionFromChapter } from '../../services/sectionFromChapter';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',

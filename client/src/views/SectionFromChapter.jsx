@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import './Chapter.css';
+import { addSubSection } from '../services/subsectionService.js';
 import { styled } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -22,55 +22,41 @@ import SendIcon from '@mui/icons-material/Send';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { addSectionFromChapter } from '../../services/sectionFromChapter';
-import SectionFromChapterDialog from '../../components/sectionFromChapter/SectionFromChapterDialog.jsx';
+import SectionFromChapterDialog from '../components/sectionFromChapter/SectionFromChapterDialog.jsx';
 
-const Chapter = () => {
-  const navigate = useNavigate();
-  const { id: templateId, id: chapterId, id: sectionId } = useParams();
-  const [openAddSection, setOpenAddSection] = useState(false);
-  const [data, setData] = useState({ sections: [] });
 
-  const handleSectionClick = () => {
-    setOpenAddSection(true);
-  };
-  useEffect(() => {
-    console.log('Updated data:', data);
-  }, [data]);
 
-  const handleSectionCreate = async (sectionFromChapterData) => {
-    try {
-      const updatedChapter = await addSectionFromChapter(templateId, chapterId, { section: sectionFromChapterData });
-      console.log('API Response:', updatedChapter);
+const SectionFromChapter = () => {
+    const navigate = useNavigate();
+    const { templateId, chapterId, sectionId } = useParams();
+    const [openAddSubsection, setOpenAddSubsection] = useState(false);
+    const [data, setData] = useState({ subsections: [] }); 
 
-      setData({ sections: updatedChapter.content });
-      console.log('Updated sections data:', updatedChapter.content);
-    } catch (error) {
-      console.error('Error creating chapter:', error);
+    const handleSubsectionClick = () =>{
+        setOpenAddSubsection(true);
     }
-  };
+
+    useEffect(() => {
+        console.log('actualizado data', data);
+    }, [data]);
+
+    const handleSubsectionCreate = async (subsectionData) =>{
+        try {
+            const updatedSection = await addSubSection(templateId, chapterId, sectionId, {subsection: subsectionData});
+            console.log('response updated', updatedSection);
+
+            setData({subsections: updatedSection.data.content });
+            console.log('content subsections data', updatedSection.content);
+        } catch (error) {
+            console.error('Error creating chapter:', error); 
+        }
+    };
+    
 
 
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-  });
-  const handleEnterSection = (sectionId) => {
-    console.log('id de la seccion para navegar', sectionId)
-    if (sectionId) {
-      navigate(`section/${sectionId}`);
-    }
-  };
   return (
     <>
-      <Stack direction="row" spacing={2} sx={{ marginLeft: '2%', marginRight: '2%', marginTop: '20px' }}>
+    <Stack direction="row" spacing={2} sx={{ marginLeft: '2%', marginRight: '2%', marginTop: '20px' }}>
         <Button variant="contained" type="submit">
           <SaveIcon />
         </Button>
@@ -87,13 +73,13 @@ const Chapter = () => {
           <Box>
             <nav aria-label="main mailbox folders">
               <List>
-                <ListItem disablePadding onClick={handleSectionClick}>
+                <ListItem disablePadding onClick={handleSubsectionClick}>
                   <ListItemButton>
                     <ListItemIcon>
                       <ImportContactsIcon />
                     </ListItemIcon>
                     <ListItemText primary="Section" />
-                    <AddIcon onClick={handleSectionClick}/>
+                    <AddIcon onClick={handleSubsectionClick}/>
                   </ListItemButton>
                 </ListItem>
                 <Divider />
@@ -104,37 +90,22 @@ const Chapter = () => {
         <CssBaseline />
         <Container fixed>
           <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
-          {data.sections.map((section, index) => (
-                section && section.title && (
+          {data.subsections.map((subsection, index) => (
+                subsection && subsection.title && (
                   <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                       {/* <LongMenu /> */}
                     </Box>
                     <Typography sx={{ mb: 2, mt: 1 }}>
-                      {section.title}
+                      {subsection.title}
                     </Typography>
                     <Divider />
-                    {section.img && (
-                      <CardMedia
-                        sx={{ mt: 2 }}
-                        component="img"
-                        height="140"
-                        width="280"
-                        image={section.img}
-                        alt="section-image"
-                      />
-                    )}
-                     <Divider/>
+                    <Typography sx={{ mb: 2, mt: 1 }}>
+                      {subsection.paragraph}
+                      </Typography>
+                    <Divider />
                     {/* <FormControlLabel disabled control={<Switch />} label={data.cover} /> */}
-                    <div className='buttons-section-mydocument'>
-    
-                    <Button variant="contained" endIcon={<SendIcon />} size="small"
-                    sx={{ width: 100 , ml: 'auto'}} 
-                    onClick={handleEnterSection}/* type="submit" */ /* onClick={()=> navigate('/document')} */ >
-                    Entrar
-                    </Button>
-                    </div>
-                    
+                                       
                 </CardContent>
                 )
                 ))}
@@ -147,8 +118,9 @@ const Chapter = () => {
         <Button variant="contained" onClick={() => navigate('/')}>SALIR SIN GUARDAR</Button>
       </Stack>
 
-      {openAddSection &&<SectionFromChapterDialog openAddSection={openAddSection} setOpenAddSection={setOpenAddSection} onSectionCreate={handleSectionCreate}  /* onCancel={handleCancelDialog} *//>}    </>
-  );
+      {openAddSubsection &&<SubsectionDialog openAddSubsection={openAddSubsection} setOpenAddSubsection={setOpenAddSubsection} onSubsectionCreate={handleSubsectionCreate} />}
+    </>
+  )
 }
 
-export default Chapter;
+export default SectionFromChapter;

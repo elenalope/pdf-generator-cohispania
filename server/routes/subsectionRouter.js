@@ -3,7 +3,7 @@ import { addSubsection, deleteSubsection } from '../controllers/subsectionContro
 
 const router = express.Router();
 
-router.post('/document/:id/chapter/:chapterId/section/:sectionId/subsection', addSubsection);
+router.post('/document/:id/chapter/:chapterId/section/:sectionId', addSubsection);
 router.delete('/document/:id/chapter/:chapterId/section/:sectionId/subsection/:subsectionId', deleteSubsection);
 
 export default router;
