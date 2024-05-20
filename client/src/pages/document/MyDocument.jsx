@@ -6,7 +6,6 @@ import { pdf, Document, Page, Text, View } from '@react-pdf/renderer';
 import PreviewPdf from '../../components/PreviewPdf/PreviewPdf.jsx';
 import ChapterDialog from '../../components/chapter/ChapterDialog.jsx';
 import SectionDialog from '../../components/section/SectionDialog.jsx';
-import ParagraphDialog from '../../components/paragraph/ParagraphDialog.jsx'
 import TitleDialog from '../../components/title/TitleDialog.jsx';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
@@ -27,7 +26,6 @@ import AddIcon from '@mui/icons-material/Add';
 import { addChapter } from '../../services/chapterServices.js';
 import { addSection} from '../../services/sectionServices.js';
 import { addTitle} from '../../services/titleService.js';
-import { addParagraph} from '../../services/paragraphServices.js';
 import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
@@ -40,8 +38,7 @@ import TitleIcon from '@mui/icons-material/Title';
 import ArticleIcon from '@mui/icons-material/Article';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import MoveDownIcon from '@mui/icons-material/MoveDown'
-import ExitWithoutSaving from '../../components/alerts/ExitWithoutSaving.jsx';
+import MoveDownIcon from '@mui/icons-material/MoveDown';
 import './MyDocument.css';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 
@@ -67,20 +64,15 @@ const MyDocument = () => {
   const initialConfig = { ...config, 
     chapters: Array.isArray(config.chapters) ? config.chapters : [],
     sections: Array.isArray(config.sections) ? config.sections : [],
-    titles:  Array.isArray(config.titles) ? config.titles : [],
-    paragraphs:  Array.isArray(config.paragraphs) ? config.paragraphs : []
+    titles:  Array.isArray(config.titles) ? config.titles : []
   };
   const [openChapter, setOpenChapter] = useState(false);
   const [openSection, setOpenSection] = useState(false);
   const [openTitle, setOpenTitle] = useState(false);
-  const [openParagraph, setOpenParagraph] = useState(false);
   const [data, setData] = useState(initialConfig);
   const [chapterId, setChapterId] = useState(null); 
   const [sectionId, setSectionId] = useState(null);
   const [titleId, setTitleId] = useState(null);
-  const [paragraphId, setParagraphId] = useState(null);
-  const [selectedType, setSelectedType] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
   
 
   useEffect(() => {
@@ -113,22 +105,14 @@ const MyDocument = () => {
 
   const handleChapterClick = () => {
     setOpenChapter(true);
-    setSelectedType('chapter');
   };
 
   const handleSectionClick = () => {
     setOpenSection(true);
-    setSelectedType('section');
   };
 
   const handleTitleClick = () => {
     setOpenTitle(true);
-    setSelectedType('title');
-  }
-
-  const handleParagraphClick = () => {
-    setOpenParagraph(true);
-    setSelectedType('paragraph');
   }
 
   const handleChapterCreate = async (chapterData) => {
@@ -145,29 +129,31 @@ const MyDocument = () => {
     }
   };
 
-  const handleSectionCreate = async (sectionData) => {
+  const handleSectionCreate = async  (sectionData) => {
+    console.log('la section data esta aqui', sectionData)
     try {
-      console.log('Section Data:', JSON.stringify(sectionData, null, 2));
-      const document = await addSection(id, { section: sectionData });
-      console.log('Document:', JSON.stringify(document, null, 2));
-  
-      const newSection = document.content[document.content.length - 1];
-      /* if (!newSection || !newSection._id) {
-        throw new Error('La sección no se añadió correctamente');
-      } */
-  
-      setData(prevData => ({
-        ...prevData,
-        sections: [...prevData.sections, newSection]
-      }));
-  
-      setSectionId(newSection._id);
-    } catch (error) {
-      console.error('Error al crear la sección:', error);
+    console.log('ID:', id);
+    console.log('Datos de la sección:', sectionData);
+    const document = await addSection(id, { section: sectionData });
+    console.log('Documento recibido:', document);
+    if (!document || !document.content) {
+      throw new Error('El documento devuelto no es válido');
+    }
+    console.log('Contenido del documento:', document.content);
+    const newSection = document.content[document.content.length - 1];
+    setData(prevData => ({
+      ...prevData,
+      sections: [...prevData.sections, newSection] 
+    }));
+
+    
+    setSectionId(newSection._id);
+  } catch (error) {
+    
+    console.error('Error al crear la sección:', error);
     }
   };
-  
- 
+
   const handleTitleCreate = async (titleData) => {
     try {
       const document = await addTitle(id, { title: titleData }); 
@@ -179,20 +165,6 @@ const MyDocument = () => {
       setTitleId(newTitle._id); 
     } catch (error) {
       console.error('Error al crear el título:', error);
-    }
-  };
-
-  const handleParagraphCreate = async (paragraphData) => {
-    try {
-      const document = await addParagraph(id, { paragraph: paragraphData }); 
-      const newParagraph= document.content[document.content.length - 1]; 
-      setData(prevData => ({
-        ...prevData,
-        paragraphs: [...prevData.paragraphs, newParagraph] 
-      }));
-      setParagraphId(newParagraph._id); 
-    } catch (error) {
-      console.error('Error al crear el párrafo:', error);
     }
   };
 
@@ -238,30 +210,17 @@ const MyDocument = () => {
     }
   };
 
-  const handleEnterTitle = () => {
-    if (titleId) {
-      navigate(`title/${titleId}`);
-    }
-  };
-  const handleEnterParagraph = () => {
-    if (paragraphId) {
-      navigate(`paragraph/${paragraphId}`);
-    }
-  };
-  const handleCancelDialog = () => {
-    setSelectedType(null);
-  };
-  const isDisabled = selectedType !== null;
-
-  const handleShowAlert = () => {
-    setShowAlert(true);
-};
+  // const handleEnterTitle = () => {
+  //   if (titleId) {
+  //     navigate(`title/${titleId}`);
+  //   }
+  // };
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className='formMyDocument'>
         <div className='template-name'>{config ? config.name : ''}</div>
-        <Stack direction="row" spacing={2} sx={{ marginLeft: '2%', marginRight: '2%', marginTop: '20px' }}>
+        <Stack direction="row" spacing={2} sx={{ marginLeft: '2%', marginRight: '2%', marginTop: '1%', justifyContent: 'flex-end' }}>
           <Button variant="contained" type="submit">
             <SaveIcon />
           </Button>
@@ -279,7 +238,7 @@ const MyDocument = () => {
               <nav aria-label="main mailbox folders">
                 <List>
                   <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'chapter'}>
+                    <ListItemButton>
                       <ListItemIcon>
                       <ImportContactsIcon />
                       </ListItemIcon>
@@ -289,7 +248,7 @@ const MyDocument = () => {
                   </ListItem>
                   <Divider />
                   <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'section'}>
+                    <ListItemButton>
                       <ListItemIcon>
                       <BookIcon />
                       </ListItemIcon>
@@ -309,7 +268,7 @@ const MyDocument = () => {
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'title'}>
+                    <ListItemButton>
                       <ListItemIcon>
                       <TitleIcon />
                       </ListItemIcon>
@@ -319,17 +278,17 @@ const MyDocument = () => {
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'paragraph'}>
+                    <ListItemButton>
                       <ListItemIcon>
                       <FormatAlignJustifyIcon />
                       </ListItemIcon>
                       <ListItemText primary="Párrafo" />
-                      <AddIcon onClick={handleParagraphClick}/>
+                      <AddIcon />
                     </ListItemButton>
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'link'}>
+                    <ListItemButton>
                       <ListItemIcon>
                       <InsertLinkIcon />
                       </ListItemIcon>
@@ -435,32 +394,11 @@ const MyDocument = () => {
                       <Typography sx={{ mb: 2, mt: 1 }}>
                         {title.title}
                       </Typography>
-                      <Button variant="contained" endIcon={<SendIcon />} size="small"
-                    sx={{ width: 100 , ml: 'auto'}} 
-                    onClick={handleEnterTitle}>
-                    Entrar
-                    </Button>
+                    
                     </CardContent>
                   )
                ))}
               
-              {data.paragraphs.map((paragraph, index) => (
-                  paragraph && paragraph.paragraph && (
-                    <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
-                      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      {/* <LongMenu /> */}
-                      </Box>
-                      <Typography sx={{ mb: 2, mt: 1 }}>
-                        {paragraph.title}
-                      </Typography>
-                      <Button variant="contained" endIcon={<SendIcon />} size="small"
-                        sx={{ width: 100 , ml: 'auto'}} 
-                        onClick={handleEnterParagraph}>
-                        Entrar
-                        </Button>
-                    </CardContent>
-                  )
-               ))}
               </Box>
               
           </Container>
@@ -473,8 +411,7 @@ const MyDocument = () => {
 
         </div>
           <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
-          <Button variant="contained" onClick={(handleShowAlert)}>SALIR SIN GUARDAR</Button>
-          {showAlert && <ExitWithoutSaving onClose={() => setShowAlert(false)} />}
+          <Button variant="contained" onClick={() => navigate('/')}>SALIR</Button>
         </Stack>
       </form>
 
