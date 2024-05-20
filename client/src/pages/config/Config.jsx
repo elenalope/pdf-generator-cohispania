@@ -221,6 +221,7 @@ const Config = () => {
                 <Button type="submit" variant="contained">Crear</Button>
                 <Button variant="outlined" onClick={() => navigate('/')}>Cancelar</Button>
               </div>
+              
               {showPreview && <PreviewPdf config={config} />}
             </form>
           </FormProvider>

@@ -66,7 +66,7 @@ const PreviewPdf = ({config, data}) => {
                 <View style={styles.page}>
                     {toc && <Text>Índice:</Text>}
                     <Text>Título: {title}</Text>
-                    <Text>Subtítulo: {config?.subtitle}</Text>
+                    <Text>Subtítulo: {subtitle}</Text>
                     <Text>{coverLogo}</Text>
                     <Text>{theme}</Text>
                 </View>
