@@ -90,7 +90,7 @@ it('debería devolver un objeto con el nuevo documento creado', async () => {
 
 //DELETE//
 describe('DELETE /api/document/:id', () => {
-  it('debería eliminar un documento existente', async () => {
+  it('should delete an existing document."', async () => {
     
     const newTemplate = new Template({
       name: "Test Template",
@@ -112,7 +112,7 @@ describe('DELETE /api/document/:id', () => {
 //PUT//
 
 describe('PUT /api/document/:id', () => {
-  it('debería actualizar un documento existente', async () => {
+  it('should update an existing document', async () => {
   
     const newTemplate = new Template({
       name: "Old Test Template",
