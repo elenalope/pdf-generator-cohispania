@@ -3,7 +3,6 @@ import './Alerts.css';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { CheckCircleOutline } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
 
 const CreateTemplate = ({ onClose }) => {
     const [open, setOpen] = useState(true);
