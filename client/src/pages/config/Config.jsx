@@ -18,11 +18,11 @@ import { postPDF } from '../../services/pdfServices';
 const Config = () => {
     const navigate = useNavigate();
     const [config, setConfig] = useState({
-        name: '',
+        name: 'Plantilla tasación',
         size: 'A4',
-        title: '',
-        subtitle: '',
-        coverLogo: '',
+        title: 'Tasación Duplex en Pinto',
+        subtitle: 'Localización',
+        coverLogo: 'https://pbs.twimg.com/profile_images/1179641400251600898/qW-KYjPj_400x400.png',
         toc: false,
         tocLevels: 1,
         padding: '20px',
@@ -33,8 +33,8 @@ const Config = () => {
         coverLogo: '',
         sectionBreak: false,
         headerLogo: '',
-        watermark: '',
-        orientation: '',
+        watermark: 'https://pbs.twimg.com/profile_images/1179641400251600898/qW-KYjPj_400x400.png',
+        orientation: 'Vertical',
       });
 
       const methods = useForm({

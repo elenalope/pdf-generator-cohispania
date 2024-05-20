@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { useDocument } from '../../context/DocumentContext';
@@ -27,46 +27,34 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { addSectionFromChapter } from '../../services/sectionFromChapter';
+import SectionFromChapterDialog from '../../components/sectionFromChapter/SectionFromChapterDialog.jsx';
 
 const Chapter = () => {
-  const [sections, setSections] = useState([]);
-/*   const [formDataArray, setFormDataArray] = useState([]);
- */  const navigate = useNavigate();
-  const { id: templateId, chapterId } = useParams();
-  const [openSection, setOpenSection] = useState(false);
+  const navigate = useNavigate();
+  const { id: templateId, id: chapterId } = useParams();
+  const [openAddSection, setOpenAddSection] = useState(false);
+  const [data, setData] = useState({ sections: [] });
 
   const handleSectionClick = () => {
-    setOpenSection(true);
+    setOpenAddSection(true);
   };
-  const handleSectionCreate = async (sectionData) => {
+  useEffect(() => {
+    console.log('Updated data:', data);
+  }, [data]);
+
+  const handleSectionCreate = async (sectionFromChapterData) => {
     try {
-      const response = await addChapter(templateId, newChapter);
-      setFormDataArray([...formDataArray, response.data]);
+      const updatedChapter = await addSectionFromChapter(templateId, chapterId, { section: sectionFromChapterData });
+      console.log('API Response:', updatedChapter);
+
+      setData({ sections: updatedChapter.content });
+      console.log('Updated sections data:', updatedChapter.content);
     } catch (error) {
       console.error('Error creating chapter:', error);
     }
   };
 
-  const handleSubmit = async (e, index) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('/api', formDataArray[index]);
-      navigate('/document')
-      console.log('Respuesta del servidor:', response.data);
-    } catch (error) {
-      console.error('Error al enviar los datos:', error);
-    }
-  }
-
-  const handleInputChange = (e, index) => {
-    const { name, value } = e.target;
-    const updatedFormDataArray = [...formDataArray];
-    updatedFormDataArray[index] = {
-      ...updatedFormDataArray[index],
-      [name]: value
-    };
-    setFormDataArray(updatedFormDataArray);
-  }
 
   const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -109,7 +97,7 @@ const Chapter = () => {
                       <ImportContactsIcon />
                     </ListItemIcon>
                     <ListItemText primary="Section" />
-                    <AddIcon />
+                    <AddIcon onClick={handleSectionClick}/>
                   </ListItemButton>
                 </ListItem>
                 <Divider />
@@ -120,40 +108,29 @@ const Chapter = () => {
         <CssBaseline />
         <Container fixed>
           <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
-          <CardContent /* key={index} */ sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
+          {data.sections.map((section, index) => (
+                section && section.title && (
+                  <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                       {/* <LongMenu /> */}
                     </Box>
                     <Typography sx={{ mb: 2, mt: 1 }}>
-                      {/* {chapter.title} */}
+                      {section.title}
                     </Typography>
                     <Divider />
-                    <Typography sx={{ mb: 2, mt: 2 }}>
-                      {/* {chapter.subtitle} */}
-                    </Typography>
-                    <Divider />
-                    {/* {chapter.img && (
+                    {section.img && (
                       <CardMedia
                         sx={{ mt: 2 }}
                         component="img"
                         height="140"
                         width="280"
-                        image=''{chapter.img}
-                        alt="chapter-image"
+                        image={section.img}
+                        alt="section-image"
                       />
-                    )} */}
-                    <div className='buttons-chapter-mydocument'>
-                      <Button
-                          sx={{ mb: 1 }}
-                          component="label"
-                          role={undefined}
-                          variant="contained"
-                          tabIndex={-1}
-                          startIcon={<CloudUploadIcon />}
-                            >
-                          Seleccionar Imagen
-                          <VisuallyHiddenInput type="file" /* onChange={(e) => handleInputChange(e, index)} */ />
-                    </Button>
+                    )}
+                     <Divider/>
+                    {/* <FormControlLabel disabled control={<Switch />} label={data.cover} /> */}
+                    <div className='buttons-section-mydocument'>
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
                     sx={{ width: 100 , ml: 'auto'}} 
@@ -163,6 +140,9 @@ const Chapter = () => {
                     </div>
                     
                 </CardContent>
+                )
+                ))}
+          
           </Box>
         </Container> 
       </div>
@@ -171,8 +151,7 @@ const Chapter = () => {
         <Button variant="contained" onClick={() => navigate('/')}>SALIR SIN GUARDAR</Button>
       </Stack>
 
-      {openSection &&<SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={(data) => console.log(data)} />}
-    </>
+      {openAddSection &&<SectionFromChapterDialog openAddSection={openAddSection} setOpenAddSection={setOpenAddSection} onSectionCreate={handleSectionCreate}  /* onCancel={handleCancelDialog} *//>}    </>
   );
 }
 

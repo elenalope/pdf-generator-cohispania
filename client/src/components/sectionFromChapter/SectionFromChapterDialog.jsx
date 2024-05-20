@@ -24,37 +24,28 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function SectionDialog({ openSection, setOpenSection, onSectionCreate, onCancel }) {
+export default function SectionFromChapterDialog({ openAddSection, setOpenAddSection, onSectionCreate}) {
   const { register, handleSubmit, reset } = useForm();
-  const [imageFile, setImageFile] = useState(null);
 
   const handleClose = () => {
-    setOpenSection(false);
+    setOpenAddSection(false);
     // onCancel();
   };
 
   const onSubmit = async (data) => {
-    console.log(data.title + '👌')
-    const sectionData = {
+    const sectionFromChapterData = {
       title: data.title,
-      cover: data.cover,
-      subsection: data.subsection,
-      img: imageFile ? URL.createObjectURL(imageFile) : "",
+      cover: data.cover || false,
+      img: data.img || '',
       content: []
     };
 
-    console.log('Section Data:',sectionData);
-    await onSectionCreate(sectionData);
+    await onSectionCreate(sectionFromChapterData );
     handleClose();
   };
 
-
-  const handleImageChange = (e) => {
-    setImageFile(e.target.files[0]);
-  };
-
   return (
-    <Dialog open={openSection} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
+    <Dialog open={openAddSection} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
       <DialogTitle>Crear Sección</DialogTitle>
       <DialogContent sx={{ p: 3 }}>
         <TextField
@@ -67,23 +58,6 @@ export default function SectionDialog({ openSection, setOpenSection, onSectionCr
           variant="standard"
           {...register('title', { required: true })}
         />
-        <FormControlLabel
-          control={
-            <Switch {...register('cover')} id="cover-switch" inputProps={{ 'aria-label': 'controlled' }}/>
-          } 
-          label="Portada" 
-        />
-        <Button
-          sx={{ mt: 3 }}
-          component="label"
-          role={undefined}
-          variant="contained"
-          tabIndex={-1}
-          startIcon={<CloudUploadIcon />}
-        >
-          Seleccionar Imagen
-          <VisuallyHiddenInput type="file" onChange={handleImageChange} />
-        </Button>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancelar</Button>

@@ -6,8 +6,11 @@ export const URL = 'http://localhost:3000/api/document';
 export const addChapter = async (templateId, newChapter) => {
   try {
     const response = await axios.post(`${URL}/${templateId}/chapter`, newChapter);
+    console.log('soy new chapter',newChapter)
     alert("Capítulo añadido exitosamente");
+
     return response.data;
+    
   } catch (error) {
     console.error('Error creating chapter', error.message);
     throw error;

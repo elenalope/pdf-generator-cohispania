@@ -39,14 +39,19 @@ const ListPdf = () => {
     }
   };
 
+  const handleNavigateDocument = async(id) =>{
+    navigate(`/document/${id}`)
+  }
+
   return (
     <div className='listPdfContainer' style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
       {documents.map((document, index) => (
         <Card key={index} sx={{ width: '290px', height: '310px', margin: '30px' }}>
           <CardActionArea>
-            <CardContent> 
-              <div style={{ width: '100%', height: '200px', overflow: 'hidden' }}>
-                <PreviewPdf config={document} style={{ width: '100%', height: '100%' }} />
+            <CardContent onClick={()=> handleNavigateDocument(document._id)}> 
+              <div style={{ width: '100%', height: '200px', overflow: 'hidden' }} >
+                {/* <PreviewPdf config={document}  /> */}
+              {document.coverImg }
               </div>
               <Typography gutterBottom variant="h5" component="div">
                 {document.name}
