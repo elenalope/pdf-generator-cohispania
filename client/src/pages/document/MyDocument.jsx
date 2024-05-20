@@ -27,7 +27,7 @@ import { addChapter } from '../../services/chapterServices.js';
 import { addSection} from '../../services/sectionServices.js';
 import { addTitle} from '../../services/titleService.js';
 import CardContent from '@mui/material/CardContent';
-import { Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import SendIcon from '@mui/icons-material/Send';
 import { styled } from '@mui/material/styles';
@@ -243,7 +243,16 @@ const MyDocument = () => {
                       <ImportContactsIcon />
                       </ListItemIcon>
                       <ListItemText primary="Capítulo" />
-                      <AddIcon onClick={handleChapterClick}/>
+                      <IconButton
+                        sx={{
+                          color: 'inherit', 
+                          '&:hover': {
+                            color: '#ffffff', 
+                            backgroundColor: 'primary.main', 
+                          }}}
+                      >
+                        <AddIcon onClick={handleChapterClick}/>
+                      </IconButton>
                     </ListItemButton>
                   </ListItem>
                   <Divider />
@@ -253,7 +262,16 @@ const MyDocument = () => {
                       <BookIcon />
                       </ListItemIcon>
                       <ListItemText primary="Sección" />
-                      <AddIcon onClick={handleSectionClick}/>
+                      <IconButton
+                        sx={{
+                          color: 'inherit', 
+                          '&:hover': {
+                            color: '#ffffff', 
+                            backgroundColor: 'primary.main', 
+                          }}}
+                      >
+                        <AddIcon onClick={handleSectionClick}/>
+                      </IconButton>
                     </ListItemButton>
                   </ListItem>
                   <Divider/>
@@ -263,7 +281,16 @@ const MyDocument = () => {
                       <ArticleIcon />
                       </ListItemIcon>
                       <ListItemText primary="Subsección" />
-                      <AddIcon />
+                      <IconButton
+                        sx={{
+                          color: 'inherit', 
+                          '&:hover': {
+                            color: '#ffffff', 
+                            backgroundColor: 'primary.main', 
+                          }}}
+                      >
+                        <AddIcon />
+                      </IconButton>
                     </ListItemButton>
                   </ListItem>
                   <Divider/>
@@ -273,7 +300,16 @@ const MyDocument = () => {
                       <TitleIcon />
                       </ListItemIcon>
                       <ListItemText primary="Título" />
-                      <AddIcon onClick={handleTitleClick}/>
+                      <IconButton 
+                        sx={{
+                          color: 'inherit', 
+                          '&:hover': {
+                            color: '#ffffff', 
+                            backgroundColor: 'primary.main', 
+                          }}}
+                      >
+                        <AddIcon onClick={handleTitleClick}/>
+                      </IconButton>
                     </ListItemButton>
                   </ListItem>
                   <Divider/>
@@ -283,7 +319,16 @@ const MyDocument = () => {
                       <FormatAlignJustifyIcon />
                       </ListItemIcon>
                       <ListItemText primary="Párrafo" />
-                      <AddIcon />
+                      <IconButton
+                        sx={{
+                          color: 'inherit', 
+                          '&:hover': {
+                            color: '#ffffff', 
+                            backgroundColor: 'primary.main', 
+                          }}}
+                      >
+                        <AddIcon />
+                      </IconButton>
                     </ListItemButton>
                   </ListItem>
                   <Divider/>
@@ -293,7 +338,16 @@ const MyDocument = () => {
                       <InsertLinkIcon />
                       </ListItemIcon>
                       <ListItemText primary="Link" />
-                      <AddIcon />
+                      <IconButton
+                        sx={{
+                          color: 'inherit', 
+                          '&:hover': {
+                            color: '#ffffff', 
+                            backgroundColor: 'primary.main', 
+                          }}}
+                      >
+                        <AddIcon />
+                      </IconButton>
                     </ListItemButton>
                   </ListItem>
                   <Divider/>
@@ -303,7 +357,16 @@ const MyDocument = () => {
                       <MoveDownIcon />
                       </ListItemIcon>
                       <ListItemText primary="Salto" />
-                      <AddIcon />
+                      <IconButton
+                        sx={{
+                          color: 'inherit', 
+                          '&:hover': {
+                            color: '#ffffff', 
+                            backgroundColor: 'primary.main', 
+                          }}}
+                      >
+                        <AddIcon />
+                      </IconButton>
                     </ListItemButton>
                   </ListItem>
                   
