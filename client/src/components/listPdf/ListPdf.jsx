@@ -71,7 +71,7 @@ const ListPdf = () => {
                             <img src={document.coverImg} alt="Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         )}
                             </div>
-                            <Typography gutterBottom variant="h5" component="div">
+                            <Typography gutterBottom variant="h6" component="div">
                                 {document.name}
                             </Typography>
                         </CardContent>
