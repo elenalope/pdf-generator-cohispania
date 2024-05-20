@@ -1,5 +1,7 @@
 
-<img src="https://i.ibb.co/ZhFSgrC/logo-black-pdf-generator.png" alt="logo-black-pdf-generator" border="0" width="400">
+  <h1 align="center">
+  <img src="https://i.ibb.co/ZhFSgrC/logo-black-pdf-generator.png" alt="logo-black-pdf-generator" border="0" width="400">
+  <h1/>
 
 # Index
 
@@ -12,9 +14,9 @@
 + [Authors](#authors)
 + [Contributions](#contributions)
 
-# Description
+# Description 
 
-Pdf Generator is a standalone application that allows users to generate and manage PDF document templates. The data structure provided to the library is in JSON format. Consequently, the application enables users to CREATE, EDIT, DELETE, and VIEW various JSON templates in a database. The application allows adding and configuring different modules in addition to the document itself. Last but not least, the application offers the option to download the PDF document.
+This is the final project of our web development bootcamp in Factoría F5, created in collaboration with Cohispania. Pdf Generator is a standalone application that allows users to generate and manage PDF document templates. The data structure provided to the library is in JSON format. Consequently, the application enables users to CREATE, EDIT, DELETE, and VIEW various JSON templates in a database. The application allows adding and configuring different modules in addition to the document itself. Last but not least, the application offers the option to download the PDF document.
 
 # Figma
 <a href="https://www.figma.com/design/fsnZrT7qmmAnIj6cZdWEGW/PDF-Generator?node-id=0%3A1&t=rgCzO5wngh4V8qbI-1" target="_blank"><img src="https://i.ibb.co/HVKSn8Z/figma-pdf-generator.png" alt="figma-pdf-generator" border="0"></a>
@@ -151,12 +153,8 @@ __README.md:__ this file typically contains instructions on how to set up and ru
 
 # Authors
 
- - Scrum Master: [Fátima Capilla](https://github.com/FatimaCapilla)
- - Product Owner: [Beatriz Mercado](https://github.com/BeatrizMercado)
- - Web Developer: [Elena López](https://github.com/elenalope)
- - Web Developer: [Rebeca Vicente](https://github.com/rebecavm28)
- - Web Developer: [Nhoeli Salazar](https://github.com/Nho89)
-
+| [<img src="https://media.licdn.com/dms/image/D4D03AQEJ3KGYFuEU3A/profile-displayphoto-shrink_800_800/0/1709049958070?e=1721865600&v=beta&t=fwIpM_f3p-ijMLqIiYz-vAjbHxqDGjkTQE61VhIGllE" width=115><br><sub>Fátima Capilla</sub>](https://github.com/FatimaCapilla) |  [<img src="https://media.licdn.com/dms/image/D4E03AQGn5w55dlVPuA/profile-displayphoto-shrink_800_800/0/1706047184665?e=1721865600&v=beta&t=v_dhV8ODZVTlM0eXawfPbrfBCaUwsA5xC0t-SqTgsq4" width=115><br><sub>Beatriz Mercado</sub>](https://github.com/BeatrizMercado) |  [<img src="https://media.licdn.com/dms/image/D4D03AQErXoTUInMePQ/profile-displayphoto-shrink_800_800/0/1709158064701?e=1721865600&v=beta&t=hfdhllc7b91VFmM1pLp0HdQULZAzd_YjhaHslxJKp0w" width=115><br><sub>Nhoeli Salazar</sub>](https://github.com/Nho89) | [<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width=115><br><sub>Elena López</sub>](https://github.com/elenalope) |  [<img src="https://media.licdn.com/dms/image/D4D03AQG1ojHQODUQiA/profile-displayphoto-shrink_800_800/0/1705241527957?e=1721865600&v=beta&t=vhFar15KUm5lRI41wGNZ-MxtMHUOQmzI5Go0vd3RKh8" width=115><br><sub>Rebeca Vicente</sub>](https://github.com/rebecavm28) |
+| :---: | :---: | :---: |:---: | :---: |
 
 # Contributions
 Contributions are welcome! If you find any problems or have suggestions for improvement, please create an issue or make a pull request.
