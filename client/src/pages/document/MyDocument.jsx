@@ -1,47 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { postPDF } from '../../services/pdfServices';
-import { pdf, Document, Page, Text, View } from '@react-pdf/renderer';
 import PreviewPdf from '../../components/PreviewPdf/PreviewPdf.jsx';
 import ChapterDialog from '../../components/chapter/ChapterDialog.jsx';
 import SectionDialog from '../../components/section/SectionDialog.jsx';
 import TitleDialog from '../../components/title/TitleDialog.jsx';
-import SaveIcon from '@mui/icons-material/Save';
-import GetAppIcon from '@mui/icons-material/GetApp';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import ImportContactsIcon from '@mui/icons-material/ImportContacts';
-import AddIcon from '@mui/icons-material/Add';
-import { addChapter } from '../../services/chapterServices.js';
-import { addSection} from '../../services/sectionServices.js';
-import { addTitle} from '../../services/titleService.js';
-import CardContent from '@mui/material/CardContent';
-import { IconButton, Typography } from '@mui/material';
-import CardMedia from '@mui/material/CardMedia';
-import SendIcon from '@mui/icons-material/Send';
-import { styled } from '@mui/material/styles';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import BookIcon from '@mui/icons-material/Book';
-import TitleIcon from '@mui/icons-material/Title';
-import ArticleIcon from '@mui/icons-material/Article';
-import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import MoveDownIcon from '@mui/icons-material/MoveDown';
+import { pdf, Document, Page, Text, View } from '@react-pdf/renderer';
+import {
+  Stack, Button, CssBaseline, Box, Container, List, ListItem, ListItemButton,
+  ListItemIcon, ListItemText, Divider, CardContent, Typography, CardMedia, 
+  FormControlLabel, Switch, IconButton, styled
+} from '@mui/material';
+import {
+  SaveIcon, GetAppIcon, VisibilityIcon, ImportContactsIcon, AddIcon, SendIcon, 
+  BookIcon, TitleIcon, ArticleIcon, FormatAlignJustifyIcon, MoveDownIcon, InsertLinkIcon
+} from '@mui/icons-material';
+import { postPDF } from '../../services/pdfServices';
+import { addChapter, addSection, addTitle } from '../../services/chapterServices.js'; 
 import './MyDocument.css';
-import InsertLinkIcon from '@mui/icons-material/InsertLink';
-
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
