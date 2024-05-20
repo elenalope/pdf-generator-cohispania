@@ -80,6 +80,14 @@ describe('POST /api/document', () => {
   });
 })
 
+it('debería devolver un objeto con el nuevo documento creado', async () => {
+  const nuevoDocumento = {
+    titulo: 'Mi nuevo documento',
+    contenido: 'Este es el contenido de mi nuevo documento.'
+  };
+})
+
+
 //DELETE//
 describe('DELETE /api/document/:id', () => {
   it('debería eliminar un documento existente', async () => {
