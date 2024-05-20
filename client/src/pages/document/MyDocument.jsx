@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { postPDF } from '../../services/pdfServices';
@@ -6,7 +6,6 @@ import { pdf, Document, Page, Text, View } from '@react-pdf/renderer';
 import PreviewPdf from '../../components/PreviewPdf/PreviewPdf.jsx';
 import ChapterDialog from '../../components/chapter/ChapterDialog.jsx';
 import SectionDialog from '../../components/section/SectionDialog.jsx';
-import ParagraphDialog from '../../components/paragraph/ParagraphDialog.jsx'
 import TitleDialog from '../../components/title/TitleDialog.jsx';
 import LinkDialog from '../../components/link/LinkDialog.jsx'
 import SaveIcon from '@mui/icons-material/Save';
@@ -40,7 +39,9 @@ import TitleIcon from '@mui/icons-material/Title';
 import ArticleIcon from '@mui/icons-material/Article';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import MoveDownIcon from '@mui/icons-material/MoveDown'
+import MoveDownIcon from '@mui/icons-material/MoveDown';
+import './MyDocument.css';
+import InsertLinkIcon from '@mui/icons-material/InsertLink';
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -106,22 +107,14 @@ const MyDocument = () => {
 
   const handleChapterClick = () => {
     setOpenChapter(true);
-    setSelectedType('chapter');
   };
 
   const handleSectionClick = () => {
     setOpenSection(true);
-    setSelectedType('section');
   };
 
   const handleTitleClick = () => {
     setOpenTitle(true);
-    setSelectedType('title');
-  }
-
-  const handleParagraphClick = () => {
-    setOpenParagraph(true);
-    setSelectedType('paragraph');
   }
 
   const handleLinkClick = () => {
@@ -144,7 +137,8 @@ const MyDocument = () => {
   };
   
 
-  const handleSectionCreate = async (sectionData) => {
+  const handleSectionCreate = async  (sectionData) => {
+    console.log('la section data esta aqui', sectionData)
     try {
       const document = await addSection(id, { section: sectionData });
       const newSection = document.content.find(item => item.title === sectionData.title);
@@ -157,8 +151,7 @@ const MyDocument = () => {
       console.error('Error al crear la sección:', error);
     }
   };
-  
- 
+
   const handleTitleCreate = async (titleData) => {
     try {
       const document = await addTitle(id, { title: titleData });
@@ -265,7 +258,7 @@ const MyDocument = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className='formMyDocument'>
         <div className='template-name'>{config ? config.name : ''}</div>
-        <Stack direction="row" spacing={2} sx={{ marginLeft: '2%', marginRight: '2%', marginTop: '20px' }}>
+        <Stack direction="row" spacing={2} sx={{ marginLeft: '2%', marginRight: '2%', marginTop: '1%', justifyContent: 'flex-end' }}>
           <Button variant="contained" type="submit">
             <SaveIcon />
           </Button>
@@ -283,7 +276,7 @@ const MyDocument = () => {
               <nav aria-label="main mailbox folders">
                 <List>
                   <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'chapter'}>
+                    <ListItemButton>
                       <ListItemIcon>
                       <ImportContactsIcon />
                       </ListItemIcon>
@@ -293,7 +286,7 @@ const MyDocument = () => {
                   </ListItem>
                   <Divider />
                   <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'section'}>
+                    <ListItemButton>
                       <ListItemIcon>
                       <BookIcon />
                       </ListItemIcon>
@@ -313,7 +306,7 @@ const MyDocument = () => {
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'title'}>
+                    <ListItemButton>
                       <ListItemIcon>
                       <TitleIcon />
                       </ListItemIcon>
@@ -323,19 +316,19 @@ const MyDocument = () => {
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'paragraph'}>
+                    <ListItemButton>
                       <ListItemIcon>
                       <FormatAlignJustifyIcon />
                       </ListItemIcon>
                       <ListItemText primary="Párrafo" />
-                      <AddIcon onClick={handleParagraphClick}/>
+                      <AddIcon />
                     </ListItemButton>
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'link'}>
+                    <ListItemButton>
                       <ListItemIcon>
-                      <FormatListBulletedIcon />
+                      <InsertLinkIcon />
                       </ListItemIcon>
                       <ListItemText primary="Link" />
                       <AddIcon onClick={handleLinkClick}/>
@@ -471,17 +464,21 @@ const MyDocument = () => {
                   )
                 ))}
               </Box>
-        
+              
           </Container>
 
           </div>
+          
+          <div className={showPreview ? 'previewContainer' : 'previewContainer empty'}>
+          {showPreview && <PreviewPdf config={config} data={data} />}
+          </div>
+
         </div>
           <Stack spacing={2} direction="row" sx={{ marginLeft: '20px' }}>
-          <Button variant="contained" onClick={() => navigate('/')}>SALIR SIN GUARDAR</Button>
+          <Button variant="contained" onClick={() => navigate('/')}>SALIR</Button>
         </Stack>
       </form>
 
-      {showPreview && <PreviewPdf config={config} data={data} />}
       {openChapter && <ChapterDialog openChapter={openChapter} setOpenChapter={setOpenChapter} onChapterCreate={handleChapterCreate} onCancel={handleCancelDialog}/>}
       {openSection &&<SectionDialog openSection={openSection} setOpenSection={setOpenSection} onSectionCreate={handleSectionCreate} onCancel={handleCancelDialog}/>}
       {openTitle &&<TitleDialog openTitle={openTitle} setOpenTitle={setOpenTitle} onTitleCreate={handleTitleCreate} onCancel={handleCancelDialog}/>}

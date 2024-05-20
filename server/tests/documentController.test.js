@@ -53,3 +53,98 @@ describe('GET /api', () => {
     expect(res.body.length).toBe(0);
   });
 });
+
+
+//POST//
+describe('POST /api/document', () => {
+  it('debería crear un nuevo documento', async () => {
+    const newTemplate = {
+      name: "Test Template 3",
+      title: { content: "Test Title 3", level: "h1" },
+      subtitle: "Test Subtitle 3",
+      content: []
+    };
+
+    const res = await request(app)
+      .post('/api/document')
+      .send(newTemplate)
+      .expect(201);
+
+    expect(res.body.name).toBe(newTemplate.name);
+    expect(res.body.title.content).toBe(newTemplate.title.content);
+    expect(res.body.subtitle).toBe(newTemplate.subtitle);
+
+    const templateInDb = await Template.findById(res.body._id);
+    expect(templateInDb).not.toBeNull();
+    expect(templateInDb.name).toBe(newTemplate.name);
+  });
+})
+
+it('debería devolver un objeto con el nuevo documento creado', async () => {
+  const nuevoDocumento = {
+    titulo: 'Mi nuevo documento',
+    contenido: 'Este es el contenido de mi nuevo documento.'
+  };
+})
+
+
+//DELETE//
+describe('DELETE /api/document/:id', () => {
+  it('debería eliminar un documento existente', async () => {
+    
+    const newTemplate = new Template({
+      name: "Test Template",
+      title: { content: "Test Title", level: "h1" },
+      subtitle: "Test Subtitle",
+      content: []
+    });
+    await newTemplate.save();
+
+    const res = await request(app)
+      .delete(`/api/document/${newTemplate._id}`)
+      .expect(200);
+
+    const templateInDb = await Template.findById(newTemplate._id);
+    expect(templateInDb).toBeNull();
+  });
+});
+
+//PUT//
+
+describe('PUT /api/document/:id', () => {
+  it('debería actualizar un documento existente', async () => {
+  
+    const newTemplate = new Template({
+      name: "Old Test Template",
+      title: { content: "Old Test Title", level: "h1" },
+      subtitle: "Old Test Subtitle",
+      content: [
+              ]
+    });
+    await newTemplate.save();
+
+    
+    const updatedData = {
+      name: "Updated Test Template",
+      title: { content: "Updated Test Title", level: "h1" },
+      subtitle: "Updated Test Subtitle",
+     
+      content: [
+       
+      ]
+    };
+
+    const res = await request(app)
+      .put(`/api/document/${newTemplate._id}`)
+      .send(updatedData)
+      .expect(200);
+
+   
+    const updatedTemplate = await Template.findById(newTemplate._id);
+    expect(updatedTemplate).toBeTruthy();
+    expect(updatedTemplate.name).toBe(updatedData.name);
+    expect(updatedTemplate.title.content).toBe(updatedData.title.content);
+    expect(updatedTemplate.subtitle).toBe(updatedData.subtitle);
+    
+  });
+})

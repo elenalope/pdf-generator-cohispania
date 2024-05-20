@@ -18,10 +18,10 @@ const Home = () => {
     return (
       <div className="homeContainer">
         <div className="boxHome">
-        <h3 className='textHome'>Mis plantillas</h3>
-        </div>
-        <div className="buttonHome">
-          <Button variant="contained" className='addTemplate' onClick={handleButtonClick}>Crear Plantilla</Button>
+          <h3 className='textHome'>Mis plantillas</h3>
+          <div className="buttonHome">
+            <Button variant="contained" className='addTemplate' onClick={handleButtonClick}>Crear Plantilla</Button>
+          </div>
         </div>
         <div className='cardsHome'>
         <ListPdf/>

@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 
-const ExitWithoutSaving = ({ onClose }) => {
+const DeletePDF = ({ onClose, onConfirm }) => {
     const [open, setOpen] = useState(true);
-    const navigate = useNavigate();
-    
+
     const handleClose = () => {
         setOpen(false);
         onClose && onClose();
     };
 
-    const handleExit = () => {
-        console.log('Saliendo sin guardar...');
+    const handleDelete = async () => {
         setOpen(false);
-        navigate('/');
-        onClose && onClose();
+        await onConfirm();
     };
 
     return (
@@ -26,10 +22,10 @@ const ExitWithoutSaving = ({ onClose }) => {
                         <div style={{ fontSize: '48px', color: 'white' }}>!</div>
                     </div>
                     <div style={{ backgroundColor: 'white', padding: '16px', textAlign: 'center' }}>
-                        <DialogTitle id="alert-dialog-title">¿Estás seguro de que quieres salir sin guardar?</DialogTitle>
+                        <DialogTitle id="alert-dialog-title">¿Estás seguro de que quieres eliminar el documento?</DialogTitle>
                         <DialogActions style={{ justifyContent: 'center' }}>
                             <Button onClick={handleClose} style={{ backgroundColor: '#2E7D32', color: 'white', margin: '0 8px' }}> Cancelar </Button>
-                            <Button onClick={()=> navigate('/')} style={{ backgroundColor: '#D32F2F', color: 'white', margin: '0 8px' }} autoFocus> Salir </Button>
+                            <Button onClick={handleDelete} style={{ backgroundColor: '#D32F2F', color: 'white', margin: '0 8px' }} autoFocus> Eliminar documento </Button>
                         </DialogActions>
                     </div>
                 </DialogContent>
@@ -38,6 +34,4 @@ const ExitWithoutSaving = ({ onClose }) => {
     );
 };
 
-export default ExitWithoutSaving;
-
-
+export default DeletePDF;

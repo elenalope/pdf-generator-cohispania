@@ -1,31 +1,32 @@
 .template-name {
     background-color: #E9EAEC;
+    width: 78%;
     height: 2vh;
     margin-left: 2%;
     margin-right: 2%;
-    padding: 20px;
+    padding: 1.5%;
     font-family: 'Open Sans', sans-serif;
-    display: flex;
-    flex-direction: row;
+    align-items: center;
+    position: absolute;
 }
 
 .document-body {
     display: flex;
     margin-left: 2%;
     margin-right: 2%;
-    margin-top: 0.5%;
+    margin-top: 1%;
 }
 
 .option-list {
     display: flex;
     flex-direction: column;
-    height: 65vh;
+    height: 70vh;
     width: 50vh;
 }
 
 .pdf-background {
-    height: 65vh;
-    width: 153vh;
+    height: 70vh;
+    width: 50vh;
     background-color: #C9C9CE;
     margin-left: 1%;
     flex-grow: 1; 
@@ -47,4 +48,18 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.previewContainer {
+    height: 70vh;
+    overflow-y: auto; 
+    background-color: #E0E0E0; 
+    padding: 30px; 
+  }
+
+  .previewContainer.empty {
+    padding: 0;
+    height: 0;
+    overflow: hidden;
+    background-color: transparent;
 }
