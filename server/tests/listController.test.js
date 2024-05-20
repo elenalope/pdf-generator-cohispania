@@ -18,10 +18,10 @@ afterAll(async () => {
 });
 
 describe('GET /api', () => {
-  it('should return all the title', async () => {
+  it('should return all the list', async () => {
     const templates = [
       {
-        title: { content: "Test Title 1", level: "h1" },
+        content:[]
        
       },
       {
@@ -41,7 +41,7 @@ describe('GET /api', () => {
     expect(res.body[1].name).toBe(templates[1].name);
   });
 
-  it('should return an empty array if there are no title', async () => {
+  it('should return an empty array if there are no list', async () => {
     const res = await request(app)
       .get('/api')
       .expect(200);
@@ -51,9 +51,9 @@ describe('GET /api', () => {
 });
 
 describe('POST /api/document/', () => {
-    it('should create a new title', async () => {
+    it('should create a new list', async () => {
       const newTemplate = {
-        title: { content: "Test Title 3", level: "h1" },
+        title: { content: "Test list 3", level: "h1" },
       };
   
       const res = await request(app)
@@ -72,7 +72,7 @@ describe('POST /api/document/', () => {
   })
 
   describe('DELETE /api/document/:id', () => {
-    it('should delete an existing title."', async () => {
+    it('should delete an existing list"', async () => {
       
       const newTemplate = new Template({
         name: "Test Template",
@@ -89,11 +89,11 @@ describe('POST /api/document/', () => {
   });
 
   describe('PUT /api/document/:id', () => {
-    it('should update an existing title', async () => {
+    it('should update an existing list', async () => {
     
       const newTemplate = new Template({
         
-        title: { content: "Old Test Title", level: "h1" },
+        title: { content: "Old Test list", level: "h1" },
         content: [
                 ]
       });
@@ -101,7 +101,7 @@ describe('POST /api/document/', () => {
 
       const updatedData = {
     
-        title: { content: "Updated Test Title", level: "h1" },
+        title: { content: "Updated Test list", level: "h1" },
         content: []
       };
   
