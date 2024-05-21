@@ -36,7 +36,7 @@ export default function TitleDialog({ openTitle, setOpenTitle, onTitleCreate, on
   return (
     <Dialog open={openTitle} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
       <DialogTitle>Crear Título</DialogTitle>
-      <DialogContent sx={{ p: 3 }}>
+      <DialogContent sx={{ p: 3, width: '450px' }}>
         <TextField
           autoFocus
           margin="dense"
