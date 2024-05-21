@@ -8,32 +8,41 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { styled } from '@mui/material/styles';
 import { useForm } from "react-hook-form";
 
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
 
-export default function SubsectionDialog({
-  openAddSubsection, setOpenAddSubsection, onSubsectionCreate}) {
-   const {register, handleSubmit} = useForm();
+export default function SectionFromChapterDialog({ openAddSection, setOpenAddSection, onSectionCreate}) {
+  const { register, handleSubmit, reset } = useForm();
 
-   const handleClose = () => {
-    setOpenAddSubsection(false);
+  const handleClose = () => {
+    setOpenAddSection(false);
+    // onCancel();
   };
-  
 
   const onSubmit = async (data) => {
-    const subsectionData = {
+    const sectionFromChapterData = {
       title: data.title,
-      paragraph: data.paragraph || '',
+      cover: data.cover || false,
+      img: data.img || '',
       content: []
     };
-  
-    await onSubsectionCreate(subsectionData);
+
+    await onSectionCreate(sectionFromChapterData );
     handleClose();
- 
   };
 
-
   return (
-    <Dialog open={openAddSubsection} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
-      <DialogTitle>Crear Subsección</DialogTitle>
+    <Dialog open={openAddSection} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
+      <DialogTitle>Crear Sección</DialogTitle>
       <DialogContent sx={{ p: 3 }}>
         <TextField
           autoFocus
@@ -44,16 +53,6 @@ export default function SubsectionDialog({
           fullWidth
           variant="standard"
           {...register('title', { required: true })}
-        />
-        <TextField
-          autoFocus
-          margin="dense"
-          id="paragraph"
-          label="Párrafo"
-          type="text"
-          fullWidth
-          variant="standard"
-          {...register('paragraph', { required: true })}
         />
       </DialogContent>
       <DialogActions>

@@ -1,90 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { addSubSection } from '../services/subsectionService';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import { addSubSection } from '../services/subsectionService.js';
+import { styled } from '@mui/material/styles';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import MoveDownIcon from '@mui/icons-material/MoveDown';
-import Button from '@mui/material/Button';
-import BookIcon from '@mui/icons-material/Book';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
-import TitleIcon from '@mui/icons-material/Title';
-import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import ImageIcon from '@mui/icons-material/Image';
-import LinkIcon from '@mui/icons-material/Link';
-import DrawIcon from '@mui/icons-material/Draw';
 import AddIcon from '@mui/icons-material/Add';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
+import CardContent from '@mui/material/CardContent';
+import { Typography } from '@mui/material';
+import CardMedia from '@mui/material/CardMedia';
 import SendIcon from '@mui/icons-material/Send';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import LongMenu from '../components/cards/DropDownMenu'
-import Stack from '@mui/material/Stack';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
-import SubsectionDialog from '../components/subsection/SubsectionDialog'
-import CardContent from '@mui/material/CardContent';
-import { Typography } from '@mui/material';
 
 
-const Section = () => {
-  const navigate = useNavigate();
-    const { id: templateId, id: chapterId, id: sectionId } = useParams();
+
+const SectionFromChapter = () => {
+    const navigate = useNavigate();
+    const { templateId, chapterId, sectionId } = useParams();
     const [openAddSubsection, setOpenAddSubsection] = useState(false);
     const [data, setData] = useState({ subsections: [] }); 
 
-  const handleSubsectionClick = () =>{
-    setOpenAddSubsection(true);
-}
-useEffect(() => {
-  console.log('actualizado data', data);
-}, [data]);
-
-const handleSubsectionCreate = async (subsectionData) => {
-  try {
-    const response = await addSubSection(templateId, chapterId, sectionId, { subsection: subsectionData });
-    console.log('response updated', response);
-
-    if (response.data && response.data.content) {
-      setData({ subsections: response.data.content });
-      console.log('content subsections data', response.data.content);
-    } else {
-      console.error('No content found in response:', response.data);
+    const handleSubsectionClick = () =>{
+        setOpenAddSubsection(true);
     }
-  } catch (error) {
-    console.error('Error creating subsection:', error);
-  }
-};
 
-const handleEnterSection = (sectionId) => {
-  navigate(`section/${sectionId}`);
-};
- 
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-  });
+    useEffect(() => {
+        console.log('actualizado data', data);
+    }, [data]);
+
+    const handleSubsectionCreate = async (subsectionData) => {
+        try {
+            const response = await addSubSection(templateId, chapterId, sectionId, { subsection: subsectionData });
+            console.log('response updated', response);
+
+            setData({ subsections: response.data.content });
+            console.log('content subsections data', response.data.content);
+        } catch (error) {
+            console.error('Error creating chapter:', error);
+        }
+    };
+
+    const handleEnterSection = (subsectionId) => {
+        navigate(`/document/${templateId}/chapter/${chapterId}/sectionChapter/${sectionId}`);
+    };
+    
 
 
   return (
@@ -106,12 +76,12 @@ const handleEnterSection = (sectionId) => {
           <Box>
             <nav aria-label="main mailbox folders">
               <List>
-                <ListItem disablePadding >
+                <ListItem disablePadding /* onClick={handleSubsectionClick} */>
                   <ListItemButton>
                     <ListItemIcon>
                       <ImportContactsIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Subsección" />
+                    <ListItemText primary="Section" />
                     <AddIcon onClick={handleSubsectionClick}/>
                   </ListItemButton>
                 </ListItem>
@@ -138,11 +108,14 @@ const handleEnterSection = (sectionId) => {
                       </Typography>
                     <Divider />
                     <div className='buttons-section-mydocument'>
-            {/* <Button variant="contained" endIcon={<SendIcon />} size="small"
-            sx={{ width: 100, ml: 'auto' }}
-            onClick={() => handleEnterSection(subsection._id)}>
-            Entrar</Button> */}
-            </div>                   
+                                        <Button variant="contained" endIcon={<SendIcon />} size="small"
+                                            sx={{ width: 100, ml: 'auto' }}
+                                            onClick={() => handleEnterSection(subsection._id)}>
+                                            Entrar
+                                        </Button>
+                                    </div>
+                    {/* <FormControlLabel disabled control={<Switch />} label={data.cover} /> */}
+                                       
                 </CardContent>
                 )
                 ))}
@@ -157,8 +130,7 @@ const handleEnterSection = (sectionId) => {
 
       {openAddSubsection &&<SubsectionDialog openAddSubsection={openAddSubsection} setOpenAddSubsection={setOpenAddSubsection} onSubsectionCreate={handleSubsectionCreate} />}
     </>
-    
   )
 }
 
-export default Section
+export default SectionFromChapter;
