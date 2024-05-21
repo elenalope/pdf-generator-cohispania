@@ -107,14 +107,22 @@ const MyDocument = () => {
 
   const handleChapterClick = () => {
     setOpenChapter(true);
+    setSelectedType('chapter');
   };
 
   const handleSectionClick = () => {
     setOpenSection(true);
+    setSelectedType('section');
   };
 
   const handleTitleClick = () => {
     setOpenTitle(true);
+    setSelectedType('title');
+  }
+
+  const handleParagraphClick = () => {
+    setOpenParagraph(true);
+    setSelectedType('paragraph');
   }
 
   const handleLinkClick = () => {
@@ -382,7 +390,7 @@ const generatePdf = async () => {
               <nav aria-label="main mailbox folders">
                 <List>
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton disabled={isDisabled && selectedType !== 'chapter'}>
                       <ListItemIcon>
                       <ImportContactsIcon />
                       </ListItemIcon>
@@ -392,7 +400,7 @@ const generatePdf = async () => {
                   </ListItem>
                   <Divider />
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton disabled={isDisabled && selectedType !== 'section'}>
                       <ListItemIcon>
                       <BookIcon />
                       </ListItemIcon>
@@ -412,7 +420,7 @@ const generatePdf = async () => {
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton disabled={isDisabled && selectedType !== 'title'}>
                       <ListItemIcon>
                       <TitleIcon />
                       </ListItemIcon>
@@ -422,7 +430,7 @@ const generatePdf = async () => {
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton disabled={isDisabled && selectedType !== 'paragraph'}>
                       <ListItemIcon>
                       <FormatAlignJustifyIcon />
                       </ListItemIcon>
@@ -432,7 +440,7 @@ const generatePdf = async () => {
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton disabled={isDisabled && selectedType !== 'link'}>
                       <ListItemIcon>
                       <InsertLinkIcon />
                       </ListItemIcon>
