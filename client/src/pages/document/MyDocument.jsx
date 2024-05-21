@@ -82,7 +82,7 @@ const MyDocument = () => {
   const [paragraphId, setParagraphId] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
   const [linkId, setLinkId]= useState(null);
-
+  
   useEffect(() => {
   }, [config, documentId]);
   const methods = useForm({
@@ -369,7 +369,19 @@ const generatePdf = async () => {
   const handleEnterLink = (linkId) => {
     navigate(`link/${linkId}`);
 };
-  const isDisabled = selectedType !== null;
+
+  const isDisabled = (buttonType) => {
+    if (selectedType === 'chapter' && buttonType !== 'chapter') {
+      return true; 
+    }
+    if (selectedType === 'section' && buttonType !== 'section') {
+      return true; 
+    }
+    if (['title', 'paragraph', 'link'].includes(selectedType)) {
+      return ['chapter', 'section'].includes(buttonType); 
+    }
+    return false; 
+  };
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className='formMyDocument'>
@@ -392,7 +404,7 @@ const generatePdf = async () => {
               <nav aria-label="main mailbox folders">
                 <List>
                   <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'chapter'}>
+                    <ListItemButton  disabled={isDisabled('chapter')} onClick={handleChapterClick}>
                       <ListItemIcon>
                       <ImportContactsIcon />
                       </ListItemIcon>
@@ -403,13 +415,13 @@ const generatePdf = async () => {
                             color: '#ffffff', 
                             backgroundColor: 'primary.main', 
                           }}}>
-                      <AddIcon onClick={handleChapterClick}/>
+                      <AddIcon/>
                       </IconButton>
                     </ListItemButton>
                   </ListItem>
                   <Divider />
                   <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'section'}>
+                    <ListItemButton disabled={isDisabled('section')} onClick={handleSectionClick}>
                       <ListItemIcon>
                       <BookIcon />
                       </ListItemIcon>
@@ -420,7 +432,7 @@ const generatePdf = async () => {
                             color: '#ffffff', 
                             backgroundColor: 'primary.main', 
                           }}}>
-                      <AddIcon onClick={handleSectionClick}/>
+                      <AddIcon/>
                       </IconButton>
                     </ListItemButton>
                   </ListItem>
@@ -443,7 +455,7 @@ const generatePdf = async () => {
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'title'}>
+                    <ListItemButton disabled={isDisabled('title')} onClick={handleTitleClick}>
                       <ListItemIcon>
                       <TitleIcon />
                       </ListItemIcon>
@@ -454,13 +466,13 @@ const generatePdf = async () => {
                             color: '#ffffff', 
                             backgroundColor: 'primary.main', 
                           }}}>
-                      <AddIcon onClick={handleTitleClick}/>
+                      <AddIcon/>
                       </IconButton>
                     </ListItemButton>
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'paragraph'}>
+                    <ListItemButton disabled={isDisabled('paragraph')} onClick={handleParagraphClick}>
                       <ListItemIcon>
                       <FormatAlignJustifyIcon />
                       </ListItemIcon>
@@ -471,13 +483,13 @@ const generatePdf = async () => {
                             color: '#ffffff', 
                             backgroundColor: 'primary.main', 
                           }}}>
-                      <AddIcon onClick={handleParagraphClick} />
+                      <AddIcon />
                       </IconButton>
                     </ListItemButton>
                   </ListItem>
                   <Divider/>
                 <ListItem disablePadding>
-                    <ListItemButton disabled={isDisabled && selectedType !== 'link'}>
+                    <ListItemButton disabled={isDisabled('link')} onClick={handleLinkClick}>
                       <ListItemIcon>
                       <InsertLinkIcon />
                       </ListItemIcon>
@@ -488,7 +500,7 @@ const generatePdf = async () => {
                             color: '#ffffff', 
                             backgroundColor: 'primary.main', 
                           }}}>
-                      <AddIcon onClick={handleLinkClick}/>
+                      <AddIcon/>
                       </IconButton>
                     </ListItemButton>
                   </ListItem>
@@ -601,7 +613,7 @@ const generatePdf = async () => {
                       />
                     )}
                      <Divider/>
-                    {/* <FormControlLabel disabled control={<Switch />} label={data.cover} /> */}
+                    
                     <div className='buttons-chapter-mydocument'>
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
