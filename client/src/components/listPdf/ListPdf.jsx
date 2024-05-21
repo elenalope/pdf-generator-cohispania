@@ -11,6 +11,8 @@ import PreviewPdf from '../PreviewPdf/PreviewPdf';
 import DeletePDF from '../alerts/DeleteAlert';
 import Deleting from '../alerts/DeleteConfirm';
 import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Alert from '@mui/material/Alert';
 
 const ListPdf = () => {
     const navigate = useNavigate();
@@ -50,29 +52,17 @@ const ListPdf = () => {
         }
     };
 
-  /* return (
-    <div className='listPdfContainer' style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-      {documents.map((document, index) => (
-        <Card key={index} sx={{ width: '290px', height: '310px', margin: '30px' }}>
-          <CardActionArea>
-            <CardContent onClick={()=> handleNavigateDocument(document._id)}> 
-              <div style={{ width: '100%', height: '200px', overflow: 'hidden' }} >
-                
-              {document.coverImg }
-              </div>
-              <Typography gutterBottom variant="h5" component="div">
-                {document.name}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
-            <DeleteIcon onClick={() => handleDeleteDocument(document._id)} />
-            <DownloadIcon/>
-          </div>
-        </Card>
-      ))}
-    </div>
-  ); */
+    useEffect(() => {
+        if (showDeletingAlert) {
+            const timer = setTimeout(() => {
+                setShowDeletingAlert(false);
+                window.location.reload();
+            }, 1500);
+
+            return () => clearTimeout(timer);
+        }
+    }, [showDeletingAlert]);
+
     return (
         <div className='listPdfContainer' style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
             {documents.map((document, index) => (
@@ -90,8 +80,8 @@ const ListPdf = () => {
                 },
                 borderRadius: '15px' }}>
                     <CardActionArea >
-                        <CardContent onClick={()=> navigate(`document/${document._id}`)}>
-                            <div style={{ width: '100%', height: '160px', overflow: 'hidden', marginBottom: '9%'}}>
+                        <CardContent onClick={() => navigate(`document/${document._id}`)}>
+                            <div style={{ width: '100%', height: '160px', overflow: 'hidden', marginBottom: '9%' }}>
                             {document.coverImg && (
                             <img src={document.coverImg} alt="Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         )}
@@ -101,31 +91,46 @@ const ListPdf = () => {
                             </Typography>
                         </CardContent>
                     </CardActionArea>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5%'}}>
-                    <IconButton
-                        sx={{
-                        color: 'black', 
-                        '&:hover': {
-                        color: 'red', 
-                        backgroundColor: 'rgba(255, 0, 0, 0.1)' 
-                        }
-                        }} 
-                        onClick={() => handleDeleteDocument(document._id)}>
-                        <DeleteIcon />
-                    </IconButton>
-                        {showAlert && <DeletePDF onClose={() => setShowAlert(false)} onConfirm={handleConfirmDelete} />}
-                        {showDeletingAlert && <Deleting onClose={() => setShowDeletingAlert(false)} />}
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5%' }}>
                         <IconButton
-                        sx={{
-                        color: 'black', 
-                        '&:hover': {
-                        color: 'green', 
-                        backgroundColor: 'rgba(0, 255, 0, 0.1)' }}}>
-                        <DownloadIcon />
+                            sx={{
+                            color: 'black', 
+                            '&:hover': {
+                            color: 'red', 
+                            backgroundColor: 'rgba(255, 0, 0, 0.1)' 
+                            }
+                            }} 
+                            onClick={() => handleDeleteDocument(document._id)}>
+                            <DeleteIcon />
+                        </IconButton>
+                        <IconButton
+                            sx={{
+                            color: 'black', 
+                            '&:hover': {
+                            color: 'green', 
+                            backgroundColor: 'rgba(0, 255, 0, 0.1)' }}}>
+                            <DownloadIcon />
                         </IconButton>
                     </div>
                 </Card>
             ))}
+            {showAlert && <DeletePDF onClose={() => setShowAlert(false)} onConfirm={handleConfirmDelete} />}
+            {showDeletingAlert && (
+                <Stack
+                    sx={{
+                        position: 'fixed',
+                        bottom: 16,
+                        right: 16,
+                        width: 'auto',
+                        zIndex: 1500
+                    }}
+                    spacing={2}
+                >
+                    <Alert variant="filled" severity="error">
+                        El documento fue eliminado
+                    </Alert>
+                </Stack>
+            )}
         </div>
     );
 };
