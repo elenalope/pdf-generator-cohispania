@@ -9,7 +9,7 @@ const Deleting = ({ onClose }) => {
         const timer = setTimeout(() => {
             setOpen(false);
             onClose && onClose();
-        }, 1500);
+        }, 600);
 
         return () => clearTimeout(timer);
     }, [onClose]);
