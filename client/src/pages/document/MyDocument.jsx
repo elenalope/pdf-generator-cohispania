@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from "react-hook-form";
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { postPDF } from '../../services/pdfServices';
 import { pdf, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
@@ -377,6 +378,34 @@ const generatePdf = async () => {
     }
     return false; 
   };
+
+  //
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+
+    if (result.type === 'chapter') {
+      const reorderedChapters = Array.from(data.chapters);
+      const [removed] = reorderedChapters.splice(result.source.index, 1);
+      reorderedChapters.splice(result.destination.index, 0, removed);
+
+      setData(prevData => ({
+        ...prevData,
+        chapters: reorderedChapters
+      }));
+    } else if (result.type === 'section') {
+      const reorderedSections = Array.from(data.sections);
+      const [removed] = reorderedSections.splice(result.source.index, 1);
+      reorderedSections.splice(result.destination.index, 0, removed);
+
+      setData(prevData => ({
+        ...prevData,
+        sections: reorderedSections
+      }));
+    }
+  };
+  
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className='formMyDocument'>
@@ -525,102 +554,133 @@ const generatePdf = async () => {
           <div className='pdf-background'>
           <Container fixed>
             <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
-              {data.chapters.map((chapter, index) => (
-                chapter && chapter.title && (
-                  <CardContent key={index} sx={{ 
-                    pl: 4, 
-                    pr: 4, 
-                    mb: 3, 
-                    pt: 2, 
-                    pb: 2, 
-                    backgroundColor: '#E9EAEC', 
-                    borderRadius: '10px',
-                    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'primary.main', width: '100%' }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                          <ImportContactsIcon />
-                          <Typography sx={{ ml: 1, mt: 1 }}>Capítulo</Typography>
-                      </Box>
-                          <LongMenu />
-                    </Box>
-                    <Typography variant="h5" sx={{ mb: 1, mt: 1 }}>
-                      {chapter.title}
-                    </Typography>
-                    <Divider/>
-                    <Typography variant="subtitle1" sx={{ mb: 1, mt: 1 }}>
-                      {chapter.subtitle}
-                    </Typography>
-                    <Divider />
-                    {chapter.img && (
-                      <CardMedia
-                        sx={{ mt: 1 }}
-                        component="img"
-                        height="140"
-                        width="140"
-                        image={chapter.img}
-                        alt="chapter-image"
-                      />
-                    )}
-                    <div className='buttons-chapter-mydocument'>
-    
-                    <Button variant="contained" endIcon={<SendIcon />} size="small"
-                    sx={{ width: 100 , ml: 'auto', marginTop: '20px'}} 
-                    onClick={handleEnterChapter}>
-                    Entrar
-                    </Button>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="chapters" type="chapter">
+                  {(provided) => (
+                    <div {...provided.droppableProps} ref={provided.innerRef}>
+                      {data.chapters.map((chapter, index) => (
+                        chapter && chapter.title && (
+                          <Draggable key={chapter._id} draggableId={chapter._id} index={index}>
+                            {(provided) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                              >
+                                <CardContent sx={{ 
+                                  pl: 4, 
+                                  pr: 4, 
+                                  mb: 3, 
+                                  pt: 2, 
+                                  pb: 2, 
+                                  backgroundColor: '#E9EAEC', 
+                                  borderRadius: '10px',
+                                  boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}
+                                >
+                                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'primary.main', width: '100%' }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                      <ImportContactsIcon />
+                                      <Typography sx={{ ml: 1, mt: 1 }}>Capítulo</Typography>
+                                    </Box>
+                                    <LongMenu />
+                                  </Box>
+                                  <Typography variant="h5" sx={{ mb: 1, mt: 1 }}>
+                                    {chapter.title}
+                                  </Typography>
+                                  <Divider/>
+                                  <Typography variant="subtitle1" sx={{ mb: 1, mt: 1 }}>
+                                    {chapter.subtitle}
+                                  </Typography>
+                                  <Divider />
+                                  {chapter.img && (
+                                    <CardMedia
+                                      sx={{ mt: 1 }}
+                                      component="img"
+                                      height="140"
+                                      width="140"
+                                      image={chapter.img}
+                                      alt="chapter-image"
+                                    />
+                                  )}
+                                  <div className='buttons-chapter-mydocument'>
+                                    <Button variant="contained" endIcon={<SendIcon />} size="small"
+                                      sx={{ width: 100 , ml: 'auto', marginTop: '20px'}} 
+                                      onClick={handleEnterChapter}>
+                                      Entrar
+                                    </Button>
+                                  </div>
+                                </CardContent>
+                              </div>
+                            )}
+                          </Draggable>
+                        )
+                      ))}
+                      {provided.placeholder}
                     </div>
-                    
-                </CardContent>
-                  
-                )
-              ))}
-            {data.sections.map((section, index) => (
-                section && section.title && (
-                  <CardContent key={index} sx={{ 
-                    pl: 4, 
-                    pr: 4, 
-                    mb: 3, 
-                    pt: 2, 
-                    pb: 2, 
-                    backgroundColor: '#E9EAEC', 
-                    borderRadius: '10px',
-                    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}
-                  >
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'primary.main', width: '100%' }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                          <BookIcon />
-                          <Typography sx={{ ml: 1, mt: 1 }}>Sección</Typography>
-                      </Box>
-                          <LongMenu />
-                    </Box>
-                    <Typography variant="h5" sx={{ mb: 2, mt: 1 }}>
-                      {section.title}
-                    </Typography>
-                    <Divider />
-                    {section.img && (
-                      <CardMedia
-                        sx={{ mt: 2 }}
-                        component="img"
-                        height="140"
-                        width="280"
-                        image={section.img}
-                        alt="section-image"
-                      />
-                    )}
-                     <Divider/>
-                    
-                    <div className='buttons-chapter-mydocument'>
-    
-                    <Button variant="contained" endIcon={<SendIcon />} size="small"
-                    sx={{ width: 100 , ml: 'auto', marginTop: '20px'}} 
-                    onClick={handleEnterSection}>
-                    Entrar
-                    </Button>
-                    </div>
-                    
-                </CardContent>
-                )
-              ))}
+                  )}
+                </Droppable>
+              <Droppable droppableId="sections">
+                {(provided) => (
+                  <div {...provided.droppableProps} ref={provided.innerRef}>
+                    {data.sections.map((section, index) => (
+                      section && section.title && (
+                        <Draggable key={section._id} draggableId={section._id} index={index}>
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <CardContent sx={{ 
+                                pl: 4, 
+                                pr: 4, 
+                                mb: 3, 
+                                pt: 2, 
+                                pb: 2, 
+                                backgroundColor: '#E9EAEC', 
+                                borderRadius: '10px',
+                                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}
+                              >
+                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'primary.main', width: '100%' }}>
+                                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                      <BookIcon />
+                                      <Typography sx={{ ml: 1, mt: 1 }}>Sección</Typography>
+                                  </Box>
+                                      <LongMenu />
+                                </Box>
+                                <Typography variant="h5" sx={{ mb: 2, mt: 1 }}>
+                                  {section.title}
+                                </Typography>
+                                <Divider />
+                                {section.img && (
+                                  <CardMedia
+                                    sx={{ mt: 2 }}
+                                    component="img"
+                                    height="140"
+                                    width="280"
+                                    image={section.img}
+                                    alt="section-image"
+                                  />
+                                )}
+                                <Divider/>
+                                <div className='buttons-chapter-mydocument'>
+                                <Button variant="contained" endIcon={<SendIcon />} size="small"
+                                sx={{ width: 100 , ml: 'auto', marginTop: '20px'}} 
+                                onClick={handleEnterSection}>
+                                Entrar
+                                </Button>
+                                </div>
+                              </CardContent>
+                            </div>
+                          )}
+                        </Draggable>
+                      )
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
 
                 {data.titles.map((title, index) => (
                   title && title.content && (
