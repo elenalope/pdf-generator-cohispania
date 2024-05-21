@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
 import { addSubSection } from '../services/subsectionService';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -10,25 +8,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import MoveDownIcon from '@mui/icons-material/MoveDown';
-import Button from '@mui/material/Button';
-import BookIcon from '@mui/icons-material/Book';
-import ImportContactsIcon from '@mui/icons-material/ImportContacts';
-import TitleIcon from '@mui/icons-material/Title';
-import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import ImageIcon from '@mui/icons-material/Image';
-import LinkIcon from '@mui/icons-material/Link';
-import DrawIcon from '@mui/icons-material/Draw';
 import AddIcon from '@mui/icons-material/Add';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
-import SendIcon from '@mui/icons-material/Send';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import LongMenu from '../components/cards/DropDownMenu'
 import Stack from '@mui/material/Stack';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
@@ -127,7 +108,6 @@ const handleEnterSection = (sectionId) => {
                 subsection && subsection.title && (
                   <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      {/* <LongMenu /> */}
                     </Box>
                     <Typography sx={{ mb: 2, mt: 1 }}>
                       {subsection.title}
@@ -138,10 +118,6 @@ const handleEnterSection = (sectionId) => {
                       </Typography>
                     <Divider />
                     <div className='buttons-section-mydocument'>
-            {/* <Button variant="contained" endIcon={<SendIcon />} size="small"
-            sx={{ width: 100, ml: 'auto' }}
-            onClick={() => handleEnterSection(subsection._id)}>
-            Entrar</Button> */}
             </div>                   
                 </CardContent>
                 )

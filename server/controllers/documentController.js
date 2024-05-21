@@ -1,4 +1,4 @@
-import {Template}from "../models/Template.js";
+import {Template, Section, Chapter}from "../models/Template.js";
 
 export const getAllDocuments = async (request, response) => {
    

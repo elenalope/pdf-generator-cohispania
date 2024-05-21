@@ -1,7 +1,5 @@
 import React from 'react'
 import {Document,Page, Text, View, StyleSheet } from '@react-pdf/renderer'
-import { useDocument } from '../../context/DocumentContext.jsx'
-
 
 const styles = StyleSheet.create({
     page:{
@@ -60,7 +58,7 @@ const PreviewPdf = ({ config, data }) => {
                 <View style={styles.page}>
                     {toc && <Text>Índice:</Text>}
                     <div style={{ width: '100%', height: '160px', overflow: 'hidden', marginBottom: '9%' }}>
-                        {coverImg && ( // Accessing coverImg directly from config
+                        {coverImg && ( 
                             <img src={coverImg} alt="Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         )}
                     </div>

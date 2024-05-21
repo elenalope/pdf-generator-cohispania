@@ -8,12 +8,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { styled } from '@mui/material/styles';
 
-export default function LinkDialog({ openLink, setOpenLink, onLinkCreate, onCancel }) {
+export default function LinkDialog({ openLink, setOpenLink, onLinkCreate }) {
   const { register, handleSubmit } = useForm();
   
   const handleClose = () => {
     setOpenLink(false);
-    // onCancel();
   };
 
   const onSubmit = (data) => {

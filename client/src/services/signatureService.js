@@ -4,7 +4,6 @@ export const URL = 'http://localhost:3000/api/document';
 
 export const addSignature = async (templateId, newSignature) => {
   try {
-    console.log("Datos de la firma enviados:", newSignature);
     const response = await axios.post(`${URL}/${templateId}/signature`, newSignature);
     alert("Firma añadida exitosamente");
     return response;

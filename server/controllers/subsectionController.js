@@ -4,14 +4,8 @@ export const addSubsection = async (req, res) => {
     try {
         const { id, chapterId, sectionId } = req.params;
         const { subsection } = req.body;
-
-        console.log('id chapter', chapterId);
-        console.log('id section', sectionId);
-        console.log('subsectiondata', subsection);
-
         const newSubsection = new Subsection(subsection);
         await newSubsection.save();
-        console.log('new subsection', newSubsection);
 
         const section = await Section.findById(sectionId);
         if (!section) {
@@ -25,7 +19,6 @@ export const addSubsection = async (req, res) => {
             path: 'content',
             model: 'Subsection'
         }).exec();
-        console.log('populatedSection', populatedSection);
         res.status(200).json(populatedSection);
     } catch (error) {
         res.status(500).json({ message: error.message });

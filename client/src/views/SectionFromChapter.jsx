@@ -76,7 +76,7 @@ const SectionFromChapter = () => {
           <Box>
             <nav aria-label="main mailbox folders">
               <List>
-                <ListItem disablePadding /* onClick={handleSubsectionClick} */>
+                <ListItem disablePadding>
                   <ListItemButton>
                     <ListItemIcon>
                       <ImportContactsIcon />

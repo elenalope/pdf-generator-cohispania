@@ -4,13 +4,7 @@ export const URL = 'http://localhost:3000/api/document';
 
 export const addSubSection = async (templateId, chapterId, sectionId, newSubSection) => {
   try {
-    console.log('templateId', templateId);
-    console.log('chapterId', chapterId);
-    console.log('sectionId', sectionId);
-    console.log('new subsection', newSubSection);
-
     const response = await axios.post(`${URL}/${templateId}/chapter/${chapterId}/section/${sectionId}`, newSubSection);
-    console.log('Response from server:', response);
     return response;
   } catch (error) {
     console.error('Error creating subsection:', error.message);

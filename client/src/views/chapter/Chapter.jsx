@@ -35,16 +35,12 @@ const Chapter = () => {
     setOpenAddSection(true);
   };
   useEffect(() => {
-    console.log('Updated data:', data);
   }, [data]);
 
   const handleSectionCreate = async (sectionFromChapterData) => {
     try {
       const updatedChapter = await addSectionFromChapter(templateId, chapterId, { section: sectionFromChapterData });
-      console.log('API Response:', updatedChapter);
-
       setData({ sections: updatedChapter.content });
-      console.log('Updated sections data:', updatedChapter.content);
     } catch (error) {
       console.error('Error creating chapter:', error);
     }
@@ -63,7 +59,6 @@ const Chapter = () => {
     width: 1,
   });
   const handleEnterSection = (sectionId) => {
-    console.log('id de la seccion para navegar', sectionId)
     if (sectionId) {
       navigate(`section/${sectionId}`);
     }
@@ -108,7 +103,6 @@ const Chapter = () => {
                 section && section.title && (
                   <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      {/* <LongMenu /> */}
                     </Box>
                     <Typography sx={{ mb: 2, mt: 1 }}>
                       {section.title}
@@ -125,12 +119,11 @@ const Chapter = () => {
                       />
                     )}
                      <Divider/>
-                    {/* <FormControlLabel disabled control={<Switch />} label={data.cover} /> */}
                     <div className='buttons-section-mydocument'>
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
                     sx={{ width: 100 , ml: 'auto'}} 
-                    onClick={handleEnterSection}/* type="submit" */ /* onClick={()=> navigate('/document')} */ >
+                    onClick={handleEnterSection} >
                     Entrar
                     </Button>
                     </div>

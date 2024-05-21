@@ -57,16 +57,16 @@ export const updateLink = async (request, response) => {
     try {
         const { id: templateId, linkId } = request.params;
         const { link: updatedLink } = request.body;
-        const document = await Template.findById(templateId);// me busca el doc por el id
+        const document = await Template.findById(templateId);
         if (!document) {
             return response.status(404).json({ message: "Template not found" });
         }
-        const linkIndex = document.content.findIndex(link => link._id.equals(linkId));  // me busca el link por id
+        const linkIndex = document.content.findIndex(link => link._id.equals(linkId));  
 
         if (linkIndex === -1) {
             return response.status(404).json({ message: "Link not found in this template" });
         }
-        document.content[linkIndex] = { ...document.content[linkIndex]._doc, ...updatedLink };//estoy actualizando los datos de link
+        document.content[linkIndex] = { ...document.content[linkIndex]._doc, ...updatedLink };
         await document.save();
 
         response.status(200).json(document);

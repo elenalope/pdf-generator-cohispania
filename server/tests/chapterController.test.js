@@ -53,7 +53,7 @@ describe('GET /api', () => {
 });
 
 
-//POST//
+
 describe('POST /api/document/', () => {
     it('debería crear un nuevo chapter', async () => {
       const newTemplate = {
@@ -78,7 +78,7 @@ describe('POST /api/document/', () => {
   })
 
 
-  //DELETE//
+ 
   describe('DELETE /api/document/:id', () => {
     it('debería eliminar un documento existente', async () => {
       
@@ -99,7 +99,7 @@ describe('POST /api/document/', () => {
     });
   });
   
-  //PUT//
+ 
   
   describe('PUT /api/document/:id', () => {
     it('debería actualizar un documento existente', async () => {

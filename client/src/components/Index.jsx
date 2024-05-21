@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 });
 
 const Index = ({ indexItems }) => {
-// lógica
+
  return (
     <Document>
       <Page size="A4" style={styles.page}>
