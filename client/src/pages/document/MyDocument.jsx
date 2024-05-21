@@ -202,7 +202,6 @@ const MyDocument = () => {
     }
 };
 
-// Descarga documento
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
@@ -219,15 +218,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     left: 10,
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 15,
   },
   watermark: {
     position: 'absolute',
-    top: '20%',
+    top: '30%',
+    opacity: 0.1,
+    fontSize: 20,
     left: '20%',
-    opacity: 0.3,
-    fontSize: 50,
+    justifyContent: 'center',
     color: 'gray',
     zIndex: -1,
   },
@@ -238,8 +238,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    textAlign: 'center',
+    textAlign: 'justify',
     marginBottom: 20,
+    marginTop: 20,
   },
   subtitle: {
     fontSize: 18,
@@ -251,41 +252,83 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'justify',
   },
+  paragraph: {
+    fontSize: 10,
+    textAlign: 'justify',
+    marginBottom: 10,
+  },
   toc: {
     fontSize: 16,
     margin: 10,
   },
   backgroundImage: {
-    top: '10%',
-    left: '5%',
-    bottom: '10%',
-    right: '5%',
-    width: '90%',
-    height: '80%'  
+    width: '100%',
+    height: '100%',
+    zIndex: -1,
   },
+ link: {
+    fontSize: 10,
+    textAlign: 'justify',
+    marginBottom: 10,
+    color:'blue',
+    textDecoration:'underline'
+  },
+  titleCover: {
+      position: 'absolute',
+      color: 'white',
+      fontSize: 32,
+      fontWeight: 'bold',
+      textAlign: 'left',
+      marginLeft: '10%',
+      width: '100%',
+      marginTop:'50%'
+  },
+  subtitleCover: {
+    position: 'absolute',
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    marginLeft: '10%',
+    width: '100%',
+    marginTop:'60%'
+},
 });
-
-
 
 const PdfDoc = ({ config }) => {
   const chapters = config.chapters || [];
   const sections = config.sections || [];
+  const titles = config.titles || [];
+  const paragraphs = config.paragraphs || [];
+  const links = config.links|| [];
 
   return (
     <Document>
       <Page size="A4" style={config.coverImg ? styles.pageWithBg : styles.page}>
+      {config.title && (
+          <Text style={styles.titleCover}>{config.title}</Text>
+        )}
+        {config.subtitle && (
+          <Text style={styles.subtitleCover}>{config.subtitle}</Text>
+        )}
         {config.coverImg && (
           <Image style={styles.backgroundImage} src={config.coverImg} />
         )}
-        {config.watermark && (
+
+        {/* {config.watermark && (
           <Text style={styles.watermark}>{config.watermark}</Text>
-        )}
-        <View style={styles.section}>
+        )} */}
+
+        {/* <View style={styles.section}>
           <Text style={styles.title}>{config.title.content}</Text>
           <Text style={styles.subtitle}>{config.subtitle}</Text>
+          {config.headerLogo && (
+            <Image style={styles.header} src={config.headerLogo} />
+          )}
           {config.toc && <Text style={styles.toc}>Índice:</Text>}
-          <Text style={styles.text}>{config.theme}</Text>
-        </View>
+          <Text style={styles.text}>{config.theme}
+          </Text>
+        </View> */}
       </Page>
       {chapters.map((chapter, index) => (
         <Page key={`chapter-${index}`} size="A4" style={styles.page}>
@@ -315,11 +358,28 @@ const PdfDoc = ({ config }) => {
           </View>
         </Page>
       ))}
+      <Page size="A4" style={styles.page}>
+        {config.headerLogo && (
+          <Image style={styles.header} src={config.headerLogo} />
+        )}
+        {config.watermark && (
+          <Text style={styles.watermark}>{config.watermark}</Text>
+        )}
+        <View style={styles.section}>
+          {titles.map((title, index) => (
+            <Text key={`title-${index}`} style={styles.title}>{title.content}</Text>
+          ))}
+          {paragraphs.map((paragraph, index) => (
+            <Text key={`paragraph-${index}`} style={styles.paragraph}>{paragraph.text}</Text>
+          ))}
+           {links.map((link, index) => (
+            <Text key={`link-${index}`} style={styles.link}>{link.src}</Text>
+          ))}
+        </View>
+      </Page>
     </Document>
   );
 };
-
-
 
 const generatePdf = async () => {
   try {
@@ -327,7 +387,8 @@ const generatePdf = async () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', 'documento.pdf');
+    const title = data.title.content || 'documento';
+    link.setAttribute('download', `${title}.pdf`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
