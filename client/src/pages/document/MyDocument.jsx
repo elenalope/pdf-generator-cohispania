@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     width: '100%',
-    height: '100%',
+    height: '90%',
     zIndex: -1,
   },
  link: {
@@ -293,6 +293,13 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop:'60%'
 },
+coverLogo: {
+  width: 150,
+  height: 50,
+  justifyContent:'center',
+  marginLeft:'35%',
+  marginTop: 20
+},
 });
 
 const PdfDoc = ({ config }) => {
@@ -314,21 +321,9 @@ const PdfDoc = ({ config }) => {
         {config.coverImg && (
           <Image style={styles.backgroundImage} src={config.coverImg} />
         )}
-
-        {/* {config.watermark && (
-          <Text style={styles.watermark}>{config.watermark}</Text>
-        )} */}
-
-        {/* <View style={styles.section}>
-          <Text style={styles.title}>{config.title.content}</Text>
-          <Text style={styles.subtitle}>{config.subtitle}</Text>
-          {config.headerLogo && (
-            <Image style={styles.header} src={config.headerLogo} />
-          )}
-          {config.toc && <Text style={styles.toc}>Índice:</Text>}
-          <Text style={styles.text}>{config.theme}
-          </Text>
-        </View> */}
+         {config.coverLogo && (
+          <Image style={styles.coverLogo} src={config.coverLogo} />
+        )}
       </Page>
       {chapters.map((chapter, index) => (
         <Page key={`chapter-${index}`} size="A4" style={styles.page}>
