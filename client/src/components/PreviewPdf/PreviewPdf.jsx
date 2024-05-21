@@ -1,5 +1,5 @@
 import React from 'react'
-import {Document, Image, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
+import {Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
 
 const styles = StyleSheet.create({
     page:{
@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
         width: '148mm', 
         height: '210mm',
         padding: '5mm',
+        marginTop: '5%',
     },
     cover: {
         position: 'relative',
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
       },
       coverImage: {
         width: '90%',
@@ -36,73 +37,62 @@ const styles = StyleSheet.create({
         position: 'absolute',
         color: 'white',
         fontSize: 32,
-        fontWeight: 'bold',
         textAlign: 'left',
-        marginLeft: '20%',
+        marginLeft: '10%',
         width: '100%',
+        marginBottom: '50%'
       },
       subtitleCover: {
         position: 'absolute',
         color: 'white',
-        fontSize: 24,
+        fontSize: 22,
         textAlign: 'left',
-        marginTop: '20%', 
+        marginBottom: '35%', 
         width: '100%',
-        marginLeft: '20%',
+        marginLeft: '10%',
+      },
+      title: {
+        fontSize: 18,
+        marginBottom: 10,
+        marginTop: 50,
+      },
+      paragraph: {
+        fontSize: 14,
+        marginBottom: 10,
+      },
+      link: {
+        fontSize: 14,
+        color: 'blue',
+        marginBottom: 10,
+      },
+      title: {
+        fontSize: 24,
+        textAlign: 'justify',
+        marginTop: 15,
+        marginLeft: 30,
+        marginRight: 30,
+      },
+      paragraph: {
+        fontSize: 10,
+        textAlign: 'justify',
+        marginLeft: 30,
+        marginRight: 30,
+      },
+      link: {
+        fontSize: 15,
+        textAlign: 'justify',
+        marginLeft: 30,
+        marginRight: 30,
+        color: 'blue',
+        textDecoration: 'underline',
       }
-    });
-    // titleCover:{
-    //     display: 'flex',
-    //     fontSize: 25,
-    //     textAlign: 'left',
-    //     fontFamily: '',
-    //     marginLeft: '40px',
-    // },
-    // subtitle:{
-    //     display: 'flex',
-    //     fontSize: 18,
-    //     textAlign: 'left',
-    //     fontFamily: '',
-    //     marginLeft: '40px'
-    // },
-    // paragraph:{
-    //     display: 'flex',
-    //     fontSize: 12,
-    //     textAlign: 'left',
-    //     marginLeft: '40px'
-    // },
-    // section:{
-    //     display: 'flex',
-    //     flexDirection: 'column',
-    //     gap: '20px',
-    //     margin: 10,
-    //     padding: 10,
-    //     flexGrow: 1
-    // },
-    // subsection:{
-    //     display: 'flex',
-    //     flexDirection: 'column',
-    // },
-    // backgroundImage: {
-    //     top: '10%',
-    //     left: '5%',
-    //     bottom: '10%',
-    //     right: '5%',
-    //     width: '90%',
-    //     height: '80%'  
-    //   },
-    //   header: {
-    //     position: 'absolute',
-    //     top: 10,
-    //     left: 10,
-    //     width: 50,
-    //     height: 50,
-    //   }
 
+     
+    });
 
 const PreviewPdf = ({ config, data, titleData }) => {
     console.log('Estoy aquí', titleData)   
-    const { size = config?.size || 'A4', title = config?.title, subtitle = config?.subtitle, coverLogo = config?.coverLogo, theme = config?.theme, toc = config?.toc, coverImg = config?.coverImg } = config;
+    const { size = config?.size || 'A4', title = config?.title, subtitle = config?.subtitle, coverLogo = config?.coverLogo, headerLogo = config?.headerLogo, theme = config?.theme, toc = config?.toc, coverImg = config?.coverImg } = config;
 
     return (
         <Document>
@@ -110,8 +100,8 @@ const PreviewPdf = ({ config, data, titleData }) => {
                 <View style={styles.cover}>
                 {coverImg && ( 
                     <img src={coverImg} alt="Cover" style={{ 
-                        width: '90%', 
-                        height: '90%', 
+                        width: '100%', 
+                        height: '92%', 
                         marginTop: '10%',
                         marginLeft: '5%',
                         marginBottom: '5%',
@@ -129,28 +119,32 @@ const PreviewPdf = ({ config, data, titleData }) => {
                             marginRight: '5%' }} />
                     )}
                 </View>
-            </Page>
-            <Page>
-                <View style={styles.cover}></View>
-            </Page>
                 
-                {/* <Page style={styles.page}>
-                    <View>
-                    {toc && <Text>Índice:</Text>}
-                    </View>
-                </Page>
-                <Text>HOLA</Text>
-                <Page>
-                {data && data.chapters && data.chapters.map((chapter, index) => (
-                    <View key={index} style={styles.page}>
-                        <Text style={styles.title}>{chapter.title}</Text>
-                        <Text style={styles.subtitle}>{chapter.subtitle}</Text>
-                        {chapter.paragraphs && chapter.paragraphs.map((paragraph, idx) => (
-                            <Text key={idx} style={styles.paragraph}>{paragraph.content}</Text>
-                        ))}
-                    </View>
+            </Page>
+
+            <Page size={size} style={styles.page}>
+            
+
+            {headerLogo && ( 
+                    <img src={headerLogo} alt="HeaderLogo" style={{ 
+                        marginTop: 10,
+                        marginLeft: 10,
+                        width: '70px', }} />
+                        )}
+
+                {data && data.titles && data.titles.map((title, index) => (
+                    <Text key={index} style={styles.title}>{title.content}</Text>
                 ))}
-                </Page> */}
+                {data && data.paragraphs && data.paragraphs.map((paragraph, index) => (
+                    <Text key={index} style={styles.paragraph}>{paragraph.text}</Text>
+                ))}
+                {data && data.links && data.links.map((link, index) => (
+                    <Text key={index} style={styles.link}>{link.src}</Text>
+                ))}
+            
+                   
+            </Page>
+            
         </Document>
     );
 };
