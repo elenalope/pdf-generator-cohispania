@@ -219,6 +219,8 @@ const Config = () => {
                 </div>
               <div className='containerButtonsConfig'>
                 <Button type="submit" variant="contained">Crear</Button>
+                        {showAlert && <CreateTemplate onClose={() => setShowAlert(false)} />}
+
                 <Button variant="outlined" onClick={() => navigate('/')}>Cancelar</Button>
               </div>
               
