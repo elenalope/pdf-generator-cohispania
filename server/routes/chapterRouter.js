@@ -5,9 +5,9 @@ import { addChapter, deleteChapter,getChapters,updateChapter, getChapterById } f
 const router = express.Router();
 
 
-router.post('/document/:id', addChapter);
-router.get('/document/:id', getChapters);
-router.get('/document/:id/chapter/:chapterId', getChapterById);
+router.post('/document/:id/chapter', addChapter);
+router.get('/document/:id/chapters', getChapters);
+router.get('/document/:id/chapters/:chapterId', getChapterById);
 router.delete('/document/:id/chapter/:chapterId', deleteChapter);
 router.put('/document/:id/chapter/:chapterId', updateChapter);
 

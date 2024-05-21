@@ -22,13 +22,13 @@ describe('GET /api', () => {
     const templates = [
       {
         name: "Test Template 1",
-        title: { content: "Test Title 1", level: "h1" },
+        title: "Test Title 1",
         subtitle: "Test Subtitle 1",
         content: []
       },
       {
         name: "Test Template 2",
-        title: { content: "Test Title 2", level: "h1" },
+        title: "Test Title 2",
         subtitle: "Test Subtitle 2",
         content: []
       }

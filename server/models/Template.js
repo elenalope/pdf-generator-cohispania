@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import {Schema} from 'mongoose'
 
-export const TitleSchema = new mongoose.Schema({
+const TitleSchema = new mongoose.Schema({
     content: { type: String, required: true },
     level: {
         type: String,
@@ -40,7 +40,7 @@ export const TitleSchema = new mongoose.Schema({
     }
 })
 
-export const ParagraphSchema = new mongoose.Schema({
+const ParagraphSchema = new mongoose.Schema({
     text: { type: String, required: true },
     highlight: Boolean,
     color:String,
@@ -146,12 +146,13 @@ const SubsectionSchema = new mongoose.Schema({
     title: String,
     paragraph: String,
     content: [
-        TitleSchema,
-        ParagraphSchema,
-        ListSchema,
-        SignatureSchema,
-        ImageSchema,
-        LinkSchema],
+        { type: Schema.Types.ObjectId, ref: 'Title' },
+        { type: Schema.Types.ObjectId, ref: 'Paragraph' },
+        { type: Schema.Types.ObjectId, ref: 'List' },
+        { type: Schema.Types.ObjectId, ref: 'Signature' },
+        { type: Schema.Types.ObjectId, ref: 'Image' },
+        { type: Schema.Types.ObjectId, ref: 'Link' }
+        ],
 })
 
 
@@ -160,13 +161,13 @@ const SectionSchema = new mongoose.Schema({
     cover: Boolean,
     img: String,
     content: [
-        TitleSchema,
-        ParagraphSchema,
-        ListSchema,
-        SignatureSchema,
-        ImageSchema,
-        LinkSchema,
-        SubsectionSchema
+        { type: Schema.Types.ObjectId, ref: 'Title' },
+        { type: Schema.Types.ObjectId, ref: 'Paragraph' },
+        { type: Schema.Types.ObjectId, ref: 'List' },
+        { type: Schema.Types.ObjectId, ref: 'Signature' },
+        { type: Schema.Types.ObjectId, ref: 'Image' },
+        { type: Schema.Types.ObjectId, ref: 'Link' },
+        { type: Schema.Types.ObjectId, ref: 'Subsection' }
     ]
 })
 
@@ -175,19 +176,19 @@ const ChapterSchema = new mongoose.Schema({
     subtitle: String,
     img: String,
     content: [
-        SectionSchema,
-        TitleSchema,
-        ParagraphSchema,
-        ListSchema,
-        SignatureSchema,
-        ImageSchema,
-        LinkSchema
+        { type: Schema.Types.ObjectId, ref: 'Section' },
+        { type: Schema.Types.ObjectId, ref: 'Title' },
+        { type: Schema.Types.ObjectId, ref: 'Paragraph' },
+        { type: Schema.Types.ObjectId, ref: 'List' },
+        { type: Schema.Types.ObjectId, ref: 'Signature' },
+        { type: Schema.Types.ObjectId, ref: 'Image' },
+        { type: Schema.Types.ObjectId, ref: 'Link' }
     ]
 });
 
 const TemplateSchema = new mongoose.Schema({
     name: String,
-    title: TitleSchema,
+    title: String,
     subtitle: String,
     highlightedValue:String,
     docExplanation: String,
@@ -207,18 +208,35 @@ const TemplateSchema = new mongoose.Schema({
     size: String,
     signature:SignatureSchema,
     content: [
-        ChapterSchema,
-        SectionSchema,
-        TitleSchema,
-        ParagraphSchema,
-        ListSchema,
-        SignatureSchema,
-        ImageSchema,
-        LinkSchema
+        { type: Schema.Types.ObjectId, ref: 'Chapter' },
+        { type: Schema.Types.ObjectId, ref: 'Section' },
+        { type: Schema.Types.ObjectId, ref: 'Title' },
+        { type: Schema.Types.ObjectId, ref: 'Paragraph' },
+        { type: Schema.Types.ObjectId, ref: 'List' },
+        { type: Schema.Types.ObjectId, ref: 'Signature' },
+        { type: Schema.Types.ObjectId, ref: 'Image' },
+        { type: Schema.Types.ObjectId, ref: 'Link' }
     ]
 });
 
 
+const Title = mongoose.model('Title', TitleSchema);
+const Paragraph = mongoose.model('Paragraph', ParagraphSchema);
+const List = mongoose.model('List', ListSchema);
+const Signature = mongoose.model('Signature', SignatureSchema);
+const Image = mongoose.model('Image', ImageSchema);
+const Link = mongoose.model('Link', LinkSchema);
+const Subsection = mongoose.model('Subsection', SubsectionSchema);
+const Section = mongoose.model('Section', SectionSchema);
+const Chapter = mongoose.model('Chapter', ChapterSchema);
 const Template = mongoose.model('Template', TemplateSchema);
-
-export  {Template}
+export  {Title,
+    Paragraph,
+    List,
+    Signature,
+    Image,
+    Link,
+    Subsection,
+    Section,
+    Chapter,
+    Template}
