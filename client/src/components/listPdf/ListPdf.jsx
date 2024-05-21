@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
 import { Document, Page, pdf, View, Text, StyleSheet, Image } from '@react-pdf/renderer';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const styles = StyleSheet.create({
     page: {
@@ -190,57 +191,81 @@ const ListPdf = () => {
           console.error('Error downloading document:', error.message);
         }
       };
+
+      const onDragEnd = (result) => {
+        if (!result.destination) return;
+        const items = Array.from(documents);
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+        setDocuments(items);
+    };
     return (
-        <div className='listPdfContainer' style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {documents.map((document, index) => (
-                <Card key={index} 
-                sx={{ 
-                width: '300px', 
-                height: '300px', 
-                margin: '30px', 
-                background: 'linear-gradient(145deg, #ffffff, #f6f6f6)',
-                boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
-                transition: 'transform 0.3s ease-in-out',
-                '&:hover': {
-                    transform: 'scale(1.05)',
-                    boxShadow: '0 10px 20px 0 rgba(0,0,0,0.3)'
-                },
-                borderRadius: '15px' }}>
-                    <CardActionArea >
-                        <CardContent onClick={() => navigate(`document/${document._id}`)}>
-                            <div style={{ width: '100%', height: '160px', overflow: 'hidden', marginBottom: '9%' }}>
-                            {document.coverImg && (
-                            <img src={document.coverImg} alt="Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        )}
-                            </div>
-                            <Typography gutterBottom variant="h5" component="div">
-                                {document.name}
-                            </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5%' }}>
-                        <IconButton
-                            sx={{
-                            color: 'black', 
-                            '&:hover': {
-                            color: 'red', 
-                            backgroundColor: 'rgba(255, 0, 0, 0.1)' 
-                            }
-                            }} 
-                            onClick={() => handleDeleteDocument(document._id)}>
-                            <DeleteIcon />
-                        </IconButton>
-                        <IconButton
-                            sx={{
-                            color: 'black', 
-                            '&:hover': {
-                            color: 'green', 
-                            backgroundColor: 'rgba(0, 255, 0, 0.1)' }}} onClick={() => handleDownloadDocument(document._id)}>
-                            <DownloadIcon />
-                        </IconButton>
+        <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="documents" direction="vertical">
+                {(provided) => (
+                    <div className='listPdfContainer' style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }} {...provided.droppableProps} ref={provided.innerRef}>
+                        {documents.map((document, index) => (
+                            <Draggable key={document._id} draggableId={document._id} index={index}>
+                                {(provided) => (
+                                    <Card 
+                                        ref={provided.innerRef} 
+                                        {...provided.draggableProps} 
+                                        {...provided.dragHandleProps}
+                                        sx={{ 
+                                            width: '300px', 
+                                            height: '300px', 
+                                            margin: '30px', 
+                                            background: 'linear-gradient(145deg, #ffffff, #f6f6f6)',
+                                            boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
+                                            transition: 'transform 0.3s ease-in-out',
+                                            '&:hover': {
+                                                transform: 'scale(1.05)',
+                                                boxShadow: '0 10px 20px 0 rgba(0,0,0,0.3)'
+                                            },
+                                            borderRadius: '15px'
+                                        }}>
+                                        <CardActionArea>
+                                            <CardContent onClick={() => navigate(`document/${document._id}`)}>
+                                                <div style={{ width: '100%', height: '160px', overflow: 'hidden', marginBottom: '9%' }}>
+                                                    {document.coverImg && (
+                                                        <img src={document.coverImg} alt="Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                    )}
+                                                </div>
+                                                <Typography gutterBottom variant="h5" component="div">
+                                                    {document.name}
+                                                </Typography>
+                                            </CardContent>
+                                        </CardActionArea>
+                                        <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5%' }}>
+                                            <IconButton
+                                                sx={{
+                                                color: 'black', 
+                                                '&:hover': {
+                                                color: 'red', 
+                                                backgroundColor: 'rgba(255, 0, 0, 0.1)' 
+                                                }
+                                                }} 
+                                                onClick={() => handleDeleteDocument(document._id)}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                            <IconButton
+                                                sx={{
+                                                color: 'black', 
+                                                '&:hover': {
+                                                color: 'green', 
+                                                backgroundColor: 'rgba(0, 255, 0, 0.1)' }}} 
+                                                onClick={() => handleDownloadDocument(document._id)}>
+                                                <DownloadIcon />
+                                            </IconButton>
+                                        </div>
+                                    </Card>
+                                )}
+                            </Draggable>
+                        ))}
+                        {provided.placeholder}
                     </div>
-                </Card>
-            ))}
+                )}
+            </Droppable>
             {showAlert && <DeletePDF onClose={() => setShowAlert(false)} onConfirm={handleConfirmDelete} />}
             {showDeletingAlert && (
                 <Stack
@@ -258,7 +283,7 @@ const ListPdf = () => {
                     </Alert>
                 </Stack>
             )}
-        </div>
+        </DragDropContext>
     );
 };
 
