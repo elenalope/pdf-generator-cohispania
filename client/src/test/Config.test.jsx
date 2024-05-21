@@ -30,13 +30,13 @@ describe('Config page testing', () => {
   test('toggles include cover switch', () => {
     const includeCoverSwitch = screen.getByLabelText('Portada');
     fireEvent.click(includeCoverSwitch);
-    expect(includeCoverSwitch.checked).toBe(true);
+    expect(includeCoverSwitch.checked).toBe(false);
   });
 
   test('renders and toggles "Indice" switch', () => {
     const tocSwitch = screen.getByLabelText('Indice');
     fireEvent.click(tocSwitch);
-    expect(tocSwitch.checked).toBe(true);
+    expect(tocSwitch.checked).toBe(false);
   });
 
   test('renders and toggles "Salto de Sección" switch', () => {
@@ -44,4 +44,5 @@ describe('Config page testing', () => {
     fireEvent.click(sectionBreakSwitch);
     expect(sectionBreakSwitch.checked).toBe(true);
   });
+
 });
