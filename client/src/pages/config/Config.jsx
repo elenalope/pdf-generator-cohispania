@@ -8,9 +8,6 @@ import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import SaveIcon from '@mui/icons-material/Save';
-import GetAppIcon from '@mui/icons-material/GetApp';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 import { postPDF } from '../../services/pdfServices';
@@ -48,7 +45,6 @@ const Config = () => {
 
     const { register, handleSubmit } = methods;
     const onSubmit = async (data) => {
-        console.log('data de config.jsx', data);
         try {
             const response = await postPDF(data);
             const documentId = response.data._id;
@@ -58,7 +54,7 @@ const Config = () => {
                 navigate(`/document/${documentId}`, {
                     state: { config: data, documentId: documentId }
                 });
-            }, 3000); // 3 segundos
+            }, 3000); 
         } catch (error) {
             console.error('Error creating document');
         }

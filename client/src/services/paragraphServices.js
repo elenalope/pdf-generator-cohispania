@@ -5,7 +5,6 @@ export const URL = 'http://localhost:3000/api/document';
 
 export const addParagraph = async (templateId, newParagraph) => {
     try {
-      console.log("Datos del párrafo enviados:", newParagraph);
       const response = await axios.post(`${URL}/${templateId}/paragraph`, newParagraph);
       alert("Párrafo añadido exitosamente");
       return response.data;

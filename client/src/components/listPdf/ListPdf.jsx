@@ -7,9 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
-import PreviewPdf from '../PreviewPdf/PreviewPdf';
 import DeletePDF from '../alerts/DeleteAlert';
-import Deleting from '../alerts/DeleteConfirm';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
@@ -57,7 +55,7 @@ const ListPdf = () => {
             const timer = setTimeout(() => {
                 setShowDeletingAlert(false);
                 window.location.reload();
-            }, 900);
+            }, 600);
 
             return () => clearTimeout(timer);
         }

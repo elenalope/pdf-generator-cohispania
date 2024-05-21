@@ -5,9 +5,6 @@ export const addSectionFromChapter = async (req, res) => {
         const { id, chapterId } = req.params;
         const { section } = req.body;
 
-        console.log('id chapter', chapterId);
-        console.log('section data', section);
-        
         const newSection = new Section({
             title: section.title,
             cover: section.cover,
@@ -25,8 +22,6 @@ export const addSectionFromChapter = async (req, res) => {
         await chapter.save();
 
         const populatedChapter = await Chapter.findById(chapterId).populate('content').exec();
-        console.log('populatedChapter', populatedChapter);
-
         res.status(200).json(populatedChapter);
     } catch (error) {
         res.status(500).json({ message: error.message });

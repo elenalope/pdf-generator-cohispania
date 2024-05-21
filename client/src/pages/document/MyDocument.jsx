@@ -146,7 +146,6 @@ const MyDocument = () => {
   
 
   const handleSectionCreate = async  (sectionData) => {
-    console.log('la section data esta aqui', sectionData)
     try {
       const document = await addSection(id, { section: sectionData });
       const newSection = document.content.find(item => item.title === sectionData.title);
@@ -226,8 +225,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '20%',
     left: '20%',
-/*     transform: 'translate(-50%, -50%)',
- */ opacity: 0.3,
+    opacity: 0.3,
     fontSize: 50,
     color: 'gray',
     zIndex: -1,
@@ -262,9 +260,7 @@ const styles = StyleSheet.create({
     bottom: '10%',
     right: '5%',
     width: '90%',
-    height: '80%',
-/*     transform: 'translate(-50%, -50%)',
- */    
+    height: '80%'  
   },
 });
 

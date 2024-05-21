@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from "react-hook-form";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -7,13 +7,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogParagraph from '@mui/material/DialogTitle';
 
-export default function ParagraphDialog({ openParagraph, setOpenParagraph, onParagraphCreate, onCancel}) {
+export default function ParagraphDialog({ openParagraph, setOpenParagraph, onParagraphCreate}) {
   const { register, handleSubmit, reset } = useForm();
   
 
   const handleClose = () => {
     setOpenParagraph(false);
-    // onCancel();
   };
 
   const onSubmit = (data) => {

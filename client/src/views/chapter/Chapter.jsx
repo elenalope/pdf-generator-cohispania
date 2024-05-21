@@ -196,16 +196,12 @@ const generatePdf = async () => {
     setOpenAddSection(true);
   };
   useEffect(() => {
-    console.log('Updated data:', data);
   }, [data]);
 
   const handleSectionCreate = async (sectionFromChapterData) => {
     try {
       const updatedChapter = await addSectionFromChapter(templateId, chapterId, { section: sectionFromChapterData });
-      console.log('API Response:', updatedChapter);
-
       setData({ sections: updatedChapter.content });
-      console.log('Updated sections data:', updatedChapter.content);
     } catch (error) {
       console.error('Error creating chapter:', error);
     }
@@ -224,7 +220,6 @@ const generatePdf = async () => {
     width: 1,
   });
   const handleEnterSection = (sectionId) => {
-    console.log('id de la seccion para navegar', sectionId)
     if (sectionId) {
       navigate(`section/${sectionId}`);
     }

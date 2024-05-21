@@ -5,15 +5,8 @@ export const URL = 'http://localhost:3000/api/document';
 
 export const addSectionFromChapter = async (templateId, chapterId, newSection) => {
   try {
-    console.log('templateId', templateId);
-    console.log('chapterId', chapterId);
-    console.log('new section', newSection);
 
     const response = await axios.post(`${URL}/${templateId}/chapter/${chapterId}`, newSection);
-
-console.log('response', response);
- console.log('soy data desde servicios section from chapter', response.data);
-
     alert("Sección añadida exitosamente");
     return response.data;
   

@@ -55,7 +55,7 @@ describe('GET /api', () => {
 });
 
 
-//POST//
+
 describe('POST /api/document', () => {
   it('debería crear un nuevo documento', async () => {
     const newTemplate = {
@@ -88,7 +88,7 @@ it('debería devolver un objeto con el nuevo documento creado', async () => {
 })
 
 
-//DELETE//
+
 describe('DELETE /api/document/:id', () => {
   it('debería eliminar un documento existente', async () => {
     
@@ -109,7 +109,7 @@ describe('DELETE /api/document/:id', () => {
   });
 });
 
-//PUT//
+
 
 describe('PUT /api/document/:id', () => {
   it('debería actualizar un documento existente', async () => {

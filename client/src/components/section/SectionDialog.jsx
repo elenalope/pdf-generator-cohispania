@@ -24,13 +24,12 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function SectionDialog({ openSection, setOpenSection, onSectionCreate, onCancel }) {
+export default function SectionDialog({ openSection, setOpenSection, onSectionCreate }) {
   const { register, handleSubmit, reset } = useForm();
   const [imageFile, setImageFile] = useState(null);
 
   const handleClose = () => {
     setOpenSection(false);
-    // onCancel();
   };
 
   const onSubmit = async (data) => {

@@ -4,7 +4,6 @@ export const URL = 'http://localhost:3000/api/document';
 
 export const addTitle = async (templateId, newTitle) => {
   try {
-    console.log("Datos del Título enviados:", newTitle);  
     const response = await axios.post(`${URL}/${templateId}/title`, newTitle );  
     alert("Título añadido exitosamente");
     return response.data;
