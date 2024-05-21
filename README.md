@@ -97,7 +97,7 @@ This will run the front tests.
   ```
 This will run the back tests.
 <br><br>
-<img src="https://i.ibb.co/b75GPYw/test-back-pdf-generator.png" alt="test-back-pdf-generator" border="0">
+<img src="https://i.imgur.com/Ke5lk0e.png" alt="test-back-pdf-generator" border="0" width="800">
 
 ## Project Structure 
 
