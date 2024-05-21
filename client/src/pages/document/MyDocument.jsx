@@ -263,6 +263,7 @@ const styles = StyleSheet.create({
   backgroundImage: {
     width: '100%',
     height: '100%',
+    zIndex: -1,
   },
  link: {
     fontSize: 10,
@@ -271,6 +272,26 @@ const styles = StyleSheet.create({
     color:'blue',
     textDecoration:'underline'
   },
+  titleCover: {
+      position: 'absolute',
+      color: 'white',
+      fontSize: 32,
+      fontWeight: 'bold',
+      textAlign: 'left',
+      marginLeft: '10%',
+      width: '100%',
+      marginTop:'50%'
+  },
+  subtitleCover: {
+    position: 'absolute',
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    marginLeft: '10%',
+    width: '100%',
+    marginTop:'60%'
+},
 });
 
 const PdfDoc = ({ config }) => {
@@ -279,18 +300,25 @@ const PdfDoc = ({ config }) => {
   const titles = config.titles || [];
   const paragraphs = config.paragraphs || [];
   const links = config.links|| [];
-  console.log('elm link q pasa', config.link)
 
   return (
     <Document>
       <Page size="A4" style={config.coverImg ? styles.pageWithBg : styles.page}>
+      {config.title && (
+          <Text style={styles.titleCover}>{config.title}</Text>
+        )}
+        {config.subtitle && (
+          <Text style={styles.subtitleCover}>{config.subtitle}</Text>
+        )}
         {config.coverImg && (
           <Image style={styles.backgroundImage} src={config.coverImg} />
         )}
-        {config.watermark && (
+
+        {/* {config.watermark && (
           <Text style={styles.watermark}>{config.watermark}</Text>
-        )}
-        <View style={styles.section}>
+        )} */}
+
+        {/* <View style={styles.section}>
           <Text style={styles.title}>{config.title.content}</Text>
           <Text style={styles.subtitle}>{config.subtitle}</Text>
           {config.headerLogo && (
@@ -299,7 +327,7 @@ const PdfDoc = ({ config }) => {
           {config.toc && <Text style={styles.toc}>Índice:</Text>}
           <Text style={styles.text}>{config.theme}
           </Text>
-        </View>
+        </View> */}
       </Page>
       {chapters.map((chapter, index) => (
         <Page key={`chapter-${index}`} size="A4" style={styles.page}>

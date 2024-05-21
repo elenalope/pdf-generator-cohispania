@@ -25,7 +25,7 @@ const Config = () => {
         title: 'Tasación Duplex en Pinto',
         subtitle: 'Cohispania',
         coverLogo: 'https://i.imgur.com/9KJnqUw.png',
-        toc: true,
+        toc: false,
         tocLevels: 1,
         padding: '20px',
         includeCover: true,
