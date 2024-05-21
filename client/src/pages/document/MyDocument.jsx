@@ -42,7 +42,7 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import MoveDownIcon from '@mui/icons-material/MoveDown';
 import './MyDocument.css';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
-
+import LongMenu from '../../components/cards/DropDownMenu.jsx'
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -504,7 +504,7 @@ const generatePdf = async () => {
                             color: '#ffffff', 
                             backgroundColor: 'primary.main', 
                           }}}>
-                      <AddIcon />
+                      <AddIcon/>
                       </IconButton>
                     </ListItemButton>
                   </ListItem>
@@ -519,21 +519,36 @@ const generatePdf = async () => {
             <Box sx={{ bgcolor: '#C9C9CE', height: '70vh' }}>
               {data.chapters.map((chapter, index) => (
                 chapter && chapter.title && (
-                  <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
-                    <Typography sx={{ mb: 2, mt: 1 }}>
+                  <CardContent key={index} sx={{ 
+                    pl: 4, 
+                    pr: 4, 
+                    mb: 3, 
+                    pt: 2, 
+                    pb: 2, 
+                    backgroundColor: '#E9EAEC', 
+                    borderRadius: '10px',
+                    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'primary.main', width: '100%' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <ImportContactsIcon />
+                          <Typography sx={{ ml: 1, mt: 1 }}>Capítulo</Typography>
+                      </Box>
+                          <LongMenu />
+                    </Box>
+                    <Typography variant="h5" sx={{ mb: 1, mt: 1 }}>
                       {chapter.title}
                     </Typography>
-                    <Divider />
-                    <Typography sx={{ mb: 2, mt: 2 }}>
+                    <Divider/>
+                    <Typography variant="subtitle1" sx={{ mb: 1, mt: 1 }}>
                       {chapter.subtitle}
                     </Typography>
                     <Divider />
                     {chapter.img && (
                       <CardMedia
-                        sx={{ mt: 2 }}
+                        sx={{ mt: 1 }}
                         component="img"
                         height="140"
-                        width="280"
+                        width="140"
                         image={chapter.img}
                         alt="chapter-image"
                       />
@@ -541,7 +556,7 @@ const generatePdf = async () => {
                     <div className='buttons-chapter-mydocument'>
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
-                    sx={{ width: 100 , ml: 'auto'}} 
+                    sx={{ width: 100 , ml: 'auto', marginTop: '20px'}} 
                     onClick={handleEnterChapter}>
                     Entrar
                     </Button>
