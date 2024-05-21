@@ -1,157 +1,223 @@
-import mongoose, {Schema} from 'mongoose';
+import mongoose from 'mongoose';
+import {Schema} from 'mongoose'
 
-// Title
-const TitleSchema = new mongoose.Schema({
-    content: {type: String, required:true},
-    level: { type: String, enum: ['h1', 'h2', 'h3', 'h4', 'h5'] },
+export const TitleSchema = new mongoose.Schema({
+    content: { type: String, required: true },
+    level: {
+        type: String,
+        enum: ['h1', 'h2', 'h3', 'h4', 'h5'], 
+        default: 'h4' 
+    },
+    bold: {
+        type: Boolean,
+        default: true,
+    },
+    font: {
+        type: String,
+        default: 'open sans',
+    },
+    color: {
+        type: String,
+        default: 'black',
+    },
     margin: {
-        top: Number,
-        left: Number,
-        bottom: Number,
-        right: Number
+        top: {
+            type: Number,
+            default: 10,
+        },
+        bottom: {
+            type: Number,
+            default: 10,
+        },
+        left: {
+            type: Number,
+            default: 10,
+        },
+        right: {
+            type: Number,
+            default: 10,
+        }
     }
-}, { _id: false });
+})
 
-const SubtitleSchema = new mongoose.Schema({
-    content: String,
-    level: { type: String, enum: ['h2', 'h3', 'h4', 'h5'] },
-    margin: {
-        top: Number,
-        left: Number,
-        bottom: Number,
-        right: Number
-    }
-}, { _id: false });
-// Paragraph
-const ParagraphSchema = new mongoose.Schema({
-    content: String,
+export const ParagraphSchema = new mongoose.Schema({
+    text: { type: String, required: true },
     highlight: Boolean,
-    color: String,
-    fontSize: {type: Number, min:8, max: 26},
-    margin: {
-        top: Number,
-        left: Number,
-        bottom: Number,
-        right: Number
-    },
-    padding: {
-        top: Number,
-        left: Number,
-        bottom: Number,
-        right: Number
-    },
-    bold: Boolean,
-    fontStyle: { type: String, enum: ['normal', 'italic', 'initial', 'inherit'] },
-    textAlign: { type: String, enum: ['left', 'center', 'right', 'justify', 'initial', 'inherit'] }
-}, { _id: false });
-
-// List
-const ListSchema = new mongoose.Schema({
-    content: [String],
-    ordered: Boolean,
-    margin: {
-        top: Number,
-        left: Number,
-        bottom: Number,
-        right: Number
-    },
-    justify: Boolean,
+    color:String,
     fontSize: Number,
+    margin: {
+        top: Number,
+        bottom: Number,
+        left: Number,
+        right: Number
+    },
+    padding: String,
     bold: Boolean,
-    fontStyle: { type: String, enum: ['normal', 'italic', 'initial', 'inherit'] }
-}, { _id: false });
+    fontStyle: { 
+        type: String, 
+        enum: ['normal', 'italic', 'initial', 'inherit'], 
+        default: 'normal'
+     },
+    textAlign: { 
+        type: String, 
+        enum: ['left', 'center', 'right', 'justify', 'initial', 'inherit'], 
+        default: 'initial' 
+    }
+})
 
-// Signature
+const ListSchema = new mongoose.Schema({
+        content: [String],
+        ordered:Boolean,
+        margin: {
+            top: Number,
+            bottom: Number,
+            left: Number,
+            right: Number
+        },
+        justify: Boolean,
+        fontSize: Number,
+        bold:Boolean,
+        fontStyle: { 
+            type: String, 
+            enum: ['normal', 'italic', 'initial', 'inherit'], 
+            default: 'normal'
+         }
+    })
+
 const SignatureSchema = new mongoose.Schema({
     fullName: String,
-    position: String,
-    party: String,
-    cif: String,
-    signature: String,
+    position:String,
+    party:String,
+    cif:String,
+    signature:String,
     margin: {
         top: Number,
-        left: Number,
         bottom: Number,
+        left: Number,
         right: Number
     },
-    size: { height: Number },
-    signedBy: Boolean
-}, { _id: false });
+    size: Number,
+    signedBy:Boolean
+})    
 
-// Image
 const ImageSchema = new mongoose.Schema({
-    src: String,
+    src: { type: String, required: true },
     width: String,
     height: String,
     margin: {
         top: Number,
-        left: Number,
         bottom: Number,
+        left: Number,
         right: Number
     },
-    align: { type: String, enum: ['left', 'center', 'right', 'auto'] }
-}, { _id: false });
+    align: {
+        type: String,
+            enum: ['left', 'center', 'right', 'auto'],
+            default:'center'
+    }
+})
 
-// Link
 const LinkSchema = new mongoose.Schema({
-    src: String,
+    src: { type: String, required: true },
     content: String,
     color: String,
     fontSize: Number,
     margin: {
         top: Number,
-        left: Number,
         bottom: Number,
+        left: Number,
         right: Number
     },
-    padding: {
-        top: Number,
-        left: Number,
-        bottom: Number,
-        right: Number
-    },
+    padding: String,
     bold: Boolean,
-    fontStyle: { type: String, enum: ['normal', 'italic', 'initial', 'inherit'] },
-    textAlign: { type: String, enum: ['left', 'center', 'right', 'justify', 'initial', 'inherit'] }
-}, { _id: false });
+    fontStyle: { 
+        type: String, 
+        enum: ['normal', 'italic', 'initial', 'inherit'], 
+        default: 'normal'
+     },
+    textAlign: { 
+        type: String, 
+        enum: ['left', 'center', 'right', 'justify', 'initial', 'inherit'], 
+        default: 'initial' 
+    },
+})
 
-////
 const SubsectionSchema = new mongoose.Schema({
-    title: TitleSchema,
-    image: ImageSchema,
-    paragraph: ParagraphSchema,
-    content: [String],
-},{_id : false})
+    title: String,
+    paragraph: String,
+    content: [
+        TitleSchema,
+        ParagraphSchema,
+        ListSchema,
+        SignatureSchema,
+        ImageSchema,
+        LinkSchema],
+})
+
 
 const SectionSchema = new mongoose.Schema({
-    title: TitleSchema,
-    paragraph: ParagraphSchema,
-    signature: SignatureSchema,
+    title: String,
     cover: Boolean,
-    image: ImageSchema,
-    link: LinkSchema,
-    break: Boolean,
-    list: LinkSchema,
+    img: String,
     content: [
-        {
-            type: Schema.Types.Mixed,
-            content:[TitleSchema, ParagraphSchema, ListSchema, SignatureSchema, ImageSchema, LinkSchema]
-        }    
-    ],
-    Subsection: [SubsectionSchema]
-},{_id : false})
+        TitleSchema,
+        ParagraphSchema,
+        ListSchema,
+        SignatureSchema,
+        ImageSchema,
+        LinkSchema,
+        SubsectionSchema
+    ]
+})
 
 const ChapterSchema = new mongoose.Schema({
-    title: TitleSchema,
-    subtitle: SubtitleSchema,
-    image: ImageSchema,
-    content: [SectionSchema]
-},{_id : false});
+    title: String,
+    subtitle: String,
+    img: String,
+    content: [
+        SectionSchema,
+        TitleSchema,
+        ParagraphSchema,
+        ListSchema,
+        SignatureSchema,
+        ImageSchema,
+        LinkSchema
+    ]
+});
 
 const TemplateSchema = new mongoose.Schema({
+    name: String,
     title: TitleSchema,
-    content: [ChapterSchema, SectionSchema]
+    subtitle: String,
+    highlightedValue:String,
+    docExplanation: String,
+    coverImg:String,
+    coverLogo:String,
+    headerLogo:String,
+    toc: Boolean,
+    tocLevels: Number,
+    padding: String,
+    sectionBreak:Boolean,
+    watermark:String,
+    includeCover: Boolean,
+    includeBackCover: Boolean,
+    theme:String,
+    sectionVariant:String,
+    orientation: String,
+    size: String,
+    signature:SignatureSchema,
+    content: [
+        ChapterSchema,
+        SectionSchema,
+        TitleSchema,
+        ParagraphSchema,
+        ListSchema,
+        SignatureSchema,
+        ImageSchema,
+        LinkSchema
+    ]
 });
+
 
 const Template = mongoose.model('Template', TemplateSchema);
 

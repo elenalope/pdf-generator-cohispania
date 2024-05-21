@@ -1,0 +1,90 @@
+.formConfig {
+    background-color: #C9C9CE; 
+    min-height: 100vh;
+}
+.configTitle{
+    font-size: 1.4em;
+    align-items: center;
+}
+
+.containerConfig {
+    background-color: #C9C9CE;
+    padding-top: 1%;
+    padding-left: 1.5%;
+    padding-bottom: 3.6%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5%;
+}
+
+.configLabel, .configLabelSize {
+    background-color: #C9C9CE;
+    margin: 2%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.configButton{
+    background-color: #2196F3;
+    padding: 10px;
+    width: 8rem;
+    border: none;
+    border-radius: 4px;
+    color:white;
+    box-shadow: 2px 2px 5px black;
+}
+.containerButtonsConfig{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end; 
+  align-items: center; 
+  padding: 10px; 
+  gap: 10px; 
+  background-color: #C9C9CE; 
+  margin-top: auto;
+  margin-right: 5%;
+}
+.lineConfig{
+    color: black;
+}
+.listButtonsConfig{
+    list-style: none;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    gap: 10px; 
+}
+.configBar{
+    display: flex;
+    background-color:  #E9EAEC;
+    align-items: center;
+    justify-content: space-between;
+}
+.configLabelName{
+    margin-top: 1%;
+    margin-left: 2%;
+}
+
+.column-left{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+@media (max-width: 768px) {
+    .containerConfig {
+        grid-template-columns: 1fr; 
+        gap: 2%; 
+    }
+    .configButton {
+        width: 100%; 
+    }
+    .containerButtonsConfig {
+        flex-direction: column;
+        align-items: stretch; 
+        width: 100%;
+    }
+}
