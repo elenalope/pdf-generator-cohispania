@@ -8,50 +8,36 @@ import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import SaveIcon from '@mui/icons-material/Save';
-import GetAppIcon from '@mui/icons-material/GetApp';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 import { postPDF } from '../../services/pdfServices';
-import { Typography } from '@mui/material';
 import CreateTemplate from '../../components/alerts/CreateTemplate';
+import { Typography } from '@mui/material';
+import { Troubleshoot } from '@mui/icons-material';
 
 const Config = () => {
     const navigate = useNavigate();
     const [showAlert, setShowAlert] = useState(false);
     const [documentId, setDocumentId] = useState(null);
     const [config, setConfig] = useState({
-        name: '',
+        name: 'Plantilla tasación',
         size: 'A4',
-        title: {
-            content: '', 
-            bold: false,
-            font: 'sans',
-            underline: false,
-            color: 'black',
-            size: '1em',
-            margin: {
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0
-            } },
-        subtitle: '',
-        coverLogo: '',
-        toc: false,
+        title: 'Tasación Duplex en Pinto',
+        subtitle: 'Localización',
+        coverLogo: 'https://pbs.twimg.com/profile_images/1179641400251600898/qW-KYjPj_400x400.png',
+        toc: true,
         tocLevels: 1,
         padding: '20px',
-        includeCover: false,
-        includeBackCover: false,
+        includeCover: true,
+        includeBackCover: Troubleshoot,
         theme:'',
-        coverImg: '',
-        coverLogo: '',
+        coverImg: 'https://www.imprentaonline.net/blog/wp-content/uploads/din-a4.png',
+        coverLogo: 'https://www.imprentaonline.net/blog/wp-content/uploads/din-a4.png',
         sectionBreak: false,
-        headerLogo: '',
-        watermark: '',
-        orientation: '',
-    });
+        headerLogo: 'https://www.imprentaonline.net/blog/wp-content/uploads/din-a4.png',
+        watermark: 'https://www.imprentaonline.net/blog/wp-content/uploads/din-a4.png',
+        orientation: 'Vertical',
+      });
 
     const methods = useForm({
         defaultValues: config,
@@ -59,7 +45,6 @@ const Config = () => {
 
     const { register, handleSubmit } = methods;
     const onSubmit = async (data) => {
-        console.log('data de config.jsx', data);
         try {
             const response = await postPDF(data);
             const documentId = response.data._id;
@@ -69,7 +54,7 @@ const Config = () => {
                 navigate(`/document/${documentId}`, {
                     state: { config: data, documentId: documentId }
                 });
-            }, 3000); // 3 segundos
+            }, 3000); 
         } catch (error) {
             console.error('Error creating document');
         }
@@ -91,19 +76,16 @@ const Config = () => {
                 </label>
               </div>
               <div className='containerConfig'>
-                <div className='column-left'>
-                  <label className='configLabel' htmlFor='title'>
-                    <TextField
-                    {...register('title.content')}
+              <div className='column-left'>
+                <label className='configLabel' htmlFor='title'>
+                  <TextField
+                    {...register('title')}
                     id='title'
                     label='Título'
                     variant='standard'
-                    value={config.title.content}
+                    value={config.title}
                     onChange={(e) =>
-                      setConfig({
-                        ...config,
-                        title: { ...config.title, content: e.target.value },
-                      })
+                      setConfig({ ...config, title: e.target.value })
                     }
                     />
                   </label>
@@ -148,7 +130,8 @@ const Config = () => {
                       />
                     } label="Contraportada" />
                   </label>
-                </div>
+                  </div>
+                
                 <div className='column-right'>
                 <label className='configLabel' htmlFor="toc-switch">
                     <FormControlLabel
@@ -235,6 +218,8 @@ const Config = () => {
                 </div>
               <div className='containerButtonsConfig'>
                 <Button type="submit" variant="contained">Crear</Button>
+                        {showAlert && <CreateTemplate onClose={() => setShowAlert(false)} />}
+
                 <Button variant="outlined" onClick={() => navigate('/')}>Cancelar</Button>
               </div>
               </div>

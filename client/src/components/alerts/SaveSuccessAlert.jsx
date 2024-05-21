@@ -10,7 +10,7 @@ const SaveSuccessAlert = ({ onClose }) => {
 
     const handleClose = () => {
         setOpen(false);
-        onClose && onClose(); // Llama a la función onClose si está definida
+        onClose && onClose(); 
     };
 
     return (

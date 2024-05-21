@@ -1,71 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import { addSubSection } from '../services/subsectionService';
 import { useNavigate, useParams } from 'react-router-dom';
+import { addSubSection } from '../services/subsectionService.js';
+import { styled } from '@mui/material/styles';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import AddIcon from '@mui/icons-material/Add';
-import { styled } from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
+import CardContent from '@mui/material/CardContent';
+import { Typography } from '@mui/material';
+import CardMedia from '@mui/material/CardMedia';
+import SendIcon from '@mui/icons-material/Send';
 import SaveIcon from '@mui/icons-material/Save';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
-import SubsectionDialog from '../components/subsection/SubsectionDialog'
-import CardContent from '@mui/material/CardContent';
-import { Typography } from '@mui/material';
 
 
-const Section = () => {
-  const navigate = useNavigate();
-    const { id: templateId, id: chapterId, id: sectionId } = useParams();
+
+const SectionFromChapter = () => {
+    const navigate = useNavigate();
+    const { templateId, chapterId, sectionId } = useParams();
     const [openAddSubsection, setOpenAddSubsection] = useState(false);
     const [data, setData] = useState({ subsections: [] }); 
 
-  const handleSubsectionClick = () =>{
-    setOpenAddSubsection(true);
-}
-useEffect(() => {
-  console.log('actualizado data', data);
-}, [data]);
-
-const handleSubsectionCreate = async (subsectionData) => {
-  try {
-    const response = await addSubSection(templateId, chapterId, sectionId, { subsection: subsectionData });
-    console.log('response updated', response);
-
-    if (response.data && response.data.content) {
-      setData({ subsections: response.data.content });
-      console.log('content subsections data', response.data.content);
-    } else {
-      console.error('No content found in response:', response.data);
+    const handleSubsectionClick = () =>{
+        setOpenAddSubsection(true);
     }
-  } catch (error) {
-    console.error('Error creating subsection:', error);
-  }
-};
 
-const handleEnterSection = (sectionId) => {
-  navigate(`section/${sectionId}`);
-};
- 
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-  });
+    useEffect(() => {
+        console.log('actualizado data', data);
+    }, [data]);
+
+    const handleSubsectionCreate = async (subsectionData) => {
+        try {
+            const response = await addSubSection(templateId, chapterId, sectionId, { subsection: subsectionData });
+            console.log('response updated', response);
+
+            setData({ subsections: response.data.content });
+            console.log('content subsections data', response.data.content);
+        } catch (error) {
+            console.error('Error creating chapter:', error);
+        }
+    };
+
+    const handleEnterSection = (subsectionId) => {
+        navigate(`/document/${templateId}/chapter/${chapterId}/sectionChapter/${sectionId}`);
+    };
+    
 
 
   return (
@@ -87,12 +76,12 @@ const handleEnterSection = (sectionId) => {
           <Box>
             <nav aria-label="main mailbox folders">
               <List>
-                <ListItem disablePadding >
+                <ListItem disablePadding>
                   <ListItemButton>
                     <ListItemIcon>
                       <ImportContactsIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Subsección" />
+                    <ListItemText primary="Section" />
                     <AddIcon onClick={handleSubsectionClick}/>
                   </ListItemButton>
                 </ListItem>
@@ -108,6 +97,7 @@ const handleEnterSection = (sectionId) => {
                 subsection && subsection.title && (
                   <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      {/* <LongMenu /> */}
                     </Box>
                     <Typography sx={{ mb: 2, mt: 1 }}>
                       {subsection.title}
@@ -118,7 +108,14 @@ const handleEnterSection = (sectionId) => {
                       </Typography>
                     <Divider />
                     <div className='buttons-section-mydocument'>
-            </div>                   
+                                        <Button variant="contained" endIcon={<SendIcon />} size="small"
+                                            sx={{ width: 100, ml: 'auto' }}
+                                            onClick={() => handleEnterSection(subsection._id)}>
+                                            Entrar
+                                        </Button>
+                                    </div>
+                    {/* <FormControlLabel disabled control={<Switch />} label={data.cover} /> */}
+                                       
                 </CardContent>
                 )
                 ))}
@@ -133,8 +130,7 @@ const handleEnterSection = (sectionId) => {
 
       {openAddSubsection &&<SubsectionDialog openAddSubsection={openAddSubsection} setOpenAddSubsection={setOpenAddSubsection} onSubsectionCreate={handleSubsectionCreate} />}
     </>
-    
   )
 }
 
-export default Section
+export default SectionFromChapter;

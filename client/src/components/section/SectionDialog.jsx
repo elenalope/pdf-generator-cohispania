@@ -24,16 +24,16 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function SectionDialog({ openSection, setOpenSection, onSectionCreate, templateId, chapterId, onCancel }) {
+export default function SectionDialog({ openSection, setOpenSection, onSectionCreate }) {
   const { register, handleSubmit, reset } = useForm();
   const [imageFile, setImageFile] = useState(null);
 
   const handleClose = () => {
     setOpenSection(false);
-    // onCancel();
   };
 
   const onSubmit = async (data) => {
+    console.log(data.title + '👌')
     const sectionData = {
       title: data.title,
       cover: data.cover,
@@ -42,7 +42,7 @@ export default function SectionDialog({ openSection, setOpenSection, onSectionCr
       content: []
     };
 
-    console.log('Section Data:', JSON.stringify(sectionData, null, 2));
+    console.log('Section Data:',sectionData);
     await onSectionCreate(sectionData);
     handleClose();
   };
@@ -67,6 +67,7 @@ export default function SectionDialog({ openSection, setOpenSection, onSectionCr
           {...register('title', { required: true })}
         />
         <FormControlLabel
+        sx={{ mt: 3 }}
           control={
             <Switch {...register('cover')} id="cover-switch" inputProps={{ 'aria-label': 'controlled' }}/>
           } 

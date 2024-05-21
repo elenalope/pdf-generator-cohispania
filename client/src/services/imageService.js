@@ -4,7 +4,6 @@ export const URL = 'http://localhost:3000/api/document';
 
 export const addImage = async (templateId, newImage) => {
   try {
-    console.log("Datos de la imagen enviados:", newImage);
     const response = await axios.post(`${URL}/document/${templateId}/chapter/${newImage.chapterId}/section/${newImage.sectionId}/image`, newImage);
     alert("Imagen añadida exitosamente");
     return response;

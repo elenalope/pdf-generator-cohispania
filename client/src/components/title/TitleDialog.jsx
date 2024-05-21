@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from "react-hook-form";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -18,9 +18,17 @@ export default function TitleDialog({ openTitle, setOpenTitle, onTitleCreate, on
 
   const onSubmit = (data) => {
     const titleData = {
-      title: data.title,
-      content: []
-    };
+      content: data.content,
+      level: data.level || 'h4',
+      bold: data.bold || true,
+      font: data.font || 'open sans',
+      color: data.color || 'black',
+      margin: {
+        top: data.marginTop || 10,
+        bottom: data.marginBottom || 10,
+        left: data.marginLeft || 10,
+        right: data.marginRight || 10,
+      }}
     onTitleCreate(titleData);
     handleClose();
   };
@@ -28,16 +36,16 @@ export default function TitleDialog({ openTitle, setOpenTitle, onTitleCreate, on
   return (
     <Dialog open={openTitle} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
       <DialogTitle>Crear Título</DialogTitle>
-      <DialogContent sx={{ p: 3 }}>
+      <DialogContent sx={{ p: 3, width: '450px' }}>
         <TextField
           autoFocus
           margin="dense"
-          id="title"
+          id="content"
           label="Título"
           type="text"
           fullWidth
           variant="standard"
-          {...register('title', { required: true })}
+          {...register('content', { required: true })}
         />
       </DialogContent>
       <DialogActions>

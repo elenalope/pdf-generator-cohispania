@@ -3,7 +3,16 @@ import axios from "axios";
 export const URL = 'http://localhost:3000/api';
 
 
-//GET
+export const postPDF = async (newData) => {
+  try {
+     const response = await axios.post(`${URL}/document`, newData);
+     return response;
+  } catch (error) {
+     console.error('Error creating document', error.message);
+     throw error; }
+ };
+ 
+
 export const getPDF = async () => {
   try {
     const response = await axios.get(URL);
@@ -14,23 +23,11 @@ export const getPDF = async () => {
   }
 };
 
-//POST
-export const postPDF = async (newData) => {
-  try {
-    console.log("Datos enviados:", newData);
-     const response = await axios.post(`${URL}/document`, newData);
-     //alert("Document create succesfully");
-     return response;
-  } catch (error) {
-     console.error('Error creating document', error.message);
-     throw error; }
- };
 
-//DELETE
+
 export const deletePDF = async (id) =>{
   try {
     const response = await axios.delete(`${URL}/document/${id}`);
-    //alert("Document deleted");
     return response;
   } catch (error) {
     console.error('Error delete document', error.message);
@@ -38,7 +35,7 @@ export const deletePDF = async (id) =>{
   }
 };
 
-//UPDATE
+
 export const updateData = async (data, id) => {
   try {
     let urlId = `${URL}/document/${id}`;
@@ -51,7 +48,7 @@ export const updateData = async (data, id) => {
   }
 }
 
-//GET BY ID
+
 export const getById = async (id) => {
   try {
     const response = await axios.get(`${URL}/document/${id}`);

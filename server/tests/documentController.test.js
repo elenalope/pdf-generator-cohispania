@@ -22,13 +22,13 @@ describe('GET /api', () => {
     const templates = [
       {
         name: "Test Template 1",
-        title: { content: "Test Title 1", level: "h1" },
+        title: "Test Title 1",
         subtitle: "Test Subtitle 1",
         content: []
       },
       {
         name: "Test Template 2",
-        title: { content: "Test Title 2", level: "h1" },
+        title: "Test Title 2",
         subtitle: "Test Subtitle 2",
         content: []
       }
@@ -55,7 +55,7 @@ describe('GET /api', () => {
 });
 
 
-//POST//
+
 describe('POST /api/document', () => {
   it('debería crear un nuevo documento', async () => {
     const newTemplate = {
@@ -88,7 +88,7 @@ it('should return an object with the newly created document', async () => {
 })
 
 
-//DELETE//
+
 describe('DELETE /api/document/:id', () => {
   it('should delete an existing document."', async () => {
     
@@ -109,7 +109,7 @@ describe('DELETE /api/document/:id', () => {
   });
 });
 
-//PUT//
+
 
 describe('PUT /api/document/:id', () => {
   it('should update an existing document', async () => {

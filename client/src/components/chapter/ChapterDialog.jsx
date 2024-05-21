@@ -21,13 +21,12 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function ChapterDialog({ openChapter, setOpenChapter, onChapterCreate, onCancel }) {
+export default function ChapterDialog({ openChapter, setOpenChapter, onChapterCreate }) {
   const { register, handleSubmit, reset } = useForm();
   const [imageFile, setImageFile] = useState(null);
 
   const handleClose = () => {
     setOpenChapter(false);
-   /*  onCancel(); */
   };
 
   const onSubmit = (data) => {
@@ -36,11 +35,11 @@ export default function ChapterDialog({ openChapter, setOpenChapter, onChapterCr
       subtitle: data.subtitle,
       img: imageFile ? URL.createObjectURL(imageFile) : "",
       content: []
-    };
+    }; 
     onChapterCreate(chapterData);
     handleClose();
   };
-
+ 
   const handleImageChange = (e) => {
     setImageFile(e.target.files[0]);
   };

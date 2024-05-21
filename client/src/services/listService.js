@@ -4,7 +4,6 @@ export const URL = 'http://localhost:3000/api/document';
 
 export const addList = async (templateId, newList) => {
   try {
-    console.log("Datos de la lista enviados:", newList);
     const response = await axios.post(`${URL}/${templateId}/list`, newList);
     alert("Lista añadida exitosamente");
     return response;

@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import ListPdf from "../components/listPdf/ListPdf.jsx"; 
 import { test, describe, beforeEach, vi } from 'vitest';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { getPDF, deletePDF } from '../services/pdfServices'; 
+import { getPDF } from '../services/pdfServices'; 
 
 vi.mock('../services/pdfServices');
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from "react-hook-form";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -7,37 +7,39 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogParagraph from '@mui/material/DialogTitle';
 
-export default function ParagraphDialog({ openParagraph, setOpenParagraph, onParagraphCreate, onCancel}) {
+export default function ParagraphDialog({ openParagraph, setOpenParagraph, onParagraphCreate}) {
   const { register, handleSubmit, reset } = useForm();
   
 
   const handleClose = () => {
     setOpenParagraph(false);
-    onCancel();
   };
 
   const onSubmit = (data) => {
     const paragraphData = {
-      paragraph: data.paragraph,
+      text: data.text,
       content: []
     };
     onParagraphCreate(paragraphData);
-   /*  handleClose(); */
+    handleClose();
   };
   
   return (
     <Dialog open={openParagraph} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
       <DialogParagraph>Crear Párrafo</DialogParagraph>
-      <DialogContent sx={{ p: 3 }}>
+      <DialogContent sx={{ p:3, minWidth: '300px', width: '100vw', maxWidth: '600px' }}>
         <TextField
           autoFocus
           margin="dense"
-          id="paragraph"
+          id="text"
           label="Párrafo"
           type="text"
           fullWidth
           variant="standard"
-          {...register('paragraph', { required: true })}
+          multiline
+          minRows={4}
+          maxRows={8}
+          {...register('text', { required: true })}
         />
       </DialogContent>
       <DialogActions>

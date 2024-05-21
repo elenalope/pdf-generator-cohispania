@@ -1,7 +1,5 @@
 import React from 'react'
 import {Document,Page, Text, View, StyleSheet } from '@react-pdf/renderer'
-import { useDocument } from '../../context/DocumentContext.jsx'
-
 
 const styles = StyleSheet.create({
     page:{
@@ -51,22 +49,20 @@ const styles = StyleSheet.create({
     },
 })
 
+const PreviewPdf = ({ config, data }) => {   
+    const { size = config?.size || 'A4', title = config?.title, subtitle = config?.subtitle, coverLogo = config?.coverLogo, theme = config?.theme, toc = config?.toc, coverImg = config?.coverImg } = config;
 
-const PreviewPdf = ({config, data}) => {   
-    console.log('data desde Preview',config,data)
-    /* const {config, setConfig} = useDocument(); 
-    console.log('config desde preview',config) */
-    const {size = config?.size || 'A4', title = {}, subtitle = config?.subtitle, coverLogo = config?.coverLogo, theme = config?.theme, toc = config?.toc } = config;
-    console.log('titulo preview', title)
-    const titleContent = title?.content || 'Título no definido';
-    console.log('titulo preview', titleContent)
     return (
-        <>
-       <Document>
+        <Document>
             <Page size={size} style={styles.page}>
                 <View style={styles.page}>
                     {toc && <Text>Índice:</Text>}
-                    <Text>Título: {titleContent}</Text>
+                    <div style={{ width: '100%', height: '160px', overflow: 'hidden', marginBottom: '9%' }}>
+                        {coverImg && ( 
+                            <img src={coverImg} alt="Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        )}
+                    </div>
+                    <Text>Título: {title}</Text>
                     <Text>Subtítulo: {subtitle}</Text>
                     <Text>{coverLogo}</Text>
                     <Text>{theme}</Text>
@@ -82,11 +78,7 @@ const PreviewPdf = ({config, data}) => {
                 ))}
             </Page>
         </Document>
-        </>
-    
-
-   
-  )
-}
+    );
+};
 
 export default PreviewPdf;
