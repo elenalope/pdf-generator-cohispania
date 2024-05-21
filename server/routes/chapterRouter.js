@@ -9,7 +9,7 @@ router.post('/document/:id/chapter', addChapter);
 router.get('/document/:id/chapters', getChapters);
 router.get('/document/:id/chapters/:chapterId', getChapterById);
 router.delete('/document/:id/chapter/:chapterId', deleteChapter);
-router.put('/document/:id/chapter/:chapterId', updateChapter);
+router.put('/document/:id/chapter', updateChapter);
 
 
 export default router;

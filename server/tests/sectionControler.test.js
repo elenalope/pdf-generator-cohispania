@@ -52,7 +52,7 @@ describe('GET /api', () => {
   });
 });
 
-describe('POST /api/document/', () => {
+describe('POST /api/document/:id', () => {
     it('should create a new section', async () => {
       const newTemplate = {
         title: { content: "Test Title 3", level: "h1" },
@@ -74,7 +74,7 @@ describe('POST /api/document/', () => {
   })
 
   //DELETE//
-describe('DELETE /api/document/:id', () => {
+describe('DELETE /api/document/:id/section/:sectioId', () => {
     it('should delete an existing section.', async () => {
       
       const newTemplate = new Template({
@@ -85,7 +85,7 @@ describe('DELETE /api/document/:id', () => {
       await newTemplate.save();
   
       const res = await request(app)
-        .delete(`/api/document/${newTemplate._id}`)
+        .delete(`/api/document/${newTemplate._id}/section/:sectionId`)
         .expect(200);
   
       const templateInDb = await Template.findById(newTemplate._id);
@@ -93,7 +93,7 @@ describe('DELETE /api/document/:id', () => {
     });
   });
 
-  describe('PUT /api/document/:id', () => {
+  describe('PUT /api/document/:id/section/sectionId', () => {
     it('should update an existing section', async () => {
     
       const newTemplate = new Template({

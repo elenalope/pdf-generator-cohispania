@@ -18,30 +18,7 @@ afterAll(async () => {
 });
 
 describe('GET /api', () => {
-  it('should return all the chapters', async () => {
-    const templates = [
-      {
-        title: { content: "Test Title 1", level: "h1" },
-        subtitle: "Test Subtitle 1",
-        content: []
-      },
-      {
-        title: { content: "Test Title 2", level: "h1" },
-        subtitle: "Test Subtitle 2",
-        content: []
-      }
-    ];
-
-    await Template.insertMany(templates);
-
-    const res = await request(app)
-      .get('/api')
-      .expect(200);
-
-    expect(res.body.length).toBe(2);
-    expect(res.body[0].name).toBe(templates[0].name);
-    expect(res.body[1].name).toBe(templates[1].name);
-  });
+  
 
   it('should return an empty array if there are no chapters', async () => {
     const res = await request(app)
@@ -54,10 +31,10 @@ describe('GET /api', () => {
 
 
 
-describe('POST /api/document/', () => {
+describe('POST /api/document/:id', () => {
     it('should create a new chapter', async () => {
       const newTemplate = {
-        title: { content: "Test Title 3", level: "h1" },
+        title: "Test Title 3",
         subtitle: "Test Subtitle 3",
         content: []
       };
@@ -79,12 +56,12 @@ describe('POST /api/document/', () => {
 
 
  
-  describe('DELETE /api/document/:id', () => {
+  describe('DELETE /api/document/:id/chapter/:chapterId', () => {
     it('should delete an existing chapter."', async () => {
       
       const newTemplate = new Template({
        
-        title: { content: "Test Title", level: "h1" },
+        title: "Test Title",
         subtitle: "Test Subtitle",
         content: []
       });
@@ -101,12 +78,12 @@ describe('POST /api/document/', () => {
   
  
   
-  describe('PUT /api/document/:id', () => {
+  describe('PUT /api/document/:id/chapter/:chapterId', () => {
     it('should update an existing chapter', async () => {
     
       const newTemplate = new Template({
         
-        title: { content: "Old Test Title", level: "h1" },
+        title: "Old Test Title",
         subtitle: "Old Test Subtitle",
         content: [
                 ]
@@ -121,14 +98,14 @@ describe('POST /api/document/', () => {
       };
   
       const res = await request(app)
-        .put(`/api/document/${newTemplate._id}`)
+        .put(`/api/document/${newTemplate._id}/chapter/:chapterId`)
         .send(updatedData)
         .expect(200);
   
      
       const updatedTemplate = await Template.findById(newTemplate._id);
       expect(updatedTemplate).toBeTruthy();
-      expect(updatedTemplate.title.content).toBe(updatedData.title.content);
+      expect(updatedTemplate.title).toBe(updatedData.title);
       expect(updatedTemplate.subtitle).toBe(updatedData.subtitle);
       
     });

@@ -21,11 +21,11 @@ describe('GET /api', () => {
   it('should return all the title', async () => {
     const templates = [
       {
-        title: { content: "Test Title 1", level: "h1" },
+        title: { content: "Test Title 1" },
        
       },
       {
-        title: { content: "Test Title 2", level: "h1" },
+        title: { content: "Test Title 2" },
         
       }
     ];
@@ -33,7 +33,7 @@ describe('GET /api', () => {
     await Template.insertMany(templates);
 
     const res = await request(app)
-      .get('/api')
+      .get('/api/document/:id/chapters')
       .expect(200);
 
     expect(res.body.length).toBe(2);
@@ -50,14 +50,14 @@ describe('GET /api', () => {
   });
 });
 
-describe('POST /api/document/', () => {
+describe('POST /api/document/:id/title', () => {
     it('should create a new title', async () => {
       const newTemplate = {
-        title: { content: "Test Title 3", level: "h1" },
+        title: { content: "Test Title 3" },
       };
   
       const res = await request(app)
-        .post('/api/document/')
+        .post(`/api/document/${newTemplate._id}/title`)
         .send(newTemplate)
         .expect(201);
   
@@ -93,7 +93,7 @@ describe('POST /api/document/', () => {
     
       const newTemplate = new Template({
         
-        title: { content: "Old Test Title", level: "h1" },
+        title: { content: "Old Test Title"},
         content: [
                 ]
       });
@@ -101,12 +101,12 @@ describe('POST /api/document/', () => {
 
       const updatedData = {
     
-        title: { content: "Updated Test Title", level: "h1" },
+        title: { content: "Updated Test Title"},
         content: []
       };
   
       const res = await request(app)
-        .put(`/api/document/${newTemplate._id}`)
+        .put(`/api/document/${newTemplate._id}/chapter`)
         .send(updatedData)
         .expect(200);
   

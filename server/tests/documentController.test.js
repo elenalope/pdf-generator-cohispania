@@ -60,7 +60,7 @@ describe('POST /api/document', () => {
   it('debería crear un nuevo documento', async () => {
     const newTemplate = {
       name: "Test Template 3",
-      title: { content: "Test Title 3", level: "h1" },
+      title: "Test Title 3",
       subtitle: "Test Subtitle 3",
       content: []
     };
@@ -94,7 +94,7 @@ describe('DELETE /api/document/:id', () => {
     
     const newTemplate = new Template({
       name: "Test Template",
-      title: { content: "Test Title", level: "h1" },
+      title: "Test Title",
       subtitle: "Test Subtitle",
       content: []
     });
@@ -116,7 +116,7 @@ describe('PUT /api/document/:id', () => {
   
     const newTemplate = new Template({
       name: "Old Test Template",
-      title: { content: "Old Test Title", level: "h1" },
+      title: "Old Test Title",
       subtitle: "Old Test Subtitle",
       content: [
               ]
@@ -126,7 +126,7 @@ describe('PUT /api/document/:id', () => {
     
     const updatedData = {
       name: "Updated Test Template",
-      title: { content: "Updated Test Title", level: "h1" },
+      title: "Updated Test Title",
       subtitle: "Updated Test Subtitle",
      
       content: [
