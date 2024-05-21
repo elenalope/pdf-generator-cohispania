@@ -201,6 +201,7 @@ const MyDocument = () => {
         console.error('Error al crear el link:', error);
     }
 };
+
 // Descarga documento
 const styles = StyleSheet.create({
   page: {

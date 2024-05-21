@@ -16,6 +16,7 @@ import Box from '@mui/material/Box';
 import { postPDF } from '../../services/pdfServices';
 import CreateTemplate from '../../components/alerts/CreateTemplate';
 import { Typography } from '@mui/material';
+import { Troubleshoot } from '@mui/icons-material';
 
 const Config = () => {
     const navigate = useNavigate();
@@ -27,17 +28,17 @@ const Config = () => {
         title: 'Tasación Duplex en Pinto',
         subtitle: 'Localización',
         coverLogo: 'https://pbs.twimg.com/profile_images/1179641400251600898/qW-KYjPj_400x400.png',
-        toc: false,
+        toc: true,
         tocLevels: 1,
         padding: '20px',
-        includeCover: false,
-        includeBackCover: false,
+        includeCover: true,
+        includeBackCover: Troubleshoot,
         theme:'',
-        coverImg: '',
-        coverLogo: '',
+        coverImg: 'https://www.imprentaonline.net/blog/wp-content/uploads/din-a4.png',
+        coverLogo: 'https://www.imprentaonline.net/blog/wp-content/uploads/din-a4.png',
         sectionBreak: false,
-        headerLogo: '',
-        watermark: 'https://www.cohispania.com/wp-content/uploads/2023/05/cohispania-logo.jpeg',
+        headerLogo: 'https://www.imprentaonline.net/blog/wp-content/uploads/din-a4.png',
+        watermark: 'https://www.imprentaonline.net/blog/wp-content/uploads/din-a4.png',
         orientation: 'Vertical',
       });
 
@@ -79,6 +80,7 @@ const Config = () => {
                 </label>
               </div>
               <div className='containerConfig'>
+              <div className='column-left'>
                 <label className='configLabel' htmlFor='title'>
                   <TextField
                     {...register('title')}
@@ -132,7 +134,8 @@ const Config = () => {
                       />
                     } label="Contraportada" />
                   </label>
-                </div>
+                  </div>
+                
                 <div className='column-right'>
                 <label className='configLabel' htmlFor="toc-switch">
                     <FormControlLabel
@@ -223,7 +226,7 @@ const Config = () => {
 
                 <Button variant="outlined" onClick={() => navigate('/')}>Cancelar</Button>
               </div>
-              
+              </div>
               {showPreview && <PreviewPdf config={config} />}
             </form>
           </FormProvider>
