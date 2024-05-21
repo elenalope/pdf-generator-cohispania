@@ -2,7 +2,17 @@ import axios from "axios";
 
 export const URL = 'http://localhost:3000/api';
 
-
+//POST
+export const postPDF = async (newData) => {
+  try {
+    console.log("Datos enviados:", newData);
+     const response = await axios.post(`${URL}/document`, newData);
+     return response;
+  } catch (error) {
+     console.error('Error creating document', error.message);
+     throw error; }
+ };
+ 
 //GET
 export const getPDF = async () => {
   try {
@@ -14,17 +24,7 @@ export const getPDF = async () => {
   }
 };
 
-//POST
-export const postPDF = async (newData) => {
-  try {
-    console.log("Datos enviados:", newData);
-     const response = await axios.post(`${URL}/document`, newData);
-     //alert("Document create succesfully");
-     return response;
-  } catch (error) {
-     console.error('Error creating document', error.message);
-     throw error; }
- };
+
 
 //DELETE
 export const deletePDF = async (id) =>{

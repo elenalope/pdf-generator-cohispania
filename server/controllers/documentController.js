@@ -13,20 +13,44 @@ catch(error){
 }
 
 //
-export const getDocById = async  (request,response)=>{
-    try {
-        const document = await Template.findById(request.params.id);    
-        
-        if(!document){
-            return response.status(404).json({message: "Document not found"});
+
+export const getDocumentById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const document = await Template.findById(id)
+      .populate({
+        path: 'content',
+        model: 'Chapter',
+        populate: {
+          path: 'content',
+          model: 'Section',
+          populate: {
+            path: 'content',
+            model: 'Subsection',
+            populate: [
+              { path: 'content', model: 'Title' },
+              { path: 'content', model: 'Paragraph' },
+              { path: 'content', model: 'List' },
+              { path: 'content', model: 'Signature' },
+              { path: 'content', model: 'Image' },
+              { path: 'content', model: 'Link' }
+            ]
+          }
         }
-        response.status(200).json(document);    
-    } 
-    catch (error) {
-        response.status(500).json({message: error.message})
+      });
+
+    if (!document) {
+      return res.status(404).json({ message: "Document not found" });
     }
 
-}
+    res.status(200).json(document);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 
 //
 
@@ -70,4 +94,63 @@ export  const updateDocument = async (request,response)=> {
     } catch (error) {
         response.status(500).json({message: error.message})
     }
-}
+};
+
+export const createAllDocument = async (req, res) => {
+    try {
+      const { name, title, subtitle, highlightedValue, docExplanation, coverImg, coverLogo, headerLogo, toc, tocLevels, padding, sectionBreak, watermark, includeCover, includeBackCover, theme, sectionVariant, orientation, size, signature, content } = req.body;
+      
+      const chapters = await Promise.all(content.map(async (chapter) => {
+        if (chapter.content && chapter.content.length > 0) {
+          const sections = await Promise.all(chapter.content.map(async (section) => {
+            const newSection = new Section(section);
+            await newSection.save();
+            return newSection._id;
+          }));
+          chapter.content = sections;
+        }
+        const newChapter = new Chapter(chapter);
+        await newChapter.save();
+        return newChapter._id;
+      }));
+  
+      const document = new Template({
+        name,
+        title,
+        subtitle,
+        highlightedValue,
+        docExplanation,
+        coverImg,
+        coverLogo,
+        headerLogo,
+        toc,
+        tocLevels,
+        padding,
+        sectionBreak,
+        watermark,
+        includeCover,
+        includeBackCover,
+        theme,
+        sectionVariant,
+        orientation,
+        size,
+        signature,
+        content: chapters
+      });
+  
+      await document.save();
+  
+      const populatedDocument = await Template.findById(document._id)
+        .populate({
+          path: 'content',
+          populate: {
+            path: 'content',
+            model: 'Section'
+          }
+        });
+  
+      res.status(201).json(populatedDocument);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };

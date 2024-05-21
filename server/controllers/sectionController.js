@@ -26,22 +26,46 @@ export const addSection = async (req, res) => {
 };
 
   
-  export const getSectionById = async (req, res) => {
-    try {
-      const { id, sectionId } = req.params;
-      const document = await Template.findById(id).populate('content');
-      if (!document) {
-        return res.status(404).json({ message: "Document not found" });
-      }
-      const section = document.content.id(sectionId);
-      if (!section) {
-        return res.status(404).json({ message: "Section not found" });
-      }
-      res.status(200).json(section);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+export const getSectionById = async (req, res) => {
+  try {
+    const { id, sectionId } = req.params;
+
+    const document = await Template.findById(id);
+    if (!document) {
+      return res.status(404).json({ message: "Document not found" });
     }
-  };
+
+    const section = await Section.findById(sectionId)
+      .populate({
+        path: 'content',
+        populate: [
+          { path: 'content', model: 'Title' },
+          { path: 'content', model: 'Paragraph' },
+          { path: 'content', model: 'List' },
+          { path: 'content', model: 'Signature' },
+          { path: 'content', model: 'Image' },
+          { path: 'content', model: 'Link' },
+          { path: 'content', model: 'Subsection', populate: [
+            { path: 'content', model: 'Title' },
+            { path: 'content', model: 'Paragraph' },
+            { path: 'content', model: 'List' },
+            { path: 'content', model: 'Signature' },
+            { path: 'content', model: 'Image' },
+            { path: 'content', model: 'Link' }
+          ] }
+        ]
+      });
+
+    if (!section) {
+      return res.status(404).json({ message: "Section not found" });
+    }
+
+    res.status(200).json(section);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
   
 
   export const updateSection = async (req, res) => {
