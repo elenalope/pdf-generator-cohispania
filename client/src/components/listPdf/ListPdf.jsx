@@ -57,7 +57,7 @@ const ListPdf = () => {
             const timer = setTimeout(() => {
                 setShowDeletingAlert(false);
                 window.location.reload();
-            }, 900);
+            }, 600);
 
             return () => clearTimeout(timer);
         }

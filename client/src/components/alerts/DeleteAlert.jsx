@@ -22,7 +22,7 @@ const DeletePDF = ({ onClose, onConfirm }) => {
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
-                BackdropProps={{ style: { backgroundColor: 'transparent' } }} // Esta línea hace que el fondo sea transparente
+                BackdropProps={{ style: { backgroundColor: 'transparent' } }}
             >
                 <DialogContent style={{ padding: 0 }}>
                     <div style={{ backgroundColor: '#D32F2F', padding: '16px', textAlign: 'center' }}>
