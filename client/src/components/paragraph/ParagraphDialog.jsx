@@ -28,7 +28,7 @@ export default function ParagraphDialog({ openParagraph, setOpenParagraph, onPar
   return (
     <Dialog open={openParagraph} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit(onSubmit) }}>
       <DialogParagraph>Crear Párrafo</DialogParagraph>
-      <DialogContent sx={{ p: 3 }}>
+      <DialogContent sx={{ p:3, minWidth: '300px', width: '100vw', maxWidth: '600px' }}>
         <TextField
           autoFocus
           margin="dense"
@@ -37,6 +37,9 @@ export default function ParagraphDialog({ openParagraph, setOpenParagraph, onPar
           type="text"
           fullWidth
           variant="standard"
+          multiline
+          minRows={4}
+          maxRows={8}
           {...register('text', { required: true })}
         />
       </DialogContent>

@@ -42,7 +42,8 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import MoveDownIcon from '@mui/icons-material/MoveDown';
 import './MyDocument.css';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
-import LongMenu from '../../components/cards/DropDownMenu.jsx'
+import LongMenu from '../../components/cards/DropDownMenu.jsx';
+import ParagraphDialog from '../../components/paragraph/ParagraphDialog.jsx'
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -470,7 +471,7 @@ const generatePdf = async () => {
                             color: '#ffffff', 
                             backgroundColor: 'primary.main', 
                           }}}>
-                      <AddIcon />
+                      <AddIcon onClick={handleParagraphClick} />
                       </IconButton>
                     </ListItemButton>
                   </ListItem>
@@ -641,18 +642,25 @@ const generatePdf = async () => {
               
               {data.paragraphs.map((paragraph, index) => (
                   paragraph && paragraph.text && (
-                    <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
-                      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      {/* <LongMenu /> */}
+                    <CardContent key={index} sx={{ 
+                      pl: 4, 
+                      pr: 4, 
+                      mb: 3, 
+                      pt: 2, 
+                      pb: 2, 
+                      backgroundColor: '#E9EAEC', 
+                      borderRadius: '10px',
+                      boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'primary.main', width: '100%' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <FormatAlignJustifyIcon />
+                          <Typography sx={{ ml: 1, mt: 0.2 }}>Párrafo</Typography>
+                      </Box>
+                          <LongMenu />
                       </Box>
                       <Typography sx={{ mb: 2, mt: 1 }}>
                         {paragraph.text}
                       </Typography>
-                      <Button variant="contained" endIcon={<SendIcon />} size="small"
-                        sx={{ width: 100 , ml: 'auto'}} 
-                        onClick={handleEnterParagraph}>
-                        Entrar
-                        </Button>
                     </CardContent>
                   )
                ))}
