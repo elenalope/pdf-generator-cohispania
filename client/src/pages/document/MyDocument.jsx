@@ -28,7 +28,7 @@ import { addChapter } from '../../services/chapterServices.js';
 import { addSection} from '../../services/sectionServices.js';
 import { addTitle} from '../../services/titleService.js';
 import { addParagraph} from '../../services/paragraphServices.js';
-import {addLink} from '../../services/linkServices.js'
+import { addLink } from '../../services/linkServices.js'
 import CardContent from '@mui/material/CardContent';
 import { IconButton, Typography } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
@@ -38,7 +38,6 @@ import BookIcon from '@mui/icons-material/Book';
 import TitleIcon from '@mui/icons-material/Title';
 import ArticleIcon from '@mui/icons-material/Article';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import MoveDownIcon from '@mui/icons-material/MoveDown';
 import './MyDocument.css';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
