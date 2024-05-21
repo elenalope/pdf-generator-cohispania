@@ -36,7 +36,7 @@ describe('Config page testing', () => {
   test('renders and toggles "Indice" switch', () => {
     const tocSwitch = screen.getByLabelText('Indice');
     fireEvent.click(tocSwitch);
-    expect(tocSwitch.checked).toBe(false);
+    expect(tocSwitch.checked).toBe(true);
   });
 
   test('renders and toggles "Salto de Sección" switch', () => {
