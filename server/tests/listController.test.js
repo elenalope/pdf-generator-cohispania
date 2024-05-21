@@ -19,7 +19,7 @@ afterAll(async () => {
 
 describe('GET /api', () => {
   
-  it('should return an empty array if there are no title', async () => {
+  it('should return an empty array if there are no list', async () => {
     const res = await request(app)
       .get('/api')
       .expect(200);
@@ -30,7 +30,7 @@ describe('GET /api', () => {
 
 
   describe('DELETE /api/document/:id', () => {
-    it('should delete an existing title."', async () => {
+    it('should delete an existing list"', async () => {
       
       const newTemplate = new Template({
         name: "Test Template",
@@ -45,3 +45,7 @@ describe('GET /api', () => {
       expect(templateInDb).toBeNull();
     });
   });
+
+  
+ 
+  

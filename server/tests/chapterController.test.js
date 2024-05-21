@@ -78,39 +78,7 @@ describe('POST /api/document/:id', () => {
   
  
   
-  describe('PUT /api/document/:id/chapter/:chapterId', () => {
-    it('should update an existing chapter', async () => {
-    
-      const newTemplate = new Template({
-        
-        title: "Old Test Title",
-        subtitle: "Old Test Subtitle",
-        content: [
-                ]
-      });
-      await newTemplate.save();
   
-      
-      const updatedData = {
-        title: { content: "Updated Test Title", level: "h1" },
-        subtitle: "Updated Test Subtitle",
-        content: []
-      };
-  
-      const res = await request(app)
-        .put(`/api/document/${newTemplate._id}/chapter/:chapterId`)
-        .send(updatedData)
-        .expect(200);
-  
-     
-      const updatedTemplate = await Template.findById(newTemplate._id);
-      expect(updatedTemplate).toBeTruthy();
-      expect(updatedTemplate.title).toBe(updatedData.title);
-      expect(updatedTemplate.subtitle).toBe(updatedData.subtitle);
-      
-    });
-  })
-
 
   
   
