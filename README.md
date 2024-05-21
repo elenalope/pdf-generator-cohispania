@@ -23,6 +23,10 @@ This is the final project of our web development bootcamp in Factoría F5, creat
 
 # Figma
 <a href="https://www.figma.com/design/fsnZrT7qmmAnIj6cZdWEGW/PDF-Generator?node-id=0%3A1&t=rgCzO5wngh4V8qbI-1" target="_blank"><img src="https://i.ibb.co/HVKSn8Z/figma-pdf-generator.png" alt="figma-pdf-generator" border="0"></a>
+ 
+Enter in Figma: https://www.figma.com/design/fsnZrT7qmmAnIj6cZdWEGW/PDF-Generator?node-id=0%3A1&t=rgCzO5wngh4V8qbI-1
+
+
 ## Project Configuration
 
 1. **Clone the Repository:**
