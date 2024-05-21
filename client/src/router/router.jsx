@@ -1,7 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import LayoutPublic from '../layout/LayoutPublic';
-import Home from '../pages/home/Home';
-import Template from '../pages/template/Template'
+import Home from '../pages/home/Home.jsx';
+import Config from '../pages/config/Config.jsx';
+import Chapter from '../views/chapter/Chapter.jsx';
+import Section from '../views/Section.jsx';
+import Subsection from  '../views/Subsection.jsx';
+import MyDocument from "../pages/document/MyDocument.jsx";
+import LayoutDocument from "../layout/LayoutDocument.jsx"
+import SectionFromChapter from "../views/SectionFromChapter.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -14,16 +21,38 @@ const router = createBrowserRouter([
       },
       {
         path: "/",
-        element: <Home />, // o el componente correspondiente para la generación de PDF
+        element: <Home />, 
       },
       {
-        path: "/template",
-        element: <Template />,
+        path: "/config",
+        element: <Config />,
+      },
+      {
+        path: "/document/:id",
+        element: <LayoutDocument />,
+        children: [
+          {
+            index: true,
+            element: <MyDocument/>,
+          },
+          {
+            path: "chapter/:id",
+            element: <Chapter />,
+          },
+          {
+            path: "section/:id",
+            element: <Section/>,
+          },
+          {
+            path: "section",
+            element: <SectionFromChapter/>
+          },
+          {
+            path: "subsection/:id",
+            element: <Subsection />,
+          },
+        ]
       }
-     // {
-     //   path: "/interface",
-     //   element: <Interface />, // Asegúrate de importar Interface si lo necesitas
-     // }
     ]
   }
 ]);
