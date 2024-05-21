@@ -631,7 +631,7 @@ const generatePdf = async () => {
                           <Typography sx={{ ml: 1, mt: 0.2 }}>Título</Typography>
                       </Box>
                           <LongMenu />
-                    </Box>
+                      </Box>
                       <Typography variant="h5" sx={{ mb: 1, mt: 1,  }}>
                         {title.content}
                       </Typography>
@@ -658,8 +658,21 @@ const generatePdf = async () => {
                ))}
                {data.links.map((link, index) => (
                   link && link.src && (
-                    <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
-                      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <CardContent key={index} sx={{ 
+                      pl: 4, 
+                      pr: 4, 
+                      mb: 3, 
+                      pt: 2, 
+                      pb: 2, 
+                      backgroundColor: '#E9EAEC', 
+                      borderRadius: '10px',
+                      boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'primary.main', width: '100%' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <InsertLinkIcon />
+                          <Typography sx={{ ml: 1, mt: 0.2 }}>Link</Typography>
+                      </Box>
+                          <LongMenu />
                       </Box>
                       <Typography sx={{ mb: 2, mt: 1 }}>
                         {link.src}
