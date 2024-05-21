@@ -68,6 +68,7 @@ export default function SectionDialog({ openSection, setOpenSection, onSectionCr
           {...register('title', { required: true })}
         />
         <FormControlLabel
+        sx={{ mt: 3 }}
           control={
             <Switch {...register('cover')} id="cover-switch" inputProps={{ 'aria-label': 'controlled' }}/>
           } 

@@ -568,11 +568,24 @@ const generatePdf = async () => {
               ))}
             {data.sections.map((section, index) => (
                 section && section.title && (
-                  <CardContent key={index} sx={{ pl: 4, pr: 4, mb: 3, pt: 2, pb: 2, backgroundColor: '#E9EAEC' }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      {/* <LongMenu /> */}
+                  <CardContent key={index} sx={{ 
+                    pl: 4, 
+                    pr: 4, 
+                    mb: 3, 
+                    pt: 2, 
+                    pb: 2, 
+                    backgroundColor: '#E9EAEC', 
+                    borderRadius: '10px',
+                    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'primary.main', width: '100%' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <BookIcon />
+                          <Typography sx={{ ml: 1, mt: 1 }}>Sección</Typography>
+                      </Box>
+                          <LongMenu />
                     </Box>
-                    <Typography sx={{ mb: 2, mt: 1 }}>
+                    <Typography variant="h5" sx={{ mb: 2, mt: 1 }}>
                       {section.title}
                     </Typography>
                     <Divider />
@@ -588,11 +601,11 @@ const generatePdf = async () => {
                     )}
                      <Divider/>
                     {/* <FormControlLabel disabled control={<Switch />} label={data.cover} /> */}
-                    <div className='buttons-section-mydocument'>
+                    <div className='buttons-chapter-mydocument'>
     
                     <Button variant="contained" endIcon={<SendIcon />} size="small"
-                    sx={{ width: 100 , ml: 'auto'}} 
-                    onClick={handleEnterSection}/* type="submit" */ /* onClick={()=> navigate('/document')} */ >
+                    sx={{ width: 100 , ml: 'auto', marginTop: '20px'}} 
+                    onClick={handleEnterSection}>
                     Entrar
                     </Button>
                     </div>
